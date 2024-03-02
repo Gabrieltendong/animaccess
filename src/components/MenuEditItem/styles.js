@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 7
+        marginVertical: 10
     },
     title: {
         color: colors.BLACK,

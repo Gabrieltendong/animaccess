@@ -7,7 +7,6 @@ import { colors } from '@themes/index';
 
 // create a component
 const SectionItem = (section, index, isActive) => {
-    console.log("section", section)
     return (
         <View style={styles.container}>
             <Icon name={section.icon} color={colors.BLACK} size={18} />

@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import EtablissementHomeStack from './HomeStack';
-import { FAVORITES, MYACCOUNT_ETABLISSEMENT, SEARCH, SEARCH_STACK } from '@constants/routes';
-import SearchScreen from '@screens/etablissement/search';
+import { FAVORITES, MYACCOUNT_ETABLISSEMENT, SEARCH_STACK } from '@constants/routes';
 import FavoritesScreen from '@screens/etablissement/favorites';
 import MyAccountScreen from '@screens/etablissement/myaccount';
 import Icon from '@components/ui/Icon';

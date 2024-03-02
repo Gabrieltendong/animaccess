@@ -7,13 +7,15 @@ import { SEARCH_BYCATEGORIE } from '@constants/routes';
 // create a component
 const CardCategorie = ({item, navigation}) => {
     return (
-        <TouchableOpacity onPress={() => navigation.navigate(SEARCH_BYCATEGORIE)} style={styles.container}>
+        <TouchableOpacity onPress={() => navigation.navigate(SEARCH_BYCATEGORIE, {categorie: item})} style={styles.container}>
             <ImageBackground 
-                source={item.image} 
+                source={{uri: item?.image}} 
                 style={styles.image_wrapper}
                 imageStyle={styles.border_container}
             >
-                <Text style={styles.title_categorie}>{item.title}</Text>
+                <View style={styles.content}>
+                    <Text style={styles.title_categorie}>{item?.name}</Text>
+                </View>
             </ImageBackground>
         </TouchableOpacity>
     );

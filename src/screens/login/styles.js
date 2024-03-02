@@ -56,5 +56,12 @@ export const styles = StyleSheet.create({
         color: colors.WHITE,
         textTransform: 'uppercase',
         marginTop: 40
+    },
+    error: {
+        color: colors.PRIMARY,
+        textAlign: 'left',
+        alignSelf: 'flex-start',
+        marginTop: -5,
+        fontSize: 12
     }
 })

@@ -7,11 +7,12 @@ import Accordion from 'react-native-collapsible/Accordion';
 import MyInfos from '@components/MyInfos';
 import MyBooking from '@components/MyBooking';
 import SectionItem from '@components/SectionItem';
+import MyInfosEtablissement from '@components/MyInfosEtablissement';
 
 const SECTIONS = [
     {
       title: 'Mes informations',
-      content: <MyInfos />,
+      content: <MyInfosEtablissement />,
       icon: "UserRound"
     },
     {
@@ -22,7 +23,6 @@ const SECTIONS = [
 ];
 
 const renderContent = ({content}) => {
-    console.log("content", content)
     return(
         <View style={styles.content}>
             {content}
@@ -33,12 +33,6 @@ const renderContent = ({content}) => {
 // create a component
 const MyAccountScreen = () => {
     const [activeSections, setActiveSections] = useState([0])
-     
-    const renderSectionTitle = () => {
-        return(
-            <View style={{backgroundColor: '#fff'}}></View>
-        )
-    }  
 
     return (
         <Container title={"Mon compte"}>
@@ -46,7 +40,7 @@ const MyAccountScreen = () => {
                 <Accordion
                     sections={SECTIONS}
                     activeSections={activeSections}
-                    renderSectionTitle={renderSectionTitle}
+                    // renderSectionTitle={renderSectionTitle}
                     renderHeader={SectionItem}
                     renderContent={renderContent}
                     onChange={setActiveSections}

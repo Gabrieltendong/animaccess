@@ -7,7 +7,8 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         borderRadius: 20,
         backgroundColor: '#eee',
-        marginVertical: 5
+        marginVertical: 5,
+        marginRight: 10
     },
     content: {
         padding: 10

@@ -10,6 +10,15 @@ import { LOGIN, SIGNUPSTEP2ETABLISSEMENT, SIGNUPSTEP2PRESTATAIRE } from '@consta
 // create a component
 const SignUpScreen = ({navigation}) => {
     const [isSelect, setIsSelect] = useState('etablissement')
+
+    const handleNextStep = () => {
+        if(isSelect == 'etablissement'){
+            navigation.navigate(SIGNUPSTEP2ETABLISSEMENT)
+        }else{
+            navigation.navigate(SIGNUPSTEP2PRESTATAIRE)
+        }
+    }
+
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -29,7 +38,7 @@ const SignUpScreen = ({navigation}) => {
                     <View style = {styles.type_profile_wrapper}>
                         <TouchableOpacity 
                             style={isSelect=="etablissement"?styles.btn_selected:styles.btn_not_selected}
-                            onPress={() => navigation.navigate(SIGNUPSTEP2ETABLISSEMENT)}
+                            onPress={() => setIsSelect('etablissement')}
                         >
                             <Icon 
                                 name={'Church'} 
@@ -37,12 +46,12 @@ const SignUpScreen = ({navigation}) => {
                                 size={30}  
                             />
                         </TouchableOpacity>
-                        <Text style={styles.text_type_profil}>Centre médico-social</Text>
+                        <Text style={styles.text_type_profil}>Etablissement</Text>
                     </View>
                     <View style = {styles.type_profile_wrapper}>
                         <TouchableOpacity 
                             style={isSelect=="prestataire"?styles.btn_selected:styles.btn_not_selected}
-                            onPress={() => navigation.navigate(SIGNUPSTEP2PRESTATAIRE)}
+                            onPress={() => setIsSelect('prestataire')}
                         >
                             <Icon 
                                 name={'Smile'} 
@@ -54,7 +63,7 @@ const SignUpScreen = ({navigation}) => {
                     </View>
                 </View>
                 <View style={styles.footer}>
-                    <Button text='Suivant' style={styles.btn_next} />
+                    <Button text='Suivant' style={styles.btn_next} onPress={handleNextStep} />
                     <View style={styles.row}>
                         <Text style={styles.footer_text}>Vous avez déjà un compte?</Text>
                         <TouchableOpacity onPress={() => navigation.navigate(LOGIN)}>

@@ -2,10 +2,13 @@
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
     "baseUrl": "." ,
+    "typeRoots": ["./src/types"],
     "paths": {
        "@constants/*": [
          "src/constants/*"
        ],
+       "@interfaces/*": ["src/interfaces/*"],
+       "@config/*": ["src/config/*"],
        "@assets/*": [
          "src/assets/*"
        ],

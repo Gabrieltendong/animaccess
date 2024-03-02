@@ -22,7 +22,9 @@ const Container = ({children, title}) => {
                     />
                 </ImageBackground>
             </View>
-            <Text style={styles.text_header}>{title}</Text>
+            {
+                title && <Text style={styles.text_header}>{title}</Text>
+            }
             <View style={styles.content}>
             {children}
             </View>

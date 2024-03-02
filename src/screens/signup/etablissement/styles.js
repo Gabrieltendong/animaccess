@@ -48,5 +48,15 @@ export const styles = StyleSheet.create({
     },
     btn: {
         marginTop: 20
+    },
+    buttonTextStyle: {
+        color: colors.WHITE,
+        fontFamily: fonts.POPPINS_REGULAR,
+        fontSize: 14
+    },
+    error: {
+        color: colors.PRIMARY,
+        fontFamily: fonts.POPPINS_REGULAR,
+        fontSize: 12
     }
 })

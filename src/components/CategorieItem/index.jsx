@@ -4,14 +4,16 @@ import { View, Text, ImageBackground } from 'react-native';
 import { styles } from './styles'
 
 // create a component
-const CategorieItem = () => {
+const CategorieItem = ({item}) => {
     return (
         <ImageBackground 
-            source={require('@assets/images/categorie_enfant.png')} 
+            source={{uri: item.image}} 
             style={styles.container}
             imageStyle={styles.border_container}
         >
-            <Text style={styles.title_categorie}>Pour les enfants</Text>
+            <View style={styles.content}>
+                <Text style={styles.title_categorie}>{item.name}</Text>
+            </View>
         </ImageBackground>
     );
 };

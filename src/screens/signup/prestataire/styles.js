@@ -39,15 +39,26 @@ export const styles = StyleSheet.create({
         borderStyle: 'dotted',
         borderColor: colors.PRIMARY,
         borderWidth: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         height: 150,
         borderRadius: 20,
-        marginVertical: 10
+        marginVertical: 10,
+        justifyContent: 'center',
+    },
+    card_center: {
+        alignItems: 'center',
+    },
+    image_cni: {
+        height: 150,
+        borderRadius: 20
     },
     text_card: {
         color: colors.BLACK,
         fontFamily: fonts.POPPINS_REGULAR,
         marginTop: 10
+    },
+    error: {
+        color: colors.PRIMARY,
+        fontFamily: fonts.POPPINS_REGULAR,
+        fontSize: 12
     }
 })

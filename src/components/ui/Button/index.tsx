@@ -1,6 +1,12 @@
 //import liraries
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, ViewStyle} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ViewStyle,
+  ActivityIndicator,
+} from 'react-native';
 import {styles} from './styles';
 import {colors} from '@themes/index';
 
@@ -9,10 +15,17 @@ type ButtonProps = {
   onPress: () => void;
   style: ViewStyle;
   variant: 'contain' | 'outline';
+  isLoading?: boolean;
 };
 
 // create a component
-const Button = ({text, onPress, style, variant = 'contain'}: ButtonProps) => {
+const Button = ({
+  text,
+  onPress,
+  style,
+  variant = 'contain',
+  isLoading,
+}: ButtonProps) => {
   return (
     <TouchableOpacity
       style={[
@@ -21,13 +34,17 @@ const Button = ({text, onPress, style, variant = 'contain'}: ButtonProps) => {
         variant == 'outline' ? styles.btn_outline : styles.btn_contain,
       ]}
       onPress={onPress}>
-      <Text
-        style={[
-          styles.text_btn,
-          {color: variant == 'outline' ? colors.PRIMARY : colors.WHITE},
-        ]}>
-        {text}
-      </Text>
+      {isLoading ? (
+        <ActivityIndicator color={colors.WHITE} size={'large'} />
+      ) : (
+        <Text
+          style={[
+            styles.text_btn,
+            {color: variant == 'outline' ? colors.PRIMARY : colors.WHITE},
+          ]}>
+          {text}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };

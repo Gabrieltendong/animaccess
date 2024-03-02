@@ -29,10 +29,15 @@ export const styles = StyleSheet.create({
     image_wrapper: {
         flex: 1
     },
+    header_title_wrapper: {
+        backgroundColor: 'rgba(255,255,255,0.7)',
+        borderRadius: 20,
+        padding: 10,
+        justifyContent: 'center',
+        height: 50,
+    },
     header_image: {
         height: 50,
-        padding: 10,
-        justifyContent: 'center'
     },
     header_image_border: {
         borderRadius: 15

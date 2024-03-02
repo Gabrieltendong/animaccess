@@ -14,7 +14,8 @@ const Input = ({
     onPressLeftIcon,
     secureTextEntry=false,
     onChangeText,
-    keyboardType
+    keyboardType,
+    value
 }) => {
     return (
         <View style={styles.container}>
@@ -27,6 +28,7 @@ const Input = ({
                 onChangeText={onChangeText}
                 numberOfLines={1}
                 keyboardType={keyboardType}
+                value={value}
             />
             {
                 leftIcon &&

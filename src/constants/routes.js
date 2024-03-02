@@ -18,6 +18,7 @@ export const MYACCOUNT_PRESTATAIRE = "My account prestataire"
 export const MY_SERVICE = "My service"
 export const MYBOOKING_PRESTATAIRE = "My booking prestataire"
 export const SIGNUP_DOCUMENT = "SignUp document prestataire"
+export const SERVICE_STACK = "Service stack navigator"
 
 
 // etablissement route

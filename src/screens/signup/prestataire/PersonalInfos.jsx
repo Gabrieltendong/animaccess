@@ -6,10 +6,18 @@ import { styles } from './styles';
 import Icon from '@components/ui/Icon';
 import Input from '@components/ui/Input';
 import Button from '@components/ui/Button';
-import { SIGNUP_DOCUMENT } from '@constants/routes';
+import { PASSWORD_PRESTATAIRE, SIGNUP_DOCUMENT } from '@constants/routes';
+import { useForm, Controller } from 'react-hook-form';
 
 // create a component
 const PersonalInfosPrestataire = ({navigation}) => {
+
+    const { handleSubmit, control, formState: { errors } } = useForm();
+
+    const handleNextStep = (data) => {
+        navigation.navigate(PASSWORD_PRESTATAIRE, {registerData: data})
+    }
+
     return (
         <KeyboardAvoidingView behavior='height' style={styles.container}>
             <ImageBackground
@@ -23,12 +31,89 @@ const PersonalInfosPrestataire = ({navigation}) => {
                 <Text style={styles.header_title}>Informations personnelle</Text>
             </ImageBackground>
             <ScrollView style={styles.content}>
-                <Input iconName={'UserRound'} placeholder={"Nom"} />
-                <Input iconName={'UserRound'} placeholder={'Prénom'} />
-                <Input iconName={'MapPin'} placeholder={'Adresse postal'} />
-                <Input iconName={'Phone'} placeholder={'Téléphone'} keyboardType={'phone-pad'} />
-                <Input iconName={'Mail'} placeholder={'Email'} keyboardType='email-address' />
-                <Button text='Suivant' style={styles.btn} onPress={() => navigation.navigate(SIGNUP_DOCUMENT)} />
+                <Controller
+                    control={control}
+                    render = {({field: {onChange, value}}) => (
+                        <Input 
+                            iconName={'UserRound'} 
+                            placeholder={"Nom"}
+                            onChangeText={(value) => onChange(value)}
+                            value={value}
+                        />
+                    )}
+                    name='name'
+                    rules={{ required: true }}
+                />
+                {errors.name && <Text style={styles.error}>Le nom est obligatoire</Text>}
+                <Controller
+                    control={control}
+                    render = {({field: {onChange, value}}) => (
+                        <Input 
+                            iconName={'UserRound'} 
+                            placeholder={"Prénom"}
+                            onChangeText={(value) => onChange(value)}
+                            value={value}
+                        />
+                    )}
+                    name='lastname'
+                    rules={{ required: false }}
+                />
+                <Controller
+                    control={control}
+                    render = {({field: {onChange, value}}) => (
+                        <Input 
+                            iconName={'MapPin'} 
+                            placeholder={'Adresse postal'}
+                            onChangeText={(value) => onChange(value)}
+                            value={value}
+                        />
+                    )}
+                    name='boite_postal'
+                    rules={{ required: true }}
+                />
+                {errors.boite_postal && <Text style={styles.error}>L'adresse postal est obligatoire</Text>}
+                <Controller
+                    control={control}
+                    render = {({field: {onChange, value}}) => (
+                        <Input 
+                            iconName={'Phone'} 
+                            placeholder={'Téléphone'}
+                            keyboardType={'phone-pad'}
+                            onChangeText={(value) => onChange(value)}
+                            value={value}
+                        />
+                    )}
+                    name='telephone'
+                    rules={{ required: true }}
+                />
+                {errors.telephone && <Text style={styles.error}>Le téléphone est obligatoire</Text>}
+                <Controller
+                    control={control}
+                    render = {({field: {onChange, value}}) => (
+                        <Input 
+                            iconName={'Mail'} 
+                            placeholder={'Email'}
+                            keyboardType='email-address'
+                            onChangeText={(value) => onChange(value)}
+                            value={value}
+                        />
+                    )}
+                    name='email'
+                    rules={{ 
+                        required: true,
+                        pattern: {
+                            value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                            message: 'Adresse email invalide',
+                          }
+                    }}
+                />
+                {
+                    errors?.email?.type == 'pattern' && <Text style={styles.error}>L'email est invalide</Text>
+                }
+                {
+                    errors?.email?.type == 'required' && <Text style={styles.error}>L'email est obligatoire</Text>
+                }
+                <Button text='Suivant' style={styles.btn} onPress={handleSubmit(handleNextStep)} />
             </ScrollView>
         </KeyboardAvoidingView>
     );

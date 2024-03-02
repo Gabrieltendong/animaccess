@@ -1,14 +1,29 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { styles } from './styles'
+import Container from '@components/common/Container';
+import BookingItem from '@components/BookingItem';
+import Help from '@components/Help';
+import { useUserStore } from 'src/store/user.store';
 
 // create a component
 const HomeScreen = () => {
+
+    const { user } = useUserStore()
+
     return (
-        <View style={styles.container}>
-            <Text>HomeScreen</Text>
-        </View>
+        <Container title={`Bonjour ${user?.account?.user?.name} !`}>
+            <View style={styles.container}>
+                <ScrollView style={styles.content} horizontal={true}>
+                    <BookingItem />
+                    <BookingItem />
+                </ScrollView>
+            </View>
+            <View style={styles.footer}>
+                <Help />
+            </View>
+        </Container>
     );
 };
 
