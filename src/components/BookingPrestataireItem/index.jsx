@@ -2,19 +2,19 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from './styles'
-import { list_services } from 'src/mocks/services';
 import Icon from '@components/ui/Icon';
 import { colors } from '@themes/index';
 import moment from 'moment';
 
 // create a component
-const BookingItem = ({item}) => {
+const BookingPrestataireItem = ({item, style}) => {
+    // console.log("item", item)
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, style]}>
             <Image source={{uri: item?.prestataire_service?.service?.service?.image}} style={styles.image_wrapper} />
             <View style={styles.content}>
-                <Text style={styles.title}>{item?.prestataire_service?.prestataire?.user?.name} {item?.prestataire_service?.prestataire?.user?.lastname}</Text>
-                <Text style={styles.sub_title}>{item?.prestataire_service?.service?.service?.name}</Text>
+                <Text style={styles.title}>{item?.etablissement?.name}</Text>
+                <Text style={styles.sub_title}>{item?.etablissement?.gerant?.name}</Text>
                 <View style = {styles.row}>
                     <Icon name={"Calendar"} color={colors.BLACK} size={16} />
                     <Text style={styles.text_time}>{moment(new Date(item?.date_reservation)).format("dddd DD MMMM YYYY")}</Text>
@@ -23,7 +23,7 @@ const BookingItem = ({item}) => {
                     <Icon name={"Clock4"} color={colors.BLACK} size={16} />
                     {
                         Array.isArray(item?.plage_horaire) &&
-                        <Text style={styles.text_time}>{item?.plage_horaire[0].heure_debut.substring(0, 5)} - {item?.plage_horaire[0].heure_fin.substring(0, 5)}</Text>
+                        <Text style={styles.text_time}>{item?.plage_horaire[0]?.heure_debut.substring(0, 5)} - {item?.plage_horaire[0]?.heure_fin.substring(0, 5)}</Text>
                     }
                 </View>
                 <TouchableOpacity style={styles.btn}>
@@ -35,4 +35,4 @@ const BookingItem = ({item}) => {
 };
 
 //make this component available to the app
-export default BookingItem;
+export default BookingPrestataireItem;

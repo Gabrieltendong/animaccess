@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { styles } from './styles'
 import Container from '@components/common/Container';
@@ -8,6 +8,10 @@ import MyInfos from '@components/MyInfos';
 import MyBooking from '@components/MyBooking';
 import SectionItem from '@components/SectionItem';
 import MyInfosEtablissement from '@components/MyInfosEtablissement';
+import { useQuery } from 'react-query';
+import { useUserStore } from 'src/store/user.store';
+import { get_my_booking_etablissement } from 'src/feature/booking/booking.service';
+import { useBookingStore } from 'src/store/booking.store';
 
 const SECTIONS = [
     {
@@ -32,8 +36,17 @@ const renderContent = ({content}) => {
 
 // create a component
 const MyAccountScreen = () => {
-    const [activeSections, setActiveSections] = useState([0])
 
+    const { user } = useUserStore()
+    const { setListBookingEtablissement } = useBookingStore()
+    const etablissement_id = user.account.id
+    const [activeSections, setActiveSections] = useState([0])
+    const {data: list_booking_etablissement } = useQuery(["List_booking_etablissament", etablissement_id], get_my_booking_etablissement)
+
+    useEffect(() => {
+        setListBookingEtablissement(list_booking_etablissement)
+    }, [list_booking_etablissement])
+   
     return (
         <Container title={"Mon compte"}>
             <ScrollView contentContainerStyle={{paddingBottom: 100}}>

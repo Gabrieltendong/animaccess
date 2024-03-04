@@ -1,9 +1,9 @@
 import { colors, fonts } from "@themes/index";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
-        height: 140,
+        minHeight: 140,
         flexDirection: 'row',
         borderRadius: 20,
         backgroundColor: '#eee',
@@ -16,10 +16,11 @@ export const styles = StyleSheet.create({
         elevation: Platform.OS == 'ios'?1:3
     },
     content: {
-        padding: 10
+        padding: 10,
+        flex: 1
     },
     image_wrapper: {
-        height: 140,
+        minHeight: 140,
         width: 80,
         borderBottomLeftRadius: 20,
         borderTopLeftRadius: 20
@@ -30,6 +31,7 @@ export const styles = StyleSheet.create({
         marginTop: 5
     },
     title: {
+        // width: 200,
         color: colors.BLACK,
         fontFamily: fonts.POPPINS_BOLD
     },

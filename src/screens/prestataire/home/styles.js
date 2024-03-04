@@ -16,5 +16,8 @@ export const styles = StyleSheet.create({
         alignSelf: 'center',
         position: 'absolute',
         bottom: 120
+    },
+    booking_item: {
+        width: Dimensions.get('window').width - 120
     }
 })

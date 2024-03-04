@@ -2,22 +2,45 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { styles } from './styles'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Container from '@components/common/Container';
-import { list_services } from 'src/mocks/services';
-import BookingItem from '@components/BookingItem';
+import MyBookingScreen from './MyBooking';
+import MyScheduleScreen from './MySchedule';
+import { colors, fonts } from '@themes/index';
+
+const Tab = createMaterialTopTabNavigator();
 
 // create a component
-const MyBookingScreen = () => {
+const MyBookingStack = () => {
     return (
-        <Container title={"Mes reservations"}>
-            <FlatList
-                data={list_services}
-                renderItem={BookingItem}
-                contentContainerStyle={{paddingBottom: 80}}
-            />
+        <Container>
+            <Tab.Navigator screenOptions={{
+                tabBarIndicatorStyle: {
+                    backgroundColor: colors.PRIMARY
+                },
+                tabBarLabelStyle: {
+                    textTransform: 'none',
+                    fontFamily: fonts.POPPINS_BOLD
+                }
+            }} >
+                <Tab.Screen 
+                    name="MyBooking" 
+                    component={MyBookingScreen}
+                    options={{
+                        tabBarLabel: "Mes réservations"
+                    }}
+                />
+                <Tab.Screen 
+                    name="MySchedule" 
+                    component={MyScheduleScreen}
+                    options={{
+                        tabBarLabel: "Mon Planning"
+                    }}
+                />
+            </Tab.Navigator>
         </Container>
     );
 };
 
 //make this component available to the app
-export default MyBookingScreen;
+export default MyBookingStack;

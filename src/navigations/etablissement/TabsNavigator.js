@@ -13,7 +13,8 @@ const Tab = createBottomTabNavigator();
 
 function EtablissementNavigator() {
   return (
-    <Tab.Navigator 
+    <Tab.Navigator
+      detachInactiveScreens={false}
       screenOptions={({route}) => ({
         headerShown: false, 
         tabBarShowLabel: false,
@@ -73,7 +74,8 @@ const styles = StyleSheet.create({
     width: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 30
+    borderRadius: 30,
+    marginTop: -30
   }
 })
 

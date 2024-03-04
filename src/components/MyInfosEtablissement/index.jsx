@@ -20,7 +20,7 @@ const MyInfosEtablissement = () => {
 
     const handleLogout = () => {
         setUser({})
-        navigation.navigate(LOGIN)
+        navigation.navigate("Auth")
     }
 
     console.log("user----", user)

@@ -8,13 +8,18 @@ import { useMutation } from 'react-query';
 import { add_service_to_favorite } from 'src/feature/favoris/favoris.service';
 import { useUserStore } from 'src/store/user.store';
 import Alert from '@components/Alert';
+import { useNavigation } from '@react-navigation/native';
+import { DETAIL_SERVICE } from '@constants/routes';
+import { useServiceStore } from 'src/store/service.store';
 
 // create a component
 const ServiceItem = ({item}) => {
 
     const { user } = useUserStore()
+    const { setSelectedService } = useServiceStore()
     const {mutateAsync: addServiceToFavorite, isLoading} = useMutation(add_service_to_favorite)
     const [isVisible, setIsVisible] = useState(false)
+    const navigation = useNavigation()
 
     const handleAddServiceToFavorite = async () => {
         const data = {
@@ -27,8 +32,13 @@ const ServiceItem = ({item}) => {
         }
     }
 
+    const openDetail = () => {
+        setSelectedService(item)
+        navigation.navigate(DETAIL_SERVICE)
+    }
+
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={openDetail} >
             <ImageBackground 
                 source={{uri: item?.service?.service?.image}} 
                 style={styles.card_image}
@@ -50,7 +60,7 @@ const ServiceItem = ({item}) => {
                 subTitle={"Se service a été ajouté a vos favoris"}
                 onToggle={() => setIsVisible(false)}
             />
-        </View>
+        </TouchableOpacity>
     );
 };
 

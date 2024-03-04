@@ -6,7 +6,7 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { HOME_PRESTATAIRE, MYACCOUNT_PRESTATAIRE, MYBOOKING_PRESTATAIRE, MY_SERVICE, SERVICE_STACK } from '@constants/routes';
 import HomeScreen from '@screens/prestataire/home';
 import MyServiceScreen from '@screens/prestataire/myservices';
-import MyBookingScreen from '@screens/prestataire/mybooking';
+import MyBookingStack from '@screens/prestataire/mybooking';
 import MyAccountScreen from '@screens/prestataire/myaccount';
 import ServiceStack from './ServiceStack';
 
@@ -15,9 +15,11 @@ const Tab = createBottomTabNavigator();
 function PrestataireNavigator(){
     return(
         <Tab.Navigator 
+            detachInactiveScreens={false}
             screenOptions={({route}) => ({
                 headerShown: false, 
                 tabBarShowLabel: false,
+                
                 tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
                 if (route.name === HOME_PRESTATAIRE) {
@@ -40,17 +42,18 @@ function PrestataireNavigator(){
                 tabBarActiveTintColor: colors.PRIMARY,
                 tabBarInactiveTintColor: colors.WHITE,
                 tabBarStyle: {
-                height: Platform.OS=='android'? 60: 80,
-                backgroundColor: colors.PRIMARY,
-                borderTopLeftRadius: 30,
-                borderTopRightRadius: 30,
-                position: 'absolute'
+                    height: Platform.OS=='android'? 60: 80,
+                    backgroundColor: colors.PRIMARY,
+                    borderTopLeftRadius: 30,
+                    borderTopRightRadius: 30,
+                    justifyContent: 'center',
+                    position: 'absolute'
                 }
             })}
         >
             <Tab.Screen name={HOME_PRESTATAIRE} component={HomeScreen} />
             <Tab.Screen name={SERVICE_STACK} component={ServiceStack} />
-            <Tab.Screen name={MYBOOKING_PRESTATAIRE} component={MyBookingScreen} />
+            <Tab.Screen name={MYBOOKING_PRESTATAIRE} component={MyBookingStack} />
             <Tab.Screen name={MYACCOUNT_PRESTATAIRE} component={MyAccountScreen} />
         </Tab.Navigator>
     )
@@ -62,7 +65,8 @@ const styles = StyleSheet.create({
       width: 40,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 30
+      borderRadius: 30,
+      marginTop: -30
     }
 })
 

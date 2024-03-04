@@ -3,6 +3,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import SplashScreen from 'react-native-splash-screen';
 import Rooter from 'src/navigations';
+import {enableLatestRenderer} from 'react-native-maps';
+
+enableLatestRenderer();
 
 const queryClient = new QueryClient();
 

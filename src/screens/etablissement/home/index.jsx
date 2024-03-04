@@ -30,7 +30,7 @@ const HomeScreen = ({navigation}) => {
                         list_all_categorie?.results && list_all_categorie?.results.map((item, index) => (
                             <CategorieItem key={index} item={item} />
                         ))
-                    }
+                    } 
                 </ScrollView>
                 <View style={styles.section_title_wrapper}>
                     <Text style={styles.section_title}>Nos coups de coeur</Text>
