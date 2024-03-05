@@ -37,6 +37,10 @@
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Animaccess a besoin d'accéder à votre galerie photo pour que vous puissiez nous fournir vos CNI pour valider votre profile.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+    <string>Nous avons besoin de votre localisation pour vous faciliter la recherche des emplacements</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Nous avons besoin de votre localisation pour vous faciliter la recherche des emplacements</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Bold.ttf</string>
