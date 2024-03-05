@@ -22,7 +22,7 @@ workflows:
           yarn install
       - name: Install CocoaPods dependencies
         script: |
-          cd ios && pod install
+          cd ios && pod deintegrate && pod install
       - name: Set up provisioning profiles settings on Xcode project
         script: xcode-project use-profiles --project ios/*.xcodeproj
       - name: show permission
@@ -33,7 +33,7 @@ workflows:
           #!/bin/sh
           cd $CM_BUILD_DIR/ios
           ls
-          agvtool new-version -all 8
+          agvtool new-version -all 9
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
