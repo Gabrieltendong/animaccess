@@ -2,6 +2,7 @@ module.exports = {
   presets: ['module:@react-native/babel-preset'],
   plugins: [
     // ... other configs, if any
+    'react-native-reanimated/plugin',
     [
       'module:react-native-dotenv',
       {
