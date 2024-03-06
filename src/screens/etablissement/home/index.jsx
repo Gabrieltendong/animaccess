@@ -27,7 +27,7 @@ const HomeScreen = ({navigation}) => {
                 </View>
                 <ScrollView horizontal style={{maxHeight: 100}}>
                     {
-                        list_all_categorie?.results && list_all_categorie?.results.map((item, index) => (
+                        list_all_categorie?.results && list_all_categorie?.results.slice(5, 8).reverse().map((item, index) => (
                             <CategorieItem key={index} item={item} />
                         ))
                     } 

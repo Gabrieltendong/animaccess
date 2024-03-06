@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
         flex: 1
     },
     header_title_wrapper: {
-        backgroundColor: 'rgba(255,255,255,0.7)',
+        // backgroundColor: 'rgba(255,255,255,0.7)',
         borderRadius: 20,
         padding: 10,
         justifyContent: 'center',
@@ -43,7 +43,8 @@ export const styles = StyleSheet.create({
         borderRadius: 15
     },
     header_title: {
-        fontFamily: fonts.POPPINS_BOLD
+        fontFamily: fonts.POPPINS_BOLD,
+        color: colors.WHITE
     },
     result_number: {
         textAlign: 'center',

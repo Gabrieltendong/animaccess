@@ -19,6 +19,6 @@ export const styles = StyleSheet.create({
         height: 100,
         borderRadius: 20,
         padding: 10,
-        backgroundColor: "rgba(0,0,0,0.5)"
+        // backgroundColor: "rgba(0,0,0,0.5)"
     }
 })

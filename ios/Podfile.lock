@@ -968,7 +968,7 @@ PODS:
   - React-Mapbuffer (0.73.4):
     - glog
     - React-debug
-  - react-native-date-picker (4.3.7):
+  - react-native-date-picker (4.4.0):
     - React-Core
   - react-native-document-picker (9.1.1):
     - React-Core
@@ -1398,7 +1398,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
   FBLazyVector: 84f6edbe225f38aebd9deaf1540a4160b1f087d7
-  FBReactNativeSpec: 291ffa628409943e6388fbb1b447c2aeb26cf10e
+  FBReactNativeSpec: d0086a479be91c44ce4687a962956a352d2dc697
   Flipper: c7a0093234c4bdd456e363f2f19b2e4b27652d44
   Flipper-Boost-iOSX: fd1e2b8cbef7e662a122412d7ac5f5bea715403c
   Flipper-DoubleConversion: 2dc99b02f658daf147069aad9dbd29d8feb06d30
@@ -1435,7 +1435,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 9ac353eccf6ab54d1e0a33862ba91221d1e88460
   React-logger: 0a57b68dd2aec7ff738195f081f0520724b35dab
   React-Mapbuffer: 63913773ed7f96b814a2521e13e6d010282096ad
-  react-native-date-picker: 5637f417bb0c1981bc9d483324d5eb5929a1651c
+  react-native-date-picker: ebcb936d72fc3bbde0dea47c6641e913523231ca
   react-native-document-picker: 3599b238843369026201d2ef466df53f77ae0452
   react-native-google-maps: 1bcc1f9f13f798fcf230db7fe476f3566d0bc0a3
   react-native-image-picker: 6c51359eca7a7df9f07e297218c25696eb9da976
@@ -1458,7 +1458,7 @@ SPEC CHECKSUMS:
   React-RCTText: f0176f5f5952f9a4a2c7354f5ae71f7c420aaf34
   React-RCTVibration: 8160223c6eda5b187079fec204f80eca8b8f3177
   React-rendererdebug: ed286b4da8648c27d6ed3ae1410d4b21ba890d5a
-  React-rncore: 318002790813e9185ae2a8eecfdb3afef0f29d9e
+  React-rncore: 43f133b89ac10c4b6ab43702a541dee1c292a3bf
   React-runtimeexecutor: e6ab6bb083dbdbdd489cff426ed0bce0652e6edf
   React-runtimescheduler: ed48e5faac6751e66ee1261c4bd01643b436f112
   React-utils: 6e5ad394416482ae21831050928ae27348f83487
