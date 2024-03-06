@@ -39,7 +39,7 @@ const MyAccountScreen = () => {
 
     const { user } = useUserStore()
     const { setListBookingEtablissement } = useBookingStore()
-    const etablissement_id = user.account.id
+    const etablissement_id = user?.account?.id
     const [activeSections, setActiveSections] = useState([0])
     const {data: list_booking_etablissement } = useQuery(["List_booking_etablissament", etablissement_id], get_my_booking_etablissement)
 
