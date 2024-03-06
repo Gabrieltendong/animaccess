@@ -33,7 +33,7 @@ workflows:
           #!/bin/sh
           cd $CM_BUILD_DIR/ios
           ls
-          agvtool new-version -all 23
+          agvtool new-version -all 24
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
