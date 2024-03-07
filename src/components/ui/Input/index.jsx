@@ -15,7 +15,8 @@ const Input = ({
     secureTextEntry=false,
     onChangeText,
     keyboardType,
-    value
+    value,
+    defaultValue
 }) => {
     return (
         <View style={styles.container}>
@@ -29,6 +30,7 @@ const Input = ({
                 numberOfLines={1}
                 keyboardType={keyboardType}
                 value={value}
+                defaultValue={defaultValue}
             />
             {
                 leftIcon &&

@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     container: {
         // height: 250,
         flex: 1,
-        marginBottom: 10,
+        marginBottom: 20,
         backgroundColor: colors.WHITE,
         borderRadius: 20
     },
@@ -50,5 +50,18 @@ export const styles = StyleSheet.create({
         width: 100,
         alignSelf: 'center',
         height: 40
+    },
+    btn_delete: {
+        height: 30,
+        width: 30,
+        backgroundColor: colors.PRIMARY,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        position: 'absolute',
+        zIndex: 2,
+        elevation: 20,
+        right: -5,
+        top: -10
     }
 })

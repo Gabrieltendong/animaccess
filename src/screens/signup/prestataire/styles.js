@@ -30,7 +30,8 @@ export const styles = StyleSheet.create({
         marginTop: 20
     },
     content: {
-        padding: 20
+        padding: 20,
+        height: '100%'
     },
     btn: {
         marginTop: 20

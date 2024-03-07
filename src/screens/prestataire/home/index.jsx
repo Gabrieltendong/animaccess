@@ -14,7 +14,7 @@ import { get_my_booking_prestataire } from 'src/feature/booking/booking.service'
 const HomeScreen = () => {
 
     const { user } = useUserStore()
-    const prestataire_id = user.account.id
+    const prestataire_id = user?.account?.id
     const {data: list_booking_pretataire, isLoading, refetch} = useQuery(['List_booking_prestataire', prestataire_id], get_my_booking_prestataire)
 
     return (

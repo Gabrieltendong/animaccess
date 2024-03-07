@@ -1,10 +1,11 @@
 import { http } from "@config/httpClient"
 
 
-export const get_service = async () => {
+export const get_service = async ({queryKey}) => {
+    const [_key, categorie_id] = queryKey
     try{
-        const res = await http.get(`/categorie-serevice/`)
-        console.log("res", JSON.stringify(res.data))
+        const res = await http.get(`/list-categorie-service-by-categorie/${categorie_id}/`)
+        // console.log("res", JSON.stringify(res.data))
         return res.data
     }catch(error){
         console.log('error service', error)
@@ -52,7 +53,28 @@ export const create_service = async (data) => {
         const res = await http.post(`/prestataire-service/`, data)
         return res.data
     }catch(error){
-        console.log('error create_service', error)
+        console.log('error create_service', error.response.data)
+        return error.response.data
+    }
+}
+
+export const update_service_pretataire = async ({data, service_prestataire_id}) => {
+    try{
+        const res = await http.patch(`/prestataire-service/${service_prestataire_id}/`, data)
+        return res.data
+    }catch(error){
+        console.log('error update_service', error)
+        return error.response.data
+    }
+}
+
+export const delete_service_prestataire = async (service_prestataire_id) => {
+    console.log("service_prestataire_id", service_prestataire_id)
+    try{
+        const res = await http.delete(`/prestataire-service/${service_prestataire_id}/`)
+        return res.data
+    }catch(error){
+        console.log('error delete_service', error.response.data)
         return error.response.data
     }
 }

@@ -15,6 +15,8 @@ const MyBookingScreen = () => {
     const { user } = useUserStore()
     const prestataire_id = user?.account?.id
     const {data: list_booking_pretataire, isLoading, refetch} = useQuery(['List_booking_prestataire', prestataire_id], get_my_booking_prestataire)
+
+    console.log("list_booking_pretataire", list_booking_pretataire)
        
     return (
         <View style={{flex: 1, paddingTop: 20}}>

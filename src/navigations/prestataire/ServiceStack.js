@@ -23,7 +23,14 @@ function ServiceStack(){
                     headerTitle: "Créer un service"
                 }}
             />
-            <Stack.Screen name={EDIT_SERVICE} component={EditServiceScreen} />
+            <Stack.Screen 
+                name={EDIT_SERVICE} 
+                component={EditServiceScreen}
+                options={({ route }) => ({ 
+                    headerShown: true,
+                    headerTitle: route.params?.item?.service?.service?.name 
+                })} 
+            />
         </Stack.Navigator>
     )
 }

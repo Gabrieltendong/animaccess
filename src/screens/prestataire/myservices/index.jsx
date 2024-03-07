@@ -9,8 +9,8 @@ import MyServiceItem from '@components/MyServiceItem';
 import { CREATE_SERVICE } from '@constants/routes';
 import { useService } from 'src/feature/service/useService';
 import { useUserStore } from 'src/store/user.store';
-import { useQuery } from 'react-query';
-import { get_all_prestataire_service } from 'src/feature/service/service.service';
+import { useMutation, useQuery } from 'react-query';
+import { delete_service_prestataire, get_all_prestataire_service } from 'src/feature/service/service.service';
 import { useServiceStore } from 'src/store/service.store';
 import Empty from '@components/Empty';
 
@@ -18,12 +18,10 @@ import Empty from '@components/Empty';
 const MyServiceScreen = ({navigation}) => {
 
     const { getListeServicePrestataire } = useService() 
-    const { user } = useUserStore()
+    const { user } = useUserStore() 
     const { list_service_prestataire } = useServiceStore()
     const { isLoading, refetch } = getListeServicePrestataire(user?.account?.id)
-    
-    console.log("list_service_prestataire", JSON.stringify(list_service_prestataire))    
-    
+           
     return (
         <Container>
             <View style={styles.row}>
@@ -35,8 +33,14 @@ const MyServiceScreen = ({navigation}) => {
                 />
             </View>
             <FlatList
+                style={{paddingTop: 10, marginHorizontal: -20, paddingHorizontal: 10}}
                 data={list_service_prestataire}
-                renderItem={MyServiceItem}
+                renderItem={({item, index}) => (
+                    <MyServiceItem 
+                        key={index} 
+                        item={item}
+                    />
+                ) }
                 ListEmptyComponent={() => <Empty title={"Vous n'avez aucun service"} />}
                 numColumns={2}
                 refreshing={isLoading}

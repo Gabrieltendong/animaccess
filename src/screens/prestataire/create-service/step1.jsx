@@ -1,8 +1,7 @@
 //import liraries
 import React, { Component, useEffect, useState } from 'react';
-import { View, Text, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown'
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import { styles } from './styles'
 import { useMutation, useQuery } from 'react-query';
 import { create_service, get_list_service_by_categorie, get_service } from 'src/feature/service/service.service';
@@ -19,7 +18,7 @@ import { get_all_categorie } from 'src/feature/categorie/categorie.service';
 import AdresseInput from '@components/AdresseInput';
 
 // create a component
-const CreateServiceScreen = ({navigation}) => {
+const CreateServiceStep1 = ({navigation}) => {
 
     const {data: listCategorie, isLoading: isLoadingListCategorie } = useQuery("list_categorie", get_all_categorie)
     const {mutateAsync: createService, isLoading: isLoadingCreateService} = useMutation(create_service)
@@ -27,54 +26,30 @@ const CreateServiceScreen = ({navigation}) => {
     const [isVisibleModal, setIsVisibleModal] = useState(false)
     const {user} = useUserStore()
     const { getListeServicePrestataire } = useService()
-    const { refetch: refreshListServicePrestataire } = getListeServicePrestataire(user?.account?.id)
     const { list_service_prestataire } = useServiceStore()
-    const [selected_categorie_id, setSelectedCategorieId] = useState()
-    const {data: listTypeService, isLoading, refetch: refreshListTypeService} = useQuery(["Service_by_categorie", selected_categorie_id], get_service)
+    const [seleted_categorie_id, setSelectedCategorieId] = useState()
+    const {data: listTypeService, isLoading, refetch: refreshListTypeService} = useQuery(["Service_by_categorie", seleted_categorie_id], get_service)
     const [error_type_service, setErrorTypeService] = useState()
-    const { handleSubmit, control, setValue, formState: { errors } } = useForm();
-    const [image, setImage] = useState()
+    const { handleSubmit, control, formState: { errors } } = useForm();
   
-    // console.log("list listTypeService", listTypeService)
-   
+    console.log("list listTypeService", listTypeService)
+ 
     const handleCreateService = async (data) => {
-        const dataForm = new FormData()
-        if(image){
-            dataForm.append("image", {
-                name: image.fileName,
-                type: image.type,
-                uri: Platform.OS === 'ios' ? image.uri.replace('file://', '') : image.uri,
-            })
-        }
+        console.log('object')
         if(type_service){
-             
-            dataForm.append("boite_postal", data.boite_postal)
-            dataForm.append("description", data.description)
-            dataForm.append("prestataire", user?.account?.id)
-            dataForm.append("service", type_service)
-            dataForm.append("price", data.price)
-            dataForm.append("longitude", data.longitude)
-            dataForm.append("latitude", data.latitude)
-            // const dataForm = {
-            //     ...data,
-            //     service: type_service,
-            //     prestataire: user?.account?.id
-            // }
+            const dataForm = {
+                ...data,
+                service: type_service,
+                prestataire: user?.account?.id
+            }
             console.log("data", dataForm)
             const res = await createService(dataForm)
             if(res.service){
-                refreshListServicePrestataire()
+                getListeServicePrestataire(user?.account?.id)
                 setIsVisibleModal(true)
             }
         }else{
             setErrorTypeService("Vous devez choisir le type de service")
-        }
-    } 
-
-    const handleSelectImage = async () => {
-        const res = await launchImageLibrary()
-        if(res.assets){
-            setImage(res.assets[0])
         }
     }
 
@@ -85,7 +60,7 @@ const CreateServiceScreen = ({navigation}) => {
 
     useEffect(() => {
         refreshListTypeService()
-    }, [selected_categorie_id])
+    }, [seleted_categorie_id])
   
     return (
         <ScrollView style={styles.container} keyboardShouldPersistTaps='handled'>
@@ -93,7 +68,7 @@ const CreateServiceScreen = ({navigation}) => {
             <SelectDropdown
                 buttonStyle={styles.input_select}
                 defaultButtonText={"Choisir une categorie"}
-                defaultValue={selected_categorie_id}
+                defaultValue={seleted_categorie_id}
                 onSelect={(item) => {
                     return {
                         ...setSelectedCategorieId(item.id)
@@ -127,35 +102,10 @@ const CreateServiceScreen = ({navigation}) => {
                 renderDropdownIcon={() => <Icon name={"ChevronDown"} color={colors.WHITE}/>}
             />
             {error_type_service && <Text style={styles.error}>{error_type_service}</Text>}
-            <TouchableOpacity 
-                style={styles.image_wrapper}
-                onPress={handleSelectImage}
-            >
-                {
-                    image?
-                    <Image source={{uri: image?.uri}} style={styles.image} />
-                    :
-                    <Icon name={"ImagePlus"} />
-                }
-                
+            <TouchableOpacity style={styles.image_wrapper}>
+                <Icon name={"ImagePlus"} />
             </TouchableOpacity>
-            
-            <Controller
-                control={control}
-                render={({field: {onChange, value}}) => (
-                    <AdresseInput 
-                        placeholder={"Ville de prestation"}
-                        setAdresse={onChange}
-                        setLocation={(location) => {
-                            setValue("longitude", location.lng)
-                            setValue("latitude", location.lat)
-                        }}
-                    />
-                )}
-                name='boite_postal'
-                rules={{required: true}}
-            />
-            {errors.boite_postal && <Text style={styles.error}>Vous devez préciser la ville de prestation</Text>}
+            <AdresseInput placeholder={"Ville de prestation"} />
             <Controller
                 control={control}
                 render={({field: {onChange, value}}) => (
@@ -178,7 +128,7 @@ const CreateServiceScreen = ({navigation}) => {
                 render={({field: {onChange, value}}) => (
                     <Input
                         iconName={"Banknote"}
-                        placeholder='Prix du service / heure'
+                        placeholder='Prix du service'
                         onChangeText={onChange}
                         keyboardType={'phone-pad'}
                         value={value}
@@ -188,11 +138,11 @@ const CreateServiceScreen = ({navigation}) => {
                 rules={{required: true}}
             />
             {errors.price && <Text style={styles.error}>Le prix est obligatoire</Text>}
-            <Button 
+            {/* <Button 
                 text='Créer le service' 
                 onPress={handleSubmit(handleCreateService)}
                 isLoading={isLoadingCreateService} 
-            />
+            /> */}
             <Alert
                 type={"success"}
                 title={"Création service reussi"}
@@ -205,4 +155,4 @@ const CreateServiceScreen = ({navigation}) => {
 };
 
 //make this component available to the app
-export default CreateServiceScreen;
+export default CreateServiceStep1;

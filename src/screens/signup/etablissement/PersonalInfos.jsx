@@ -10,6 +10,7 @@ import Button from '@components/ui/Button';
 import { PASSWORD_ETABLISSEMENT } from '@constants/routes';
 import { useForm, Controller } from 'react-hook-form';
 import { useTypeEtablissement } from 'src/feature/type_etablissement/useTypeEtablissement';
+import AdresseInput from '@components/AdresseInput';
 
 // create a component
 const PersonalInfosEtablissement = ({navigation}) => {
@@ -78,17 +79,20 @@ const PersonalInfosEtablissement = ({navigation}) => {
                 <Controller
                     control={control}
                     render = {({field: {onChange, value}}) => (
-                        <Input 
-                            iconName={'MapPin'} 
-                            placeholder={'Adresse postal'}
-                            onChangeText={(value) => onChange(value)}
-                            value={value}
-                        />
+                        <AdresseInput 
+                            placeholder={"Adresse postal"}
+                            setAdresse={onChange}
+                            setLocation={(location) => {
+                                setValue("longitude", location.lng)
+                                setValue("latitude", location.lat)
+                            }}
+                        />     
                     )}
                     name='boite_postal'
                     rules={{ required: true }}
                 />
                 {errors.boite_postal && <Text style={styles.error}>L'adresse est obligatoire</Text>}
+                
                 <Controller
                     control={control}
                     render = {({field: {onChange, value}}) => (

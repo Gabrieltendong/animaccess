@@ -8,11 +8,12 @@ import Input from '@components/ui/Input';
 import Button from '@components/ui/Button';
 import { PASSWORD_PRESTATAIRE, SIGNUP_DOCUMENT } from '@constants/routes';
 import { useForm, Controller } from 'react-hook-form';
+import AdresseInput from '@components/AdresseInput';
 
 // create a component
 const PersonalInfosPrestataire = ({navigation}) => {
 
-    const { handleSubmit, control, formState: { errors } } = useForm();
+    const { handleSubmit, control,setValue, formState: { errors } } = useForm();
 
     const handleNextStep = (data) => {
         navigation.navigate(PASSWORD_PRESTATAIRE, {registerData: data})
@@ -61,12 +62,14 @@ const PersonalInfosPrestataire = ({navigation}) => {
                 <Controller
                     control={control}
                     render = {({field: {onChange, value}}) => (
-                        <Input 
-                            iconName={'MapPin'} 
-                            placeholder={'Adresse postal'}
-                            onChangeText={(value) => onChange(value)}
-                            value={value}
-                        />
+                        <AdresseInput 
+                            placeholder={"Adresse postal"}
+                            setAdresse={onChange}
+                            setLocation={(location) => {
+                                setValue("longitude", location.lng)
+                                setValue("latitude", location.lat)
+                            }}
+                        />     
                     )}
                     name='boite_postal'
                     rules={{ required: true }}
