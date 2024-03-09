@@ -5,7 +5,6 @@ export const get_service = async ({queryKey}) => {
     const [_key, categorie_id] = queryKey
     try{
         const res = await http.get(`/list-categorie-service-by-categorie/${categorie_id}/`)
-        console.log("res type service", JSON.stringify(res.data))
         return res.data
     }catch(error){
         console.log('error service', error)
@@ -17,7 +16,6 @@ export const get_list_service_by_categorie = async ({queryKey}) => {
     const [_key, categorie_id] = queryKey
     try{
         const res = await http.get(`/list-service-by-categorie/${categorie_id}/`)
-        console.log("res list-service-by-categorie", JSON.stringify(res.data))
         return res.data
     }catch(error){
         console.log('error list-service-by-categorie', error)
@@ -28,7 +26,6 @@ export const get_list_service_by_categorie = async ({queryKey}) => {
 export const get_all_prestataire_service = async () => {
     try{
         const res = await http.get(`/prestataire-service/`)
-        console.log("res", res.data)
         return res.data
     }catch(error){
         console.log('error ll_prestataire_service', error)
@@ -40,7 +37,6 @@ export const get_prestataire_service = async ({queryKey}) => {
     const [_key, prestataire_id] = queryKey
     try{
         const res = await http.get(`/list-service-prestataire/${prestataire_id}/`)
-        console.log("res", res.data)
         return res.data
     }catch(error){
         console.log('error prestataire_service', error)
@@ -69,7 +65,6 @@ export const update_service_pretataire = async ({data, service_prestataire_id}) 
 }
 
 export const delete_service_prestataire = async (service_prestataire_id) => {
-    console.log("service_prestataire_id", service_prestataire_id)
     try{
         const res = await http.delete(`/prestataire-service/${service_prestataire_id}/`)
         return res.data

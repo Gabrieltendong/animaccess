@@ -7,10 +7,11 @@ import { colors } from '@themes/index';
 
 // create a component
 const CardItem = ({item, isFavotite}) => {
+    console.log("image", item.image)
     return (
         <View style={styles.container}>
             <ImageBackground 
-                source={{uri: item?.service?.service?.image}} 
+                source={{uri: item?.image? item?.image: item?.service?.service?.image}} 
                 style={styles.card_image}
                 imageStyle={styles.card_image_border}
             >

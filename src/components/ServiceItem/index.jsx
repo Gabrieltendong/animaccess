@@ -40,7 +40,7 @@ const ServiceItem = ({item}) => {
     return (
         <TouchableOpacity style={styles.container} onPress={openDetail} >
             <ImageBackground 
-                source={{uri: item?.service?.service?.image}} 
+                source={{uri: item?.image?item?.image: item?.service?.service?.image}} 
                 style={styles.card_image}
                 imageStyle={styles.card_image_border}
             >
