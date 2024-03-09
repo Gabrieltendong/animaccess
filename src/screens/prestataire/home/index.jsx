@@ -9,6 +9,7 @@ import { useUserStore } from 'src/store/user.store';
 import BookingPrestataireItem from '@components/BookingPrestataireItem';
 import { useQuery } from 'react-query';
 import { get_my_booking_prestataire } from 'src/feature/booking/booking.service';
+import Empty from '@components/Empty';
 
 // create a component
 const HomeScreen = () => {
@@ -19,16 +20,25 @@ const HomeScreen = () => {
 
     return (
         <Container title={`Bonjour ${user?.account?.user?.name} !`}>
-            <View style={styles.container}>
+            <View style={[
+                    styles.container,
+                    Array.isArray(list_booking_pretataire) && list_booking_pretataire.length == 0 && styles.container_empty_booking
+                ]}>
+                
                 {
-                    list_booking_pretataire && 
-                    <ScrollView style={styles.content} horizontal={true}>
+                    Array.isArray(list_booking_pretataire) && list_booking_pretataire.length > 0?
+                   <View>
+                    <Text style={styles.header_title}>Mes prochains rendez-vous</Text>
+                     <ScrollView style={styles.content} horizontal={true}>
                         {
                             Array.isArray(list_booking_pretataire) && list_booking_pretataire.slice(0,3).map((item) => (
                                 <BookingPrestataireItem item={item} style={styles.booking_item} />
                             ))
                         }
                     </ScrollView>
+                   </View>
+                   :
+                   <Empty title={"Vous n'avez pas de rendez-vous pour le moment"} />
                 }
                
             </View>

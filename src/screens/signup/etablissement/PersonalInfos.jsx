@@ -15,7 +15,7 @@ import AdresseInput from '@components/AdresseInput';
 // create a component
 const PersonalInfosEtablissement = ({navigation}) => {
 
-    const { handleSubmit, control, formState: { errors } } = useForm();
+    const { handleSubmit, control,setValue, formState: { errors } } = useForm();
     const {data: listTypeEtablissement, isLoading, isError} = useTypeEtablissement()
     const [type_etablissement, setTypeEtablissement] = useState()
     const [error_type_etablissement, setErrorTypeEtablissement] = useState("")

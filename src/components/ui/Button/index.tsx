@@ -35,7 +35,10 @@ const Button = ({
       ]}
       onPress={onPress}>
       {isLoading ? (
-        <ActivityIndicator color={colors.WHITE} size={'large'} />
+        <ActivityIndicator
+          color={variant == 'outline' ? colors.PRIMARY : colors.WHITE}
+          size={'large'}
+        />
       ) : (
         <Text
           style={[

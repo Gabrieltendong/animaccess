@@ -35,7 +35,7 @@ const CreateServiceScreen = ({navigation}) => {
     const { handleSubmit, control, setValue, formState: { errors } } = useForm();
     const [image, setImage] = useState()
   
-    // console.log("list listTypeService", listTypeService)
+    console.log("list listTypeService", listTypeService)
    
     const handleCreateService = async (data) => {
         const dataForm = new FormData()

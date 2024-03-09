@@ -12,11 +12,9 @@ const AdresseInput = ({placeholder, setAdresse, setLocation, defaultValue}) => {
 
     useEffect(() => {
         if(defaultValue){
-            setTimeout(() => {
-                inpuRef?.current?.getAddressText("test")
-            }, 1000);
+            inpuRef?.current?.setAddressText(defaultValue)
         }
-    }, [])
+    }, [defaultValue])
 
 
     return (

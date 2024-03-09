@@ -95,11 +95,11 @@ export const create_booking = async (data) => {
 
 export const update_booking = async ({data, reservation_id}) => {
     try{
-        const res = await http.patch(`/reservation/${reservation_id}`, data)
-        console.log("res", res.data)
+        const res = await http.patch(`/reservation/${reservation_id}/`, data)
+        console.log("res", reservation_id)
         return res.data
     }catch(error){
-        console.log('error', error.response.data)
+        console.log('error', error)
         return error.response.data
     }
 }

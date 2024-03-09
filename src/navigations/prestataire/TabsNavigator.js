@@ -3,12 +3,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from '@components/ui/Icon';
 import { colors } from '@themes/index';
 import { Platform, StyleSheet, View } from 'react-native';
-import { HOME_PRESTATAIRE, MYACCOUNT_PRESTATAIRE, MYBOOKING_PRESTATAIRE, MY_SERVICE, SERVICE_STACK } from '@constants/routes';
+import { BOOKING_STACK, HOME_PRESTATAIRE, MYACCOUNT_PRESTATAIRE, SERVICE_STACK } from '@constants/routes';
 import HomeScreen from '@screens/prestataire/home';
-import MyServiceScreen from '@screens/prestataire/myservices';
-import MyBookingStack from '@screens/prestataire/mybooking';
 import MyAccountScreen from '@screens/prestataire/myaccount';
 import ServiceStack from './ServiceStack';
+import BookingStack from './BookingStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,7 +27,7 @@ function PrestataireNavigator(){
                 else if(route.name == SERVICE_STACK){
                     iconName = "Smile"
                 }
-                else if(route.name == MYBOOKING_PRESTATAIRE){
+                else if(route.name == BOOKING_STACK){
                     iconName = "CalendarClock"
                 }
                 else{
@@ -53,7 +52,7 @@ function PrestataireNavigator(){
         >
             <Tab.Screen name={HOME_PRESTATAIRE} component={HomeScreen} />
             <Tab.Screen name={SERVICE_STACK} component={ServiceStack} />
-            <Tab.Screen name={MYBOOKING_PRESTATAIRE} component={MyBookingStack} />
+            <Tab.Screen name={BOOKING_STACK} component={BookingStack} />
             <Tab.Screen name={MYACCOUNT_PRESTATAIRE} component={MyAccountScreen} />
         </Tab.Navigator>
     )

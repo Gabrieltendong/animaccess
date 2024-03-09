@@ -65,7 +65,7 @@ const EditServiceScreen = ({navigation, route}) => {
         navigation.goBack()
     }
 
-    console.log("item?.price", item?.price)
+    console.log("item?.price", item)
 
     useEffect(() => {
         reset({
@@ -167,7 +167,7 @@ const EditServiceScreen = ({navigation, route}) => {
             />
             <Alert
                 type={"success"}
-                title={"Modification service reussi"}
+                title={"Modification reussi"}
                 subTitle={"Votre service a bien été Modifié "}
                 isVisible={isVisibleModal}
                 onToggle={handleCloseModal}

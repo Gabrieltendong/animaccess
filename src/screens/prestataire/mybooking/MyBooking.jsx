@@ -9,6 +9,7 @@ import { useQuery } from 'react-query';
 import { get_my_booking_prestataire } from 'src/feature/booking/booking.service';
 import BookingPrestataireItem from '@components/BookingPrestataireItem';
 import { colors } from '@themes/index';
+import Empty from '@components/Empty';
 
 // create a component
 const MyBookingScreen = () => {
@@ -17,7 +18,7 @@ const MyBookingScreen = () => {
     const {data: list_booking_pretataire, isLoading, refetch} = useQuery(['List_booking_prestataire', prestataire_id], get_my_booking_prestataire)
 
     console.log("list_booking_pretataire", list_booking_pretataire)
-       
+        
     return (
         <View style={{flex: 1, paddingTop: 20}}>
             {
@@ -29,8 +30,9 @@ const MyBookingScreen = () => {
                 <FlatList
                     data={list_booking_pretataire}
                     refreshing={isLoading}
+                    ListEmptyComponent={() => <Empty title={"Aucune réservation pour le moment"} />}
                     onRefresh={() => refetch()}
-                    renderItem={({item}) => <BookingPrestataireItem item={item} />}
+                    renderItem={({item}) => <BookingPrestataireItem item={item} style={styles.card_wrapper} />}
                     contentContainerStyle={{paddingBottom: 80}}
                 />
             }

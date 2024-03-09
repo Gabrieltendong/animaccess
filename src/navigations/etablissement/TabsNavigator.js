@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import EtablissementHomeStack from './HomeStack';
-import { FAVORITES, MYACCOUNT_ETABLISSEMENT, SEARCH_STACK } from '@constants/routes';
+import { FAVORITES, MYACCOUNT_ETABLISSEMENT, MYACCOUNT_STACK, SEARCH_STACK } from '@constants/routes';
 import FavoritesScreen from '@screens/etablissement/favorites';
 import MyAccountScreen from '@screens/etablissement/myaccount';
 import Icon from '@components/ui/Icon';
 import { colors } from '@themes/index';
 import { Platform, StyleSheet, View } from 'react-native';
 import SearchStack from './SearchStack';
+import MyAccountStack from './MyAccountStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -61,8 +62,8 @@ function EtablissementNavigator() {
         component={FavoritesScreen}
       />
       <Tab.Screen 
-        name={MYACCOUNT_ETABLISSEMENT} 
-        component={MyAccountScreen}
+        name={MYACCOUNT_STACK} 
+        component={MyAccountStack}
       />
     </Tab.Navigator>
   );

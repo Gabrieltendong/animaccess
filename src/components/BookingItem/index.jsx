@@ -2,13 +2,17 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from './styles'
-import { list_services } from 'src/mocks/services';
 import Icon from '@components/ui/Icon';
 import { colors } from '@themes/index';
 import moment from 'moment';
+import { useNavigation } from '@react-navigation/native';
+import { BOOKING_DETAIL } from '@constants/routes';
 
 // create a component
 const BookingItem = ({item}) => {
+
+    const navigation = useNavigation()
+
     return (
         <View style={styles.container}>
             <Image source={{uri: item?.prestataire_service?.service?.service?.image}} style={styles.image_wrapper} />
@@ -26,7 +30,7 @@ const BookingItem = ({item}) => {
                         <Text style={styles.text_time}>{item?.plage_horaire[0].heure_debut.substring(0, 5)} - {item?.plage_horaire[0].heure_fin.substring(0, 5)}</Text>
                     }
                 </View>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity onPress={() => navigation.navigate(BOOKING_DETAIL, {item})} style={styles.btn}>
                     <Text style={styles.text_btn}>Voir</Text>
                 </TouchableOpacity>
             </View>

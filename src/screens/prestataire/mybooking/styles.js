@@ -42,5 +42,8 @@ export const styles = StyleSheet.create({
         color: colors.GRAY,
         fontFamily: fonts.POPPINS_MEDIUM,
         marginLeft: 10
+    },
+    card_wrapper: {
+        backgroundColor: colors.WHITE
     }
 })

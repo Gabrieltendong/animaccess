@@ -16,9 +16,11 @@ export const EDIT_SERVICE = "Edit service"
 export const CREATE_SERVICE = "Create service"
 export const MYACCOUNT_PRESTATAIRE = "My account prestataire"
 export const MY_SERVICE = "My service"
+export const BOOKING_STACK = "Booking Stack"
 export const MYBOOKING_PRESTATAIRE = "My booking prestataire"
 export const SIGNUP_DOCUMENT = "SignUp document prestataire"
 export const SERVICE_STACK = "Service stack navigator"
+export const BOOKING_DETAIL_PRESTATAIRE = "booking detail prestataire"
 
 
 // etablissement route
@@ -30,3 +32,5 @@ export const SEARCH = "Search"
 export const SEARCH_BYCATEGORIE = "Search by categorie"
 export const SEARCH_STACK = "Search stack navigator"
 export const BOOKING_SERVICE = "Booking service"
+export const BOOKING_DETAIL = "Booking detail"
+export const MYACCOUNT_STACK = "My account stack navigator"

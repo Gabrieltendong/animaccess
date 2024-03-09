@@ -10,9 +10,9 @@ export const styles = StyleSheet.create({
         marginVertical: 5,
         marginRight: 10,
         shadowColor: colors.BLACK,
-        shadowOffset: {height: 1, width: 1},
+        shadowOffset: {height: 1},
         shadowOpacity: 0.5,
-        shadowRadius: 3,
+        shadowRadius: Platform.OS == 'ios'?0.2: 3,
         elevation: Platform.OS == 'ios'?1:3
     },
     content: {

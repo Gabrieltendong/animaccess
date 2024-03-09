@@ -5,7 +5,7 @@ export const get_service = async ({queryKey}) => {
     const [_key, categorie_id] = queryKey
     try{
         const res = await http.get(`/list-categorie-service-by-categorie/${categorie_id}/`)
-        // console.log("res", JSON.stringify(res.data))
+        console.log("res type service", JSON.stringify(res.data))
         return res.data
     }catch(error){
         console.log('error service', error)

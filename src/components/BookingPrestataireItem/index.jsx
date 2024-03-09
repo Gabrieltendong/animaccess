@@ -5,13 +5,24 @@ import { styles } from './styles'
 import Icon from '@components/ui/Icon';
 import { colors } from '@themes/index';
 import moment from 'moment';
+import { useNavigation } from '@react-navigation/native';
+import { BOOKING_DETAIL_PRESTATAIRE } from '@constants/routes';
 
 // create a component
 const BookingPrestataireItem = ({item, style}) => {
-    // console.log("item", item)
+
+    const navigation = useNavigation()
+
     return (
         <View style={[styles.container, style]}>
-            <Image source={{uri: item?.prestataire_service?.service?.service?.image}} style={styles.image_wrapper} />
+            <Image 
+                source={{uri: 
+                    item?.prestataire_service?.image?
+                    item?.prestataire_service?.image
+                    :
+                    item?.prestataire_service?.service?.service?.image}} 
+                style={styles.image_wrapper} 
+            />
             <View style={styles.content}>
                 <Text style={styles.title}>{item?.etablissement?.name}</Text>
                 <Text style={styles.sub_title}>{item?.etablissement?.gerant?.name}</Text>
@@ -26,7 +37,7 @@ const BookingPrestataireItem = ({item, style}) => {
                         <Text style={styles.text_time}>{item?.plage_horaire[0]?.heure_debut.substring(0, 5)} - {item?.plage_horaire[0]?.heure_fin.substring(0, 5)}</Text>
                     }
                 </View>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate(BOOKING_DETAIL_PRESTATAIRE, {item})}>
                     <Text style={styles.text_btn}>Voir</Text>
                 </TouchableOpacity>
             </View>
