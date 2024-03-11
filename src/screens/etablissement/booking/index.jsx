@@ -75,7 +75,7 @@ const BookingServiceScreen = () => {
                 <View style={styles.header}>
                     <Image 
                         style={styles.avatar}
-                        source={{uri: infos_service?.service?.service?.image}} 
+                        source={{uri: infos_service?.image? infos_service?.image: infos_service?.service?.service?.image}} 
                     />
                     <Text>
                         <Text style={styles.name_prestataire}>{infos_service?.prestataire?.user?.name}</Text>
@@ -90,7 +90,8 @@ const BookingServiceScreen = () => {
                         <ExpandableCalendar
                             theme={{
                                 selectedDayBackgroundColor: colors.PRIMARY,
-                                arrowColor: colors.PRIMARY
+                                arrowColor: colors.PRIMARY,
+                                
                             }}
                             renderHeader={(date) => <Text style={styles.monthStyle}>{moment(date).format("MMMM YYYY")}</Text>}
                             enableSwipeMonths

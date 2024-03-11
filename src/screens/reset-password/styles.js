@@ -23,7 +23,11 @@ export const styles = StyleSheet.create({
     content: {
         padding: 20
     },
+    btn: {
+        marginTop: 30
+    },
     error: {
-        color: colors.PRIMARY
+        color: colors.PRIMARY,
+        fontFamily: fonts.POPPINS_REGULAR
     }
 })

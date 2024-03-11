@@ -22,7 +22,7 @@ const DetailServiceScreen = ({navigation, route}) => {
                     <View style={styles.avatar_wrapper}>
                         <Image 
                             style={styles.avatar}
-                            source={{uri: infos_service?.service?.service?.image}}
+                            source={{uri: infos_service?.image? infos_service?.image: infos_service?.service?.service?.image}}
                         />
                     </View>
                     <View style={styles.infos_service_wrapper}>

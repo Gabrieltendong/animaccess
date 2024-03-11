@@ -47,6 +47,9 @@ dependencies:
   react-native-collapsible:
     specifier: ^1.6.1
     version: 1.6.1(react-native@0.72.3)(react@18.2.0)
+  react-native-confirmation-code-field:
+    specifier: ^7.3.2
+    version: 7.3.2(react-native@0.72.3)(react@18.2.0)
   react-native-date-picker:
     specifier: ^4.3.7
     version: 4.3.7(react-native@0.72.3)(react@18.2.0)
@@ -6713,6 +6716,21 @@ packages:
     peerDependencies:
       react: '*'
       react-native: '*'
+    dependencies:
+      react: 18.2.0
+      react-native: 0.72.3(@babel/core@7.23.9)(@babel/preset-env@7.23.9)(react@18.2.0)
+    dev: false
+
+  /react-native-confirmation-code-field@7.3.2(react-native@0.72.3)(react@18.2.0):
+    resolution: {integrity: sha512-uuJKxR+pQrXSx8lmRpekA+Hlle/nkoQKppS8jH7ApqY00+c11nCJg9kuFM0++vdbXg1rKm2P6jPZoSEJK2EaKw==}
+    peerDependencies:
+      react: '>=16.4.0'
+      react-native: '>=0.64.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-native:
+        optional: true
     dependencies:
       react: 18.2.0
       react-native: 0.72.3(@babel/core@7.23.9)(@babel/preset-env@7.23.9)(react@18.2.0)

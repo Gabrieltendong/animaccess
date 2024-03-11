@@ -23,7 +23,30 @@ export const styles = StyleSheet.create({
     content: {
         padding: 20
     },
+    label: {
+        fontFamily: fonts.POPPINS_MEDIUM,
+        fontSize: 18
+    },
+    title: {textAlign: 'center', fontSize: 30},
+    codeFieldRoot: {marginTop: 20},
+    cell: {
+        width: 40,
+        height: 40,
+        lineHeight: 38,
+        fontSize: 24,
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: '#00000030',
+        textAlign: 'center',
+    },
+    focusCell: {
+        borderColor: colors.PRIMARY,
+    },
+    btn: {
+        marginTop: 30
+    },
     error: {
-        color: colors.PRIMARY
+        color: colors.PRIMARY,
+        marginTop: 10
     }
 })

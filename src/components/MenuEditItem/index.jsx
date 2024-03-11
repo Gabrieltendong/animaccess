@@ -6,12 +6,12 @@ import Icon from '@components/ui/Icon';
 import { colors } from '@themes/index';
 
 // create a component
-const MenuEditItem = ({title, icon, name}) => {
+const MenuEditItem = ({title, icon, onPress}) => {
     return (
         <View style={styles.container}>
             <Icon name={icon} color={colors.BLACK} size={18} />
             <Text style={styles.title}>{title}</Text>
-            <TouchableOpacity style={styles.btn_edit}>
+            <TouchableOpacity style={styles.btn_edit} onPress={onPress}>
                 <Icon name={"Pencil"} color={colors.PRIMARY} size={14} />
                 <Text style={styles.text_btn_edit}>Modifier</Text>
             </TouchableOpacity>

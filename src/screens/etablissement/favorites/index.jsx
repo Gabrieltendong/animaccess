@@ -21,7 +21,7 @@ const FavoritesScreen = () => {
         <Container title={"Mes favoris"}>
             <FlatList 
                 data={list_my_favorite}
-                renderItem={CardItem}
+                renderItem={({item}) => <CardItem item={item} />}
                 ListEmptyComponent={() => <Empty title={"Vous n'avez aucun favoris"} />}
                 numColumns={2}
                 refreshing={isLoading}

@@ -23,7 +23,24 @@ export const styles = StyleSheet.create({
     content: {
         padding: 20
     },
+    btn: {
+        marginTop: 30
+    },
+    buttonTextStyle: {
+        color: colors.WHITE,
+        fontFamily: fonts.POPPINS_REGULAR,
+        fontSize: 14
+    },
     error: {
-        color: colors.PRIMARY
-    }
+        color: colors.PRIMARY,
+        fontFamily: fonts.POPPINS_REGULAR,
+        fontSize: 12
+    },
+    input_select: {
+        width: '100%',
+        // height: 50,
+        backgroundColor: colors.PRIMARY,
+        color: colors.WHITE,
+        borderRadius: 50
+    },
 })

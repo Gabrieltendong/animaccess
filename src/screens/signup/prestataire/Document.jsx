@@ -9,40 +9,51 @@ import Input from '@components/ui/Input';
 import Button from '@components/ui/Button';
 import { colors } from '@themes/index';
 import { PASSWORD_PRESTATAIRE } from '@constants/routes';
+import { useUserStore } from 'src/store/user.store';
 
 // create a component
 const DocumentScreen = ({navigation, route}) => {
 
-    const { registerData } = route.params
+    const { registerData, setRegisterData } = useUserStore()
     const [cni_verso, setcni_verso] = useState()
     const [cni_recto, setcni_recto] = useState()
+    const [file_upload, setFileUpload] = useState("")
+    const [messageError, setMessageError] = useState()
 
     const pickDocument = async () => {
         const res = await DocumentPicker.pickSingle({type: DocumentPicker.types.pdf})
+        setFileUpload(res)
         console.log("res", res)
     }
 
     const onTackeCNIRecto = async () => {
-        const res = await launchCamera()
+        const res = await launchImageLibrary()
         if(res.assets){
             setcni_recto(res.assets[0])
         }
     }
 
     const onTackeCNIVerso = async () => {
-        const res = await launchCamera()
+        const res = await launchImageLibrary()
         if(res.assets){
             setcni_verso(res.assets[0])
         }
     }
 
     const handleNextStep = () => {
-        const data = {
-            ...registerData,
-            cni_recto,
-            cni_verso
+        if(cni_recto && cni_verso && file_upload){
+            const data = {
+                ...registerData,
+                cni_recto,
+                cni_verso,
+                file_upload
+            }
+            setRegisterData(data)
+            navigation.navigate(PASSWORD_PRESTATAIRE)
+        }else{
+            setMessageError("Veuillez fournir tout les documents")
         }
-        navigation.navigate(PASSWORD_PRESTATAIRE, {registerData: data})
+        
     }
 
     return (
@@ -58,12 +69,12 @@ const DocumentScreen = ({navigation, route}) => {
                 <Text style={styles.header_title}>Document d'identification</Text>
             </ImageBackground>
             <ScrollView style={{padding: 10, height: '80%'}} contentContainerStyle={{paddingBottom: 80}}>
-                {/* <TouchableOpacity style = {styles.card_wrapper} onPress={pickDocument}>
+                <TouchableOpacity style = {styles.card_wrapper} onPress={pickDocument}>
                     <View style={styles.card_center}>
                         <Icon name={"Upload"} color={colors.GRAY} />
                         <Text style={styles.text_card}>Ajouter votre document RCPRO</Text>
                     </View>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.card_wrapper} onPress={onTackeCNIRecto}>
                     {
                         cni_recto?.uri?
@@ -86,6 +97,7 @@ const DocumentScreen = ({navigation, route}) => {
                         </View>
                     }
                 </TouchableOpacity>
+                <Text style={styles.error}>{messageError}</Text>
                 {/* <View style={styles.card_wrapper}>
                     <Icon name={"ImagePlus"} color={colors.GRAY} />
                     <Text style={styles.text_card}>Photo CNI verso </Text>

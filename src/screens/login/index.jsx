@@ -4,7 +4,7 @@ import { View, Text, ImageBackground, TouchableOpacity, ScrollView, KeyboardAvoi
 import { styles } from './styles'
 import Input from '@components/ui/Input';
 import Button from '@components/ui/Button';
-import { ETABLISSEMENT_NAVIGATOR, PRESTATAIRE_NAVIGATOR, SIGNUP } from '@constants/routes';
+import { ETABLISSEMENT_NAVIGATOR, FORGOT_PASSWORD, PRESTATAIRE_NAVIGATOR, SIGNUP } from '@constants/routes';
 import { useForm, Controller } from 'react-hook-form';
 import { useLogin } from 'src/feature/auth/useLogin';
 import Alert from '@components/Alert';
@@ -63,6 +63,7 @@ const LoginScreen = ({navigation}) => {
                             <Input 
                                 iconName={'UserRound'} 
                                 placeholder={'Email'}
+                                keyboardType='email-address'
                                 onChangeText={(value) => onChange(value)}
                                 value={value}
                             />
@@ -94,7 +95,7 @@ const LoginScreen = ({navigation}) => {
                         onPress={handleSubmit(handleLogin)}
                         isLoading={isLoading}
                     />
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate(FORGOT_PASSWORD)}>
                         <Text style={styles.text_forgot_password}>Mot de passe oublié?</Text>
                     </TouchableOpacity>
                 </View>

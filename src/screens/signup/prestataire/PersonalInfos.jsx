@@ -6,17 +6,20 @@ import { styles } from './styles';
 import Icon from '@components/ui/Icon';
 import Input from '@components/ui/Input';
 import Button from '@components/ui/Button';
-import { PASSWORD_PRESTATAIRE, SIGNUP_DOCUMENT } from '@constants/routes';
+import { SIGNUP_DOCUMENT } from '@constants/routes';
 import { useForm, Controller } from 'react-hook-form';
 import AdresseInput from '@components/AdresseInput';
+import { useUserStore } from 'src/store/user.store';
 
 // create a component
 const PersonalInfosPrestataire = ({navigation}) => {
 
+    const { setRegisterData } = useUserStore()
     const { handleSubmit, control,setValue, formState: { errors } } = useForm();
 
     const handleNextStep = (data) => {
-        navigation.navigate(PASSWORD_PRESTATAIRE, {registerData: data})
+        setRegisterData(data)
+        navigation.navigate(SIGNUP_DOCUMENT)
     }
 
     return (

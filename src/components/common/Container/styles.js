@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
         color: colors.BLACK,
         textAlign: 'center',
         marginVertical: 20,
+        paddingHorizontal: 10,
         fontFamily: fonts.POPPINS_BOLD,
         fontSize: 22
     },

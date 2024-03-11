@@ -11,13 +11,14 @@ import { colors } from '@themes/index';
 import Alert from '@components/Alert';
 import { LOGIN } from '@constants/routes';
 import { useRegisterPrestataire } from 'src/feature/register/useRegister';
+import { useUserStore } from 'src/store/user.store';
 
 const messageSuccess = "Votre compte a bien été crée, Nous vous averons un mail de confirmation dans les 24h une fois votre inscription validé"
 
 // create a component
 const PasswordPrestataire = ({navigation, route}) => {
 
-    const { registerData } = route.params
+    const { registerData, setRegisterData } = useUserStore()
     const {mutateAsync: signUpPrestataire, isLoading, error, data} = useRegisterPrestataire()
     const { handleSubmit, control, watch, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState()
@@ -27,11 +28,27 @@ const PasswordPrestataire = ({navigation, route}) => {
     const [messageError, setMessageError] = useState("")
 
     const handleRegister = async (data) => {
-        const dataForm = {
-            ...registerData,
-            password: data.password
-        }
-        console.log("dataForm", dataForm)
+        const dataForm = new FormData()
+        dataForm.append("name", registerData.name)
+        dataForm.append("telephone", registerData.telephone)
+        dataForm.append("email", registerData.email)
+        dataForm.append("lastname", registerData.lastname)
+        dataForm.append("password", data.password)
+        dataForm.append("longitude", registerData.longitude)
+        dataForm.append("latitude", registerData.latitude)
+        dataForm.append("boite_postal", registerData.boite_postal)
+        dataForm.append("document_file", registerData.file_upload)
+        dataForm.append("cni_verso", {
+            name: registerData.cni_verso.fileName,
+            type: registerData.cni_verso.type,
+            uri: Platform.OS === 'ios' ? registerData.cni_verso.uri.replace('file://', '') : registerData.cni_verso.uri,
+        })
+        dataForm.append("cni_recto", {
+            name: registerData.cni_recto.fileName,
+            type: registerData.cni_recto.type,
+            uri: Platform.OS === 'ios' ? registerData.cni_recto.uri.replace('file://', '') : registerData.cni_recto.uri,
+        })
+        console.log('data', dataForm)
         const res = await signUpPrestataire(dataForm)
         if(res.error){
             setMessageError(res.error)

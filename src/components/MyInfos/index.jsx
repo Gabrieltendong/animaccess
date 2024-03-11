@@ -7,7 +7,7 @@ import Icon from '@components/ui/Icon';
 import { colors } from '@themes/index';
 import { useUserStore } from 'src/store/user.store';
 import { useNavigation } from '@react-navigation/native';
-import { LOGIN } from '@constants/routes';
+import { CHANGE_PASSWORD, EDIT_EMAIL, EDIT_NAME, EDIT_PHONE, LOGIN } from '@constants/routes';
 
 
 
@@ -27,25 +27,22 @@ const MyInfos = () => {
 
     return (
         <View style={styles.container}>
-            {
-                statut == 'ETABLISSEMENT' && 
-                <MenuEditItem title={"La crusoé"} icon={"Home"} />
-            }
-            {
-                statut == 'ETABLISSEMENT' &&
-                <MenuEditItem title={"EHPAD"} icon={"Building2"} />
-            }
-            {
-                statut == 'ETABLISSEMENT' && 
-                <MenuEditItem title={"Stephanie Laurient"} icon={"UserRound"} />
-            }
-            {
-                statut == 'PRESTATAIRE' &&
-                <MenuEditItem title={`${user?.account?.user?.name} ${user?.account?.user?.lastname}`} icon={"UserRound"} />
-            }
-            <MenuEditItem title={user?.account?.user?.telephone} icon={"Phone"} />
-            <MenuEditItem title={user?.account?.user?.email} icon={"Mail"} />
-            <TouchableOpacity style={styles.btn_password}>
+            <MenuEditItem 
+                title={`${user?.account?.user?.name} ${user?.account?.user?.lastname}`} 
+                icon={"UserRound"} 
+                onPress={() => navigation.navigate(EDIT_NAME)}
+            />
+            <MenuEditItem 
+                title={user?.account?.user?.telephone} 
+                icon={"Phone"}
+                onPress={() => navigation.navigate(EDIT_PHONE)}
+            />
+            <MenuEditItem 
+                title={user?.account?.user?.email} 
+                icon={"Mail"} 
+                onPress={() => navigation.navigate(EDIT_EMAIL)}
+            />
+            <TouchableOpacity style={styles.btn_password} onPress={() => navigation.navigate(CHANGE_PASSWORD)}>
                 <Icon name={"Lock"} color={colors.BLACK} size={18}/>
                 <Text style = {styles.text_btn_password}>Modifier mon mot de passe</Text>
             </TouchableOpacity>
