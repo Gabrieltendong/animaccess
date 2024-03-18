@@ -3,14 +3,13 @@ import { auth } from './auth.service';
 import { User } from '@interfaces/User';
 import { useNavigation } from '@react-navigation/native';
 import { ETABLISSEMENT_NAVIGATOR, PRESTATAIRE_NAVIGATOR } from '@constants/routes';
+import { setAuthUser } from 'src/store/auth.store';
 
 export const useLogin = () => {
 
-    const navigation = useNavigation()
-
     return useMutation<User, Error, User>(auth, {
-        onSuccess: (user) => {
-            console.log("user", user)
+        onSuccess: async (user) => {
+            console.log("user login", user)
         },
         onError: (error) => {
             console.log("error", error)

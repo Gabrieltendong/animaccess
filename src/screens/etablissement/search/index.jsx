@@ -24,7 +24,7 @@ const SearchScreen = ({navigation}) => {
  
     const handleSearch = () => {
        setSearchTerm("")
-    }
+    } 
   
     return (
         <Container title={"Recherche ..."}>
@@ -51,7 +51,7 @@ const SearchScreen = ({navigation}) => {
                 <View>
                     <Text style={styles.section_title}>Recherche par categorie</Text>
                     <FlatList
-                        data={list_all_categorie.results}
+                        data={list_all_categorie?.results}
                         renderItem={({item}) => <CardCategorie item={item} navigation={navigation} />}
                         numColumns={2}
                         columnWrapperStyle={{gap: 20}}

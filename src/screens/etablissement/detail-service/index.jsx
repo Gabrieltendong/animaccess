@@ -8,12 +8,15 @@ import Icon from '@components/ui/Icon';
 import { colors } from '@themes/index';
 import Button from '@components/ui/Button';
 import { useServiceStore } from 'src/store/service.store';
-import { BOOKING_SERVICE } from '@constants/routes';
+import { BOOKING_SERVICE, PROFIL_PRESTATAIRE } from '@constants/routes';
+import { useService } from 'src/feature/service/useService';
 
 // create a component
 const DetailServiceScreen = ({navigation, route}) => {
 
     const { infos_service } = useServiceStore()
+    const { getListeServicePrestataire } = useService()
+    const { data: list_service_prestataire } = getListeServicePrestataire(infos_service?.prestataire?.id)
 
     return (
         <Container>
@@ -28,8 +31,12 @@ const DetailServiceScreen = ({navigation, route}) => {
                     <View style={styles.infos_service_wrapper}>
                         <Text style={styles.title}>{infos_service?.prestataire?.user?.name} {infos_service?.prestataire?.user?.lastname}</Text>
                         <Text style={styles.subtitle}>{infos_service.service.service.name}</Text>
-                        <Text style={styles.small_text}>3 service actif</Text>
-                        <Button text='Voir le profil' style={styles.btn_header} />
+                        <Text style={styles.small_text}>{Array.isArray(list_service_prestataire) && list_service_prestataire.length} service actif</Text>
+                        <Button 
+                            text='Voir le profil' 
+                            style={styles.btn_header}
+                            onPress={() => navigation.navigate(PROFIL_PRESTATAIRE, {prestataire_infos: infos_service?.prestataire})}
+                        />
                     </View>
                 </View>
                 <Text style={styles.description}>{infos_service.description}</Text>
@@ -48,16 +55,16 @@ const DetailServiceScreen = ({navigation, route}) => {
                         provider={PROVIDER_GOOGLE}
                         style={styles.map}
                         region={{
-                            latitude: 37.78825,
-                            longitude: -122.4324,
+                            latitude: infos_service?.adresse?.latitude?infos_service?.adresse?.latitude:37.78825,
+                            longitude: infos_service?.adresse?.longitude?infos_service?.adresse?.longitude:-122.4324,
                             latitudeDelta: 0.0922,
                             longitudeDelta: 0.0421,
                           }}
                     >
                         <Marker
                             coordinate={{
-                                latitude: 37.78825,
-                                longitude: -122.4324,
+                                latitude: infos_service?.adresse?.latitude?infos_service?.adresse?.latitude:37.78825,
+                                longitude: infos_service?.adresse?.longitude?infos_service?.adresse?.longitude:-122.4324,
                             }}  
                         />
                     </MapView>

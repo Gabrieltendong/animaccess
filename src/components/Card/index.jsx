@@ -8,9 +8,10 @@ import { useServiceStore } from 'src/store/service.store';
 import { useNavigation } from '@react-navigation/native';
 import { DETAIL_SERVICE } from '@constants/routes';
 import { useUserStore } from 'src/store/user.store';
-import { useMutation } from 'react-query';
-import { add_service_to_favorite } from 'src/feature/favoris/favoris.service';
+import { useMutation, useQuery } from 'react-query';
+import { add_service_to_favorite, get_my_favorite } from 'src/feature/favoris/favoris.service';
 import Alert from '@components/Alert';
+import { Heart } from 'lucide-react-native';
 
 // create a component
 const CardItem = ({item, isFavotite}) => {
@@ -18,8 +19,11 @@ const CardItem = ({item, isFavotite}) => {
     const { user } = useUserStore()
     const { setSelectedService } = useServiceStore()
     const {mutateAsync: addServiceToFavorite, isLoading} = useMutation(add_service_to_favorite)
+    const etablissement_id = user?.account?.id
+    const {data: list_my_favorite, refetch} = useQuery(['myFavorite', etablissement_id], get_my_favorite)
     const [isVisible, setIsVisible] = useState(false)
     const navigation = useNavigation()
+    const list_favorite_id = list_my_favorite.map((item) => item.id)
 
     const handleAddServiceToFavorite = async () => {
         const data = {
@@ -28,11 +32,14 @@ const CardItem = ({item, isFavotite}) => {
         }
         const res = await addServiceToFavorite(data)
         if(res.id){
+            refetch()
             setIsVisible(true)
         }
     }
 
-    const openDetail = () => {
+    console.log("list favorite", list_favorite_id)
+
+    const openDetail = () => { 
         setSelectedService(item)
         navigation.navigate(DETAIL_SERVICE)
     }
@@ -45,7 +52,11 @@ const CardItem = ({item, isFavotite}) => {
                 imageStyle={styles.card_image_border}
             >
                 <TouchableOpacity style={styles.btn_favorite} onPress={handleAddServiceToFavorite}>
-                    <Icon name={'Heart'} color={colors.WHITE} />
+                    <Heart 
+                        strokeWidth={isFavotite || list_favorite_id.includes(item.id)?0:2} 
+                        fill={isFavotite || list_favorite_id.includes(item.id)?colors.PRIMARY: 'transparent'} 
+                        color={colors.WHITE} 
+                    />
                 </TouchableOpacity>
             </ImageBackground>
             <View style={styles.card_content}>

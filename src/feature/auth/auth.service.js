@@ -3,6 +3,7 @@ import { User } from '@interfaces/User'
 
 
 export const auth = async (data) => {
+    console.log("data login", data)
     try{
         const res = await http.post(`/login/`, data)
         return res.data

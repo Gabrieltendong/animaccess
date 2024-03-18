@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
         backgroundColor: colors.WHITE,
         marginVertical: 5,
         marginRight: 10,
-        shadowColor: colors.BLACK,
+        shadowColor: Platform.OS == 'ios'?'#aaa':colors.BLACK,
         shadowOffset: {height: 1, width: 1},
         shadowOpacity: 0.5,
         shadowRadius: Platform.OS == 'ios'?1:3,

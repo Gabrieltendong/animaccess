@@ -21,5 +21,19 @@ export const styles = StyleSheet.create({
         color: colors.BLACK,
         fontFamily: fonts.POPPINS_BOLD,
         fontSize: 18
+    },
+    btn_all_categorie: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: colors.PRIMARY,
+        borderRadius: 20,
+        width: 200,
+        paddingHorizontal: 20
+    },
+    text_btn: {
+        textAlign: 'center',
+        fontFamily: fonts.POPPINS_MEDIUM,
+        color: colors.PRIMARY
     }
 })

@@ -11,6 +11,8 @@ import { useQuery } from 'react-query';
 import { get_all_prestataire_service } from 'src/feature/service/service.service';
 import { get_all_categorie } from 'src/feature/categorie/categorie.service';
 import { SEARCH_STACK } from '@constants/routes';
+import { LayoutGrid } from 'lucide-react-native';
+import { colors } from '@themes/index';
 
 // create a component
 const HomeScreen = ({navigation}) => {
@@ -30,14 +32,21 @@ const HomeScreen = ({navigation}) => {
                         list_all_categorie?.results && list_all_categorie?.results.slice(5, 8).reverse().map((item, index) => (
                             <CategorieItem key={index} item={item} />
                         ))
-                    } 
+                    }
+                    {
+                        (list_all_categorie?.results && list_all_categorie?.results.length > 0) &&
+                        <TouchableOpacity onPress={() => navigation.navigate(SEARCH_STACK)} style={styles.btn_all_categorie}>
+                            <Text style={styles.text_btn}>Afficher toutes les categories</Text>
+                        </TouchableOpacity>
+                    }
+                    
                 </ScrollView>
                 <View style={styles.section_title_wrapper}>
                     <Text style={styles.section_title}>Nos coups de coeur</Text>
                 </View>
                 <ScrollView horizontal style={{maxHeight: 250}}>
                     {
-                        list_all_service?.results && list_all_service?.results.map((item, index) => (
+                        list_all_service?.results && list_all_service?.results.slice(0, 5).map((item, index) => (
                             <ServiceItem key={index} item={item} />
                         ))
                     }

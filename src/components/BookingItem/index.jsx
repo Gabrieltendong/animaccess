@@ -15,7 +15,7 @@ const BookingItem = ({item}) => {
 
     return (
         <View style={styles.container}>
-            <Image source={{uri: item?.prestataire_service?.service?.service?.image}} style={styles.image_wrapper} />
+            <Image source={{uri: item?.prestataire_service?.image?item?.prestataire_service?.image:item?.prestataire_service?.service?.service?.image}} style={styles.image_wrapper} />
             <View style={styles.content}>
                 <Text style={styles.title}>{item?.prestataire_service?.prestataire?.user?.name} {item?.prestataire_service?.prestataire?.user?.lastname}</Text>
                 <Text style={styles.sub_title}>{item?.prestataire_service?.service?.service?.name}</Text>

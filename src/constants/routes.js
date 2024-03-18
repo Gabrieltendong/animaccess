@@ -17,6 +17,7 @@ export const EDIT_NAME = "Edit name"
 export const EDIT_PHONE = "Edit phone"
 export const EDIT_ETABLISSEMENT_NAME = "Edit etablissement name"
 export const EDIT_TYPE_ETABLISSEMENT = "Edit type etablissement"
+export const HELP = "Help app"
 
 // prestataire route 
 export const HOME_PRESTATAIRE = "Home prestataire"
@@ -42,3 +43,5 @@ export const SEARCH_STACK = "Search stack navigator"
 export const BOOKING_SERVICE = "Booking service"
 export const BOOKING_DETAIL = "Booking detail"
 export const MYACCOUNT_STACK = "My account stack navigator"
+export const MYBOOKING_ETABLISSEMENT = "My booking etablissement"
+export const PROFIL_PRESTATAIRE = "Profile prestataire"

@@ -42,7 +42,9 @@ const PlageHoraire = ({heure_debut, heure_fin, setTime, onDelete}) => {
                 modal
                 open={openHeureDebut}
                 date={new Date()}
-                timeInterval={30}
+                minuteInterval={30}
+                locale='pm'
+                is24hourSource='device'
                 mode='time'
                 onConfirm={(date) => {
                     console.log("time", date)
@@ -57,7 +59,9 @@ const PlageHoraire = ({heure_debut, heure_fin, setTime, onDelete}) => {
                 modal
                 open={openHeureFin}
                 date={new Date()}
-                timeInterval={30}
+                minuteInterval={30}
+                is24hourSource='device'
+                locale='pm'
                 mode='time'
                 onConfirm={(date) => {
                     setOpenHeureFin(false)

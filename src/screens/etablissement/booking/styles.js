@@ -16,6 +16,53 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20
     },
+    day_wapper: {
+        flexDirection: 'row',
+        marginHorizontal: 10,
+        marginBottom: 20,
+        borderBottomColor: '#ccc',
+        borderBottomWidth: 1
+    },
+    day_name_wrapper: {
+        flex: 1, 
+        alignItems: 'center',
+        // borderBottomColor: colors.BLACK,
+        // borderBottomWidth: 1
+    },
+    btn_row: {
+        height: 20,
+        width: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.PRIMARY,
+        borderRadius: 15
+    },
+    day_name: {
+        fontSize: 12,
+        color: colors.GRAY,
+        fontFamily: fonts.POPPINS_REGULAR,
+        textTransform: 'capitalize'
+    },
+    day_name_selected: {
+        borderBottomColor: colors.PRIMARY,
+        borderBottomWidth: 1
+    },
+    dateStyle: {
+        fontSize: 18,
+        fontFamily: fonts.POPPINS_BOLD
+    },
+    header_week: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colors.WHITE,
+        marginVertical: 20
+    },
+    header_month_name: {
+        fontFamily: fonts.POPPINS_BOLD,
+        marginHorizontal: 20,
+        textTransform: 'capitalize'
+    },
     avatar: {
         height: 50,
         width: 50,

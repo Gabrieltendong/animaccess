@@ -33,12 +33,14 @@ const CreateServiceScreen = ({navigation}) => {
     const {data: listTypeService, isLoading, refetch: refreshListTypeService} = useQuery(["Service_by_categorie", selected_categorie_id], get_service)
     const [error_type_service, setErrorTypeService] = useState()
     const { handleSubmit, control, setValue, formState: { errors } } = useForm();
-    const [image, setImage] = useState()
+    const [image, setImage] = useState() 
   
     console.log("list listTypeService", listTypeService)
    
     const handleCreateService = async (data) => {
         const dataForm = new FormData()
+        const duree_service = []
+        duree_service.push({duree: data.duree_service})
         if(image){
             dataForm.append("image", {
                 name: image.fileName,
@@ -55,13 +57,16 @@ const CreateServiceScreen = ({navigation}) => {
             dataForm.append("price", data.price)
             dataForm.append("longitude", data.longitude)
             dataForm.append("latitude", data.latitude)
+            dataForm.append("distance_zone", data.distance_zone)
+            dataForm.append("duree_service", JSON.stringify(duree_service))
             // const dataForm = {
             //     ...data,
             //     service: type_service,
             //     prestataire: user?.account?.id
             // }
-            console.log("data", dataForm)
+            console.log("data", JSON.stringify(dataForm))
             const res = await createService(dataForm)
+            // console.log("create service", res)
             if(res.service){
                 refreshListServicePrestataire()
                 setIsVisibleModal(true)
@@ -88,7 +93,7 @@ const CreateServiceScreen = ({navigation}) => {
     }, [selected_categorie_id])
   
     return (
-        <ScrollView style={styles.container} keyboardShouldPersistTaps='handled'>
+        <ScrollView style={styles.container} keyboardShouldPersistTaps='handled' contentContainerStyle={{paddingBottom: 100}}>
             
             <SelectDropdown
                 buttonStyle={styles.input_select}
@@ -156,6 +161,36 @@ const CreateServiceScreen = ({navigation}) => {
                 rules={{required: true}}
             />
             {errors.boite_postal && <Text style={styles.error}>Vous devez préciser la ville de prestation</Text>}
+            <Controller
+                control={control}
+                render={({field: {onChange, value}}) => (
+                    <Input
+                        iconName={"Banknote"}
+                        placeholder="Zone d'intervention en km"
+                        onChangeText={onChange}
+                        keyboardType={'number-pad'}
+                        value={value}
+                    />
+                )}
+                name='distance_zone'
+                rules={{required: true}}
+            />
+            {errors.distance_zone && <Text style={styles.error}>La zone d'intervention est obligatoire</Text>}
+            <Controller
+                control={control}
+                render={({field: {onChange, value}}) => (
+                    <Input
+                        iconName={"Banknote"}
+                        placeholder="Temps de prestations / heure"
+                        onChangeText={onChange}
+                        keyboardType={'number-pad'}
+                        value={value}
+                    />
+                )}
+                name='duree_service'
+                rules={{required: true}}
+            />
+            {errors.duree_service && <Text style={styles.error}>Le temps de prestation est obligatoire</Text>}
             <Controller
                 control={control}
                 render={({field: {onChange, value}}) => (

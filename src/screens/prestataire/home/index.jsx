@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import { styles } from './styles'
 import Container from '@components/common/Container';
 import BookingItem from '@components/BookingItem';
@@ -37,6 +37,8 @@ const HomeScreen = () => {
                         }
                     </ScrollView>
                    </View>
+                   :isLoading?
+                   <ActivityIndicator size={'large'} />
                    :
                    <Empty title={"Vous n'avez pas de rendez-vous pour le moment"} />
                 }

@@ -8,7 +8,8 @@ export const styles = StyleSheet.create({
         flex: 1,
         marginTop: 10,
         backgroundColor: colors.WHITE,
-        borderRadius: 20
+        borderRadius: 20,
+        paddingBottom: 10
     },
     card_image: {
         height: 100,

@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
         height: 120,
         borderColor: colors.PRIMARY,
         borderWidth: 1,
-        marginVertical: 20,
+        marginVertical: 10,
         borderRadius: 20,
         color: colors.BLACK,
         fontFamily: fonts.POPPINS_REGULAR,

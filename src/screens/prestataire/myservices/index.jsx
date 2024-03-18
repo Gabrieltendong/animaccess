@@ -21,6 +21,8 @@ const MyServiceScreen = ({navigation}) => {
     const { user } = useUserStore() 
     const { list_service_prestataire } = useServiceStore()
     const { isLoading, refetch } = getListeServicePrestataire(user?.account?.id)
+
+    console.log("list_service_prestataire", JSON.stringify(list_service_prestataire))
            
     return (
         <Container>
@@ -40,14 +42,14 @@ const MyServiceScreen = ({navigation}) => {
                         key={index} 
                         item={item}
                     />
-                ) }
+                ) } 
                 ListEmptyComponent={() => <Empty title={"Vous n'avez aucun service"} />}
                 numColumns={2}
                 refreshing={isLoading}
                 onRefresh={() => refetch()}
                 columnWrapperStyle={{gap: 10}}
                 contentContainerStyle={{paddingBottom: 80}}
-            />
+            /> 
         </Container>
     );
 };

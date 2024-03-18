@@ -9,7 +9,13 @@ Geocoder.init("AIzaSyAFpAbTDluIMS4p9EnCNEGjJmcf64JDtx0");
 
 enableLatestRenderer();
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      structuralSharing: false
+    }
+  }
+});
 
 const App = () => {
   React.useEffect(() => {

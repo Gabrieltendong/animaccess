@@ -20,9 +20,6 @@ const SearchBar = ({onPressIn, onChangeText, onSearch, value}) => {
                     onChangeText={onChangeText}
                 />
             </View>
-            <TouchableOpacity style={styles.btn_filter} onPress={onSearch}>
-                <Icon name={'SlidersHorizontal'} color={colors.WHITE} size={20} />
-            </TouchableOpacity>
         </View>
     );
 };

@@ -45,11 +45,13 @@ export const get_prestataire_service = async ({queryKey}) => {
 }
 
 export const create_service = async (data) => {
+    console.log("test prestataire service", data)
     try{
         const res = await http.post(`/prestataire-service/`, data)
+        console.log("Response", res.data)
         return res.data
     }catch(error){
-        console.log('error create_service', error.response.data)
+        console.log('error create_service', error)
         return error.response.data
     }
 }

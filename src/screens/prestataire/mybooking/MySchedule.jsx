@@ -57,6 +57,8 @@ const MyScheduleScreen = () => {
     const [daySelected, setDaySelected] = useState(days[0])
     const [plage_horraire, setPlageHorraire] = useState([])
     const [isVisibleAlert, setIsVisibleAlert] = useState(false)
+    const [isVisibleAlertError, setIsVisibleAlertError] = useState(false)
+    const [message_error, setMessageError] = useState()
 
     // console.log("list_plannig", list_plannig)  
 
@@ -103,7 +105,6 @@ const MyScheduleScreen = () => {
         }
         if(list_plannig.planing_plage_horaire && list_plannig.planing_plage_horaire.length > 0){
             const newPlageHorraire = plage_horraire.filter((item) => {
-                console.log("test", item.hours.filter((hour) => !hour.id).length)
                 item.hours = item.hours.filter((hour) => !hour.id)
                 if(item.hours.length > 0){
                     return item
@@ -111,14 +112,20 @@ const MyScheduleScreen = () => {
                 
             })
             data.plage_horraire = newPlageHorraire
-            console.log("object", JSON.stringify(data))
             const res = await createPlanning(data)
+            console.log("res create plage", res)
+            if(res.error){
+                setMessageError(res.error)
+                setIsVisibleAlertError(true)
+            }
             if(res.id){
                 refetch() 
                 setIsVisibleAlert(true)
+                setMessageError("")
             } 
         }else{
             const res = await createPlanning(data)
+            console.log("res create plage", res)
             if(res.id){
                 refetch()
                 setIsVisibleAlert(true)
@@ -213,6 +220,13 @@ const MyScheduleScreen = () => {
                 title={"Création planning"}
                 subTitle={"Votre planning a bien été crée, les établissements peuvent vous contacter sur ces horaires"}
                 onToggle={() => setIsVisibleAlert(false)}
+            /> 
+            <Alert
+                type={"danger"}
+                isVisible={isVisibleAlertError}
+                title={"Erreur création planning"}
+                subTitle={message_error}
+                onToggle={() => setIsVisibleAlertError(false)}
             />
         </ScrollView> 
     );

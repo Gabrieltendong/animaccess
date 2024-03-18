@@ -1,7 +1,8 @@
 //import liraries
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
-import {ExpandableCalendar, CalendarProvider} from 'react-native-calendars';
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, ScrollView, Dimensions } from 'react-native';
+import {ExpandableCalendar, CalendarProvider, WeekCalendar} from 'react-native-calendars';
+import WeeklyCalendar from 'react-native-weekly-calendar';
 import { styles } from './styles';
 import Container from '@components/common/Container';
 import { useServiceStore } from 'src/store/service.store';
@@ -15,29 +16,30 @@ import Empty from '@components/Empty';
 import Button from '@components/ui/Button';
 import { useUserStore } from 'src/store/user.store';
 import Alert from '@components/Alert';
+import { ETABLISSEMENT_NAVIGATOR } from '@constants/routes';
+import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 
-moment.locale('fr')
+moment.locale('fr') 
 
 // create a component
-const BookingServiceScreen = () => {
+const BookingServiceScreen = ({navigation}) => {
 
     const { user } = useUserStore()
     const { infos_service } = useServiceStore()
     const prestataire_service_id = infos_service.id
-    const { mutateAsync: createBooking, isLoading, data } = useMutation(create_booking)
+    const { mutateAsync: createBooking, isLoading } = useMutation(create_booking)
     const [date, setDate] = useState(moment().format("YYYY-MM-DD"))
-    const {data: list_plage_horaire, refetch: refretchListPlageHoraire, isLoading: isLoadingListPlageHoraire} = useQuery(["list_plage_horaire", {prestataire_service_id, date}], get_list_plage_horaire_status)
+    const [selected_date, setSelectedDate] = useState(moment().format("YYYY-MM-DD"))
+    const {data: list_plage_horaire, refetch: refretchListPlageHoraire, isLoading: isLoadingListPlageHoraire} = useQuery(["list_plage_horaire", {prestataire_service_id, selected_date}], get_list_plage_horaire_status)
     const [isVisible, setIsVisible] = useState(false)
     const [isVisibleModalError, setIsVisibleModalError] = useState(false)
     const [selected_plage_horaire, setSelectedPlageHoraire]=useState([])
     const [messageError, setMessageError] = useState()
-
-    console.log("list_plage_horaire", list_plage_horaire)   
-     
+    const [days, setDays] = useState([])
+    
 
     const onChangeDate = (date) => {
-        console.log("object")
-        setDate(date.dateString)
+        setSelectedDate(moment(new Date(date)).format("YYYY-MM-DD"))
         refretchListPlageHoraire()
     }
 
@@ -56,16 +58,42 @@ const BookingServiceScreen = () => {
             etablissement: user.account.id,
             service: infos_service.id,
             plage_horaire: selected_plage_horaire,
-            date_reservation: date
+            date_reservation: selected_date
         }
         const res = await createBooking(data)
+        console.log("data res", res)
         if(res.id){
             setIsVisible(true)
         }
         if(res.status == false){
             setIsVisibleModalError(true)
-            setMessageError("Cette plage horaire n'est plus disponible, Veuillez choisir une autre plage")
+            // setMessageError("Cette plage horaire n'est plus disponible, Veuillez choisir une autre plage")
+            setMessageError(res.error)
         }
+    }
+
+    const handleNextWeek = () => {
+        setDate(moment(new Date(date)).add(1,'w').format("YYYY-MM-DD"))
+        
+    }
+
+    const handlePreviousWeek = () => {
+        setDate(moment(new Date(date)).add(-1,'w').format("YYYY-MM-DD"))
+    }
+
+    useEffect(() => {
+        const newWeekDays = []
+        for(let i=0; i<7; i++){
+            newWeekDays.push(moment(new Date(date)).add(i, 'd'))
+            setDays(newWeekDays)
+        }
+    }, [date])
+
+    // console.log("list_plage_horaire", list_plage_horaire)
+
+    const handleCloseModal = () => {
+        navigation.navigate(ETABLISSEMENT_NAVIGATOR)
+        setIsVisible(false)
     }
 
     return (
@@ -83,23 +111,33 @@ const BookingServiceScreen = () => {
                     </Text>
                 </View>
                 <View style={styles.content_calendar}>
-                    <CalendarProvider
-                        date={moment().format("YYYY-MM-DD")}
-                        style={{maxHeight: 150}}
-                    >
-                        <ExpandableCalendar
-                            theme={{
-                                selectedDayBackgroundColor: colors.PRIMARY,
-                                arrowColor: colors.PRIMARY,
-                                
-                            }}
-                            renderHeader={(date) => <Text style={styles.monthStyle}>{moment(date).format("MMMM YYYY")}</Text>}
-                            enableSwipeMonths
-                            initialPosition='closed'
-                            onDayPress={onChangeDate}
-                            disablePan 
-                        />
-                    </CalendarProvider>
+                    <View style={styles.header_week}>
+                        <TouchableOpacity style={styles.btn_row} onPress={handlePreviousWeek}>
+                            <ChevronLeft color={colors.WHITE} size={15} />
+                        </TouchableOpacity>
+                        <Text style={styles.header_month_name}>{moment(new Date(date)).format('MMMM')}</Text>
+                        <TouchableOpacity style={styles.btn_row} onPress={handleNextWeek}>
+                            <ChevronRight color={colors.WHITE} size={15} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.day_wapper}>
+                        {
+                            days.map((day, index) => (
+                                <TouchableOpacity 
+                                    onPress={() => onChangeDate(day)} 
+                                    style={[
+                                        styles.day_name_wrapper, 
+                                        moment(new Date(day)).format("YYYY-MM-DD") == moment(new Date(selected_date)).format("YYYY-MM-DD") &&
+                                        styles.day_name_selected
+                                    ]} 
+                                    key={index}
+                                >
+                                    <Text style={styles.day_name}>{moment(new Date(day)).format("ddd")}</Text>
+                                    <Text style={styles.dateStyle}>{moment(new Date(day)).format("DD")}</Text>
+                                </TouchableOpacity>
+                            ))
+                        }
+                    </View>
                     <ScrollView style={{flex: 1}}>
                         {
                             Array.isArray(list_plage_horaire) && list_plage_horaire.length == 0 &&
@@ -152,7 +190,7 @@ const BookingServiceScreen = () => {
                 <Alert
                     type={"success"}
                     isVisible={isVisible}
-                    onToggle={() => setIsVisible(false)}
+                    onToggle={handleCloseModal}
                     title={"Réservation reussi"}
                     subTitle={"Votre réservation a été effectué avec succès, Veuillez suivre le statut de votre réservation dans vos réservation"}
                 />

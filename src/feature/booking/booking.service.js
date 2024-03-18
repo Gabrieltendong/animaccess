@@ -22,9 +22,9 @@ export const get_planning = async ({queryKey}) => {
 }
 
 export const get_list_plage_horaire_status = async ({queryKey}) => {
-    const [_key, {prestataire_service_id, date}] = queryKey
+    const [_key, {prestataire_service_id, selected_date}] = queryKey
     try{
-        const res = await http.get(`/list-plage-horaire-status/`, {params: {prestataire_service: prestataire_service_id, date}})
+        const res = await http.get(`/list-plage-horaire-status/`, {params: {prestataire_service: prestataire_service_id, date: selected_date}})
         return res.data
     }catch(error){
         return error.response.data
@@ -83,12 +83,13 @@ export const get_my_booking_etablissement = async ({queryKey}) => {
 }
 
 export const create_booking = async (data) => {
+    console.log("test----------", data)
     try{
         const res = await http.post(`/reservation/`, data)
         console.log("res", res.data)
         return res.data
     }catch(error){
-        console.log('error', error.response.data)
+        console.log('error', error)
         return error.response.data
     }
 }

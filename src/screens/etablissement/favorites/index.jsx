@@ -16,12 +16,11 @@ const FavoritesScreen = () => {
     const etablissement_id = user?.account?.id
     const {data: list_my_favorite, isLoading, refetch} = useQuery(['myFavorite', etablissement_id], get_my_favorite)
 
-    console.log("list_my_favorite", list_my_favorite) 
     return (
         <Container title={"Mes favoris"}>
             <FlatList 
                 data={list_my_favorite}
-                renderItem={({item}) => <CardItem item={item} />}
+                renderItem={({item}) => <CardItem item={item} isFavotite={true} />}
                 ListEmptyComponent={() => <Empty title={"Vous n'avez aucun favoris"} />}
                 numColumns={2}
                 refreshing={isLoading}

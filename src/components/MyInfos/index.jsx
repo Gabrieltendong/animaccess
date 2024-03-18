@@ -5,7 +5,7 @@ import { styles } from './styles'
 import MenuEditItem from '@components/MenuEditItem';
 import Icon from '@components/ui/Icon';
 import { colors } from '@themes/index';
-import { useUserStore } from 'src/store/user.store';
+import { storage, useUserStore } from 'src/store/user.store';
 import { useNavigation } from '@react-navigation/native';
 import { CHANGE_PASSWORD, EDIT_EMAIL, EDIT_NAME, EDIT_PHONE, LOGIN } from '@constants/routes';
 
@@ -20,6 +20,7 @@ const MyInfos = () => {
 
     const handleLogout = () => {
         setUser({})
+        storage.delete("user-persist-storage")
         navigation.navigate("Auth")
     }
 

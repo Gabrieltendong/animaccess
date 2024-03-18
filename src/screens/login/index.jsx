@@ -8,7 +8,8 @@ import { ETABLISSEMENT_NAVIGATOR, FORGOT_PASSWORD, PRESTATAIRE_NAVIGATOR, SIGNUP
 import { useForm, Controller } from 'react-hook-form';
 import { useLogin } from 'src/feature/auth/useLogin';
 import Alert from '@components/Alert';
-import { useUserStore } from 'src/store/user.store';
+import { storage, useUserStore } from 'src/store/user.store';
+import { setAuthUser } from 'src/store/auth.store';
 
 // create a component
 const LoginScreen = ({navigation}) => {
@@ -22,13 +23,13 @@ const LoginScreen = ({navigation}) => {
 
     const handleLogin = async (data) => {
         const res = await login(data)
-        console.log("data", data)
         if(res.error){
             setMessageError(res.error)
             setIsVisibleModalError(true)
         }else{
             setUser(res)
-            console.log("login", res)
+            setAuthUser(data)
+            storage.set("user-persist-storage", JSON.stringify(res))
             if(res?.account?.user?.statut == "PRESTATAIRE"){
                 navigation.navigate(PRESTATAIRE_NAVIGATOR)
             }
@@ -43,7 +44,7 @@ const LoginScreen = ({navigation}) => {
     }
 
     return (
-        <ScrollView style={styles.container} >
+        <ScrollView style={styles.container} keyboardShouldPersistTaps='always' >
             <View style={styles.wrapper}>
                 <ImageBackground 
                     source={require('@assets/images/banner_connexion.png')} 

@@ -14,10 +14,6 @@ function BookingStack(){
                 name={MYBOOKING_PRESTATAIRE} 
                 component={MyBookingStack} 
             />
-            <Stack.Screen 
-                name={BOOKING_DETAIL_PRESTATAIRE} 
-                component={BookingPrestataireDetailScreen} 
-            />
         </Stack.Navigator>
     )
 }
