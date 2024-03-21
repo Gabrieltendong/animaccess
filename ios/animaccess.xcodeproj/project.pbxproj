@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* animaccessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* animaccessTests.m */; };
+		0404800F2BA9690900B869E9 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 0404800E2BA9690900B869E9 /* assets */; };
 		0C80B921A6F3F58F76C31292 /* libPods-animaccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-animaccess.a */; };
 		0D6FA775510545C1AAC2B12D /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5722CC092245488BB3308B16 /* Poppins-Medium.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
@@ -39,6 +40,7 @@
 		00E356EE1AD99517003FC87E /* animaccessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = animaccessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* animaccessTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = animaccessTests.m; sourceTree = "<group>"; };
+		0404800E2BA9690900B869E9 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../src/assets; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* animaccess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = animaccess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = animaccess/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = animaccess/AppDelegate.mm; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				0404800E2BA9690900B869E9 /* assets */,
 				13B07FAE1A68108700A75B9A /* animaccess */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* animaccessTests */,
@@ -276,6 +279,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0404800F2BA9690900B869E9 /* assets in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				B1781CF6E71246BEA4172300 /* Montserrat-Bold.ttf in Resources */,
