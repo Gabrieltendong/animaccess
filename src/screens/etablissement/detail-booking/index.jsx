@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import RNFetchBlob from "rn-fetch-blob";
 import { styles } from './styles';
 import Container from '@components/common/Container';
@@ -16,19 +16,31 @@ const DetailBookingEtablissementScreen = ({route, navigation}) => {
     const { item } = route.params
 
     const downloadBonCommande = async () => {
-       const res = await RNFetchBlob.config({
-            fileCache: true,
-            addAndroidDownloads: {
-                useDownloadManager: true,
+        const res = await RNFetchBlob.config(Platform.select({
+            ios: {
+                fileCache: true,
+                path:  RNFetchBlob.fs.dirs.DocumentDir + "/bon_de_commande" + item.date_reservation + ".pdf",
                 notification: true,
-                path: RNFetchBlob.fs.dirs.DocumentDir + "/bon_de_commande" + item.date_reservation + ".pdf",
-                description: 'Downloading PDF document',
-                mediaScannable: true,
             },
-        })
-        .fetch('GET', item.file)
-        console.log('PDF document downloaded successfully', res.path());
-    }
+            android: {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path: RNFetchBlob.fs.dirs.DownloadDir + "/bon_de_commande" + item.date_reservation + ".pdf",
+                    description: 'Downloading PDF document',
+                    mediaScannable: true,
+                },
+            }
+        }))
+         .fetch('GET', item.file)
+         if(Platform.OS == 'ios'){
+            RNFetchBlob.ios.openDocument(res.data);  
+         }else{
+            RNFetchBlob.android.actionViewIntent(res.path());
+         }
+         console.log('PDF document downloaded successfully', res.path());
+     }
 
     return (
         <Container >

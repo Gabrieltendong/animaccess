@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Platform } from 'react-native';
 import RNFetchBlob from "rn-fetch-blob";
 
 import { styles } from './styles';
@@ -66,17 +66,29 @@ const BookingPrestataireDetailScreen = ({route, navigation}) => {
     }
 
     const downloadBonCommande = async () => {
-        const res = await RNFetchBlob.config({
-             fileCache: true,
-             addAndroidDownloads: {
-                 useDownloadManager: true,
-                 notification: true,
-                 path: RNFetchBlob.fs.dirs.DocumentDir + "/bon_de_commande" + item.date_reservation + ".pdf",
-                 description: 'Downloading PDF document',
-                 mediaScannable: true,
-             },
-         })
+        const res = await RNFetchBlob.config(Platform.select({
+            ios: {
+                fileCache: true,
+                path:  RNFetchBlob.fs.dirs.DocumentDir + "/bon_de_commande" + item.date_reservation + ".pdf",
+                notification: true,
+            },
+            android: {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path: RNFetchBlob.fs.dirs.DownloadDir + "/bon_de_commande" + item.date_reservation + ".pdf",
+                    description: 'Downloading PDF document',
+                    mediaScannable: true,
+                },
+            }
+        }))
          .fetch('GET', item.file)
+         if(Platform.OS == 'ios'){
+            RNFetchBlob.ios.openDocument(res.data);  
+         }else{
+            RNFetchBlob.android.actionViewIntent(res.path());
+         }
          console.log('PDF document downloaded successfully', res.path());
      }
 
