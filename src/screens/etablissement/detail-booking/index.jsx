@@ -1,19 +1,38 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import RNFetchBlob from "rn-fetch-blob";
 import { styles } from './styles';
 import Container from '@components/common/Container';
 import Button from '@components/ui/Button';
 import moment from 'moment';
+import { PROFIL_PRESTATAIRE } from '@constants/routes';
+import { Download } from 'lucide-react-native';
+import { colors } from '@themes/index';
 
 // create a component
-const DetailBookingEtablissementScreen = ({route}) => {
+const DetailBookingEtablissementScreen = ({route, navigation}) => {
 
     const { item } = route.params
 
+    const downloadBonCommande = async () => {
+       const res = await RNFetchBlob.config({
+            fileCache: true,
+            addAndroidDownloads: {
+                useDownloadManager: true,
+                notification: true,
+                path: RNFetchBlob.fs.dirs.DocumentDir + "/bon_de_commande" + item.date_reservation + ".pdf",
+                description: 'Downloading PDF document',
+                mediaScannable: true,
+            },
+        })
+        .fetch('GET', item.file)
+        console.log('PDF document downloaded successfully', res.path());
+    }
+
     return (
         <Container >
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <Text style={styles.title}>Votre réservation</Text>
                 <View style={styles.header}>
                     <View style={styles.row}>
@@ -31,6 +50,7 @@ const DetailBookingEtablissementScreen = ({route}) => {
                     <Button 
                         text='Voir le profil' 
                         style={styles.btn_detail_profil}
+                        onPress={() => navigation.navigate(PROFIL_PRESTATAIRE, {prestataire_infos: item?.prestataire_service?.prestataire})}
                     />
                 </View>
                 <View style={styles.time_wrapper}>
@@ -109,7 +129,14 @@ const DetailBookingEtablissementScreen = ({route}) => {
                         </View>
                     </View>
                 </View>
-            </View>
+                {
+                    item.status_reservation == "PAYE_ET_TERMINE" && 
+                    <TouchableOpacity onPress={downloadBonCommande} style = {styles.btn_download}>
+                        <Download color={colors.WHITE} />
+                        <Text style={styles.text_btn}>Télécharger le bon de commande </Text>
+                    </TouchableOpacity>
+                }
+            </ScrollView>
         </Container>
     );
 };

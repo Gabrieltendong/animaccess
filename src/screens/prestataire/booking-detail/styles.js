@@ -93,5 +93,19 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 20,
         color: "#e17055"
+    },
+    btn_download: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
+        height: 40,
+        borderRadius: 15,
+        backgroundColor: colors.PRIMARY
+    },
+    text_btn: {
+        color: colors.WHITE,
+        fontFamily: fonts.POPPINS_MEDIUM,
+        marginLeft: 5
     }
 })

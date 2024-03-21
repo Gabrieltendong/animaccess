@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, ScrollView, Dimensions } from 'react-native';
 import {ExpandableCalendar, CalendarProvider, WeekCalendar} from 'react-native-calendars';
-import WeeklyCalendar from 'react-native-weekly-calendar';
+import DocumentPicker from 'react-native-document-picker'
 import { styles } from './styles';
 import Container from '@components/common/Container';
 import { useServiceStore } from 'src/store/service.store';
@@ -18,6 +18,8 @@ import { useUserStore } from 'src/store/user.store';
 import Alert from '@components/Alert';
 import { ETABLISSEMENT_NAVIGATOR } from '@constants/routes';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import { bonCommandHtml } from '@utils/bon-command';
 
 moment.locale('fr') 
 
@@ -43,6 +45,41 @@ const BookingServiceScreen = ({navigation}) => {
         refretchListPlageHoraire()
     }
 
+    console.log("infos_service", JSON.stringify(list_plage_horaire))
+
+    const formatPlageHoraire = () => {
+        return list_plage_horaire.map((horaire) => {
+            if(selected_plage_horaire.includes(horaire.id)){
+                return horaire.heure_debut.substring(0,5) + "-" + horaire.heure_fin.substring(0,5)
+            }
+        }).join(" ")
+    }
+
+    const  createPDF = async () => {
+        const data = {
+            name_etablissement: user?.account?.gerant?.name,
+            name_prestataire: infos_service?.prestataire?.user?.name + " " + infos_service?.prestataire?.user?.lastname,
+            date_reservation: moment(new Date(selected_date)).format("DD MMM YYYY"),
+            heure_reservation: formatPlageHoraire(),
+            duree: infos_service?.duree_service[0].dure_service,
+            service: infos_service?.service?.service?.name,
+            contact_prestataire: infos_service?.prestataire?.user?.telephone + "/" + infos_service?.prestataire?.user?.email,
+            contact_etablissement: user?.account?.gerant?.telephone + "/" + user?.account?.gerant?.email,
+            price: infos_service?.price + "€ / heure"
+        }
+        let options = {
+          html: bonCommandHtml(data),
+          fileName: 'bon_de_commande' + moment().format("DD-MM-YYYY"),
+          directory: 'Documents',
+        };
+    
+        let file = await RNHTMLtoPDF.convert(options)
+
+        console.log(file);
+        return file.filePath
+        // alert(file.filePath);
+    }
+
     const handleSelectPlageHoraire = (plage_horaire_id) => {
         let newList = [...selected_plage_horaire]
         if(selected_plage_horaire.includes(plage_horaire_id)){
@@ -54,14 +91,26 @@ const BookingServiceScreen = ({navigation}) => {
     }
 
     const handleCreateBooking = async () => {
-        const data = {
-            etablissement: user.account.id,
-            service: infos_service.id,
-            plage_horaire: selected_plage_horaire,
-            date_reservation: selected_date
-        }
+        const file_path = await createPDF()
+        console.log("file", file_path)
+        // const data = {
+        //     etablissement: user.account.id,
+        //     service: infos_service.id,
+        //     plage_horaire: selected_plage_horaire,
+        //     date_reservation: selected_date
+        // }
+        const data = new FormData()
+        data.append('etablissement', user.account.id)
+        data.append('service', infos_service.id)
+        data.append('plage_horaire', JSON.stringify(selected_plage_horaire))
+        data.append('date_reservation', selected_date)
+        data.append("file", {
+            uri: file_path,
+            type: DocumentPicker.types.pdf,
+            name: 'bon_de_commande' + moment().format("DD-MM-YYYY") + ".pdf",
+        })
         const res = await createBooking(data)
-        console.log("data res", res)
+        // console.log("data res", res)
         if(res.id){
             setIsVisible(true)
         }

@@ -17,6 +17,6 @@ export const styles = StyleSheet.create({
         fontFamily: fonts.MONTSERRAT_MEDIUM,
         marginLeft: 5,
         color: colors.BLACK,
-        // borderWidth: 1
+        height: 50,
     }
 })

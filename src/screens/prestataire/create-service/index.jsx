@@ -35,7 +35,7 @@ const CreateServiceScreen = ({navigation}) => {
     const { handleSubmit, control, setValue, formState: { errors } } = useForm();
     const [image, setImage] = useState() 
   
-    console.log("list listTypeService", listTypeService)
+    console.log("list listTypeService")
    
     const handleCreateService = async (data) => {
         const dataForm = new FormData()
@@ -89,6 +89,7 @@ const CreateServiceScreen = ({navigation}) => {
     }
 
     useEffect(() => {
+        console.log("selected_categorie_id", selected_categorie_id)
         refreshListTypeService()
     }, [selected_categorie_id])
   
@@ -165,7 +166,7 @@ const CreateServiceScreen = ({navigation}) => {
                 control={control}
                 render={({field: {onChange, value}}) => (
                     <Input
-                        iconName={"Banknote"}
+                        iconName={"Locate"}
                         placeholder="Zone d'intervention en km"
                         onChangeText={onChange}
                         keyboardType={'number-pad'}
@@ -180,7 +181,7 @@ const CreateServiceScreen = ({navigation}) => {
                 control={control}
                 render={({field: {onChange, value}}) => (
                     <Input
-                        iconName={"Banknote"}
+                        iconName={"Clock3"}
                         placeholder="Temps de prestations / heure"
                         onChangeText={onChange}
                         keyboardType={'number-pad'}

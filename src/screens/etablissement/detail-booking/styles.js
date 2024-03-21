@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         padding: 20
     },
     title: {
@@ -119,5 +119,19 @@ export const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 3,
         borderRadius: 4
+    },
+    btn_download: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
+        height: 50,
+        borderRadius: 20,
+        backgroundColor: colors.PRIMARY
+    },
+    text_btn: {
+        color: colors.WHITE,
+        fontFamily: fonts.POPPINS_MEDIUM,
+        marginLeft: 5
     }
 })

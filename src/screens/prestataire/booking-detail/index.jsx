@@ -1,6 +1,7 @@
 //import liraries
 import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import RNFetchBlob from "rn-fetch-blob";
 
 import { styles } from './styles';
 import Icon from '@components/ui/Icon';
@@ -11,6 +12,7 @@ import { useMutation, useQuery } from 'react-query';
 import { get_my_booking_prestataire, update_booking } from 'src/feature/booking/booking.service';
 import Alert from '@components/Alert';
 import { useUserStore } from 'src/store/user.store';
+import { Download } from 'lucide-react-native';
 
 // create a component
 const BookingPrestataireDetailScreen = ({route, navigation}) => {
@@ -63,7 +65,20 @@ const BookingPrestataireDetailScreen = ({route, navigation}) => {
         }
     }
 
-    console.log("item", JSON.stringify(item))
+    const downloadBonCommande = async () => {
+        const res = await RNFetchBlob.config({
+             fileCache: true,
+             addAndroidDownloads: {
+                 useDownloadManager: true,
+                 notification: true,
+                 path: RNFetchBlob.fs.dirs.DocumentDir + "/bon_de_commande" + item.date_reservation + ".pdf",
+                 description: 'Downloading PDF document',
+                 mediaScannable: true,
+             },
+         })
+         .fetch('GET', item.file)
+         console.log('PDF document downloaded successfully', res.path());
+     }
 
     const handleCloseModal = () => {
         refreshListBooking()
@@ -150,6 +165,14 @@ const BookingPrestataireDetailScreen = ({route, navigation}) => {
                 {
                     item.status_reservation == "REFUSE" &&
                     <Text style={styles.booking_decline}>Vous avez decliné cette réservation</Text>
+                }
+
+                {
+                    item.status_reservation == "PAYE_ET_TERMINE" && 
+                    <TouchableOpacity onPress={downloadBonCommande} style = {styles.btn_download}>
+                        <Download color={colors.WHITE} />
+                        <Text style={styles.text_btn}>Télécharger le bon de commande </Text>
+                    </TouchableOpacity>
                 }
                 
             </View>

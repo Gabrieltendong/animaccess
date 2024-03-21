@@ -23,7 +23,7 @@ const CardItem = ({item, isFavotite}) => {
     const {data: list_my_favorite, refetch} = useQuery(['myFavorite', etablissement_id], get_my_favorite)
     const [isVisible, setIsVisible] = useState(false)
     const navigation = useNavigation()
-    const list_favorite_id = list_my_favorite.map((item) => item.id)
+    const list_favorite_id = Array.isArray(list_my_favorite) ?list_my_favorite.map((item) => item.id):[]
 
     const handleAddServiceToFavorite = async () => {
         const data = {

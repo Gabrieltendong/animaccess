@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { styles } from './styles'
 import Container from '@components/common/Container';
@@ -12,14 +12,18 @@ import { get_all_prestataire_service } from 'src/feature/service/service.service
 import { get_all_categorie } from 'src/feature/categorie/categorie.service';
 import { SEARCH_STACK } from '@constants/routes';
 import { LayoutGrid } from 'lucide-react-native';
-import { colors } from '@themes/index';
+import { createBonCommandPdf } from '@utils/bon-command';
+
 
 // create a component
 const HomeScreen = ({navigation}) => {
 
     const {data: list_all_service, isLoading: isLoadingAllService} = useQuery("all_service", get_all_prestataire_service)
     const {data: list_all_categorie, isLoading: isLoadingAllCategorieService} = useQuery("all_categorie", get_all_categorie)
- 
+    
+    useEffect(() => {
+        createBonCommandPdf()
+    }, [])
     return (
         <Container title={'Bonjour !'}>
             <SearchBar onPressIn={() => navigation.navigate(SEARCH_STACK)} /> 

@@ -41,7 +41,7 @@ const DocumentScreen = ({navigation, route}) => {
     }
 
     const handleNextStep = () => {
-        if(cni_recto && cni_verso && file_upload){
+        if(cni_recto && cni_verso){
             const data = {
                 ...registerData,
                 cni_recto,

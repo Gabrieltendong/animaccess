@@ -34,7 +34,7 @@ const PersonalInfosPrestataire = ({navigation}) => {
                 </TouchableOpacity>
                 <Text style={styles.header_title}>Informations personnelle</Text>
             </ImageBackground>
-            <ScrollView style={styles.content}>
+            <ScrollView style={styles.content} keyboardShouldPersistTaps='always'>
                 <Controller
                     control={control}
                     render = {({field: {onChange, value}}) => (
