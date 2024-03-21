@@ -1,7 +1,7 @@
 //import liraries
 import Input from '@components/ui/Input';
 import React, { Component, useState } from 'react';
-import { View, Text, TouchableOpacity, ImageBackground, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TouchableOpacity, ImageBackground, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown'
 import { styles } from './styles';
 import Icon from '@components/ui/Icon';
@@ -29,7 +29,7 @@ const PersonalInfosEtablissement = ({navigation}) => {
     }
 
     return (
-        <KeyboardAvoidingView  style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS == 'ios'? 'padding': 'height'}  style={styles.container}>
             <ImageBackground
                 source={require('@assets/images/banner_connexion.png')} 
                 style={styles.image_header}

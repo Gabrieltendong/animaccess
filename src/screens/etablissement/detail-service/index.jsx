@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, ScrollView } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { styles } from './styles'
 import Container from '@components/common/Container';
@@ -20,7 +20,7 @@ const DetailServiceScreen = ({navigation, route}) => {
 
     return (
         <Container>
-            <View style={styles.container}>
+            <ScrollView style={styles.container} contentContainerStyle={{paddingBottom: 60}}>
                 <View style={styles.header}>
                     <View style={styles.avatar_wrapper}>
                         <Image 
@@ -74,7 +74,7 @@ const DetailServiceScreen = ({navigation, route}) => {
                     style={styles.btn_booking}
                     onPress={() => navigation.navigate(BOOKING_SERVICE)} 
                 />
-            </View>
+            </ScrollView>
         </Container>
     );
 };

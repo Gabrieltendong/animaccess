@@ -1,7 +1,7 @@
 //import liraries
 import { colors } from '@themes/index';
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ImageBackground, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TouchableOpacity, ImageBackground, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { styles } from './styles';
 import Icon from '@components/ui/Icon';
 import Input from '@components/ui/Input';
@@ -23,7 +23,7 @@ const PersonalInfosPrestataire = ({navigation}) => {
     }
 
     return (
-        <KeyboardAvoidingView behavior='height' style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS == 'ios'? 'padding': 'height'} style={styles.container}>
             <ImageBackground
                 source={require('@assets/images/banner_connexion.png')} 
                 style={styles.image_header}

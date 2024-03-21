@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component, useEffect, useState } from 'react';
-import { View, Text, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, Platform } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown'
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import { styles } from './styles'
@@ -94,7 +94,8 @@ const CreateServiceScreen = ({navigation}) => {
     }, [selected_categorie_id])
   
     return (
-        <ScrollView style={styles.container} keyboardShouldPersistTaps='handled' contentContainerStyle={{paddingBottom: 100}}>
+        <KeyboardAvoidingView behavior={Platform.OS == 'ios'? 'padding': 'height'} style={styles.container}>
+            <ScrollView  keyboardShouldPersistTaps='always' contentContainerStyle={{paddingBottom: 100}}>
             
             <SelectDropdown
                 buttonStyle={styles.input_select}
@@ -237,6 +238,8 @@ const CreateServiceScreen = ({navigation}) => {
                 onToggle={handleCloseModal}
             />
         </ScrollView>
+        </KeyboardAvoidingView>
+        
     );
 };
 
