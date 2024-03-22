@@ -28,11 +28,11 @@ const BookingServiceScreen = ({navigation}) => {
 
     const { user } = useUserStore()
     const { infos_service } = useServiceStore()
-    const prestataire_service_id = infos_service.id
+    const prestataire_id = infos_service?.prestataire?.id
     const { mutateAsync: createBooking, isLoading } = useMutation(create_booking)
-    const [date, setDate] = useState(moment().format("YYYY-MM-DD"))
+    const [date, setDate] = useState(moment().startOf('isoweek').format("YYYY-MM-DD"))
     const [selected_date, setSelectedDate] = useState(moment().format("YYYY-MM-DD"))
-    const {data: list_plage_horaire, refetch: refretchListPlageHoraire, isLoading: isLoadingListPlageHoraire} = useQuery(["list_plage_horaire", {prestataire_service_id, selected_date}], get_list_plage_horaire_status)
+    const {data: list_plage_horaire, refetch: refretchListPlageHoraire, isLoading: isLoadingListPlageHoraire} = useQuery(["list_plage_horaire", {prestataire_id, selected_date}], get_list_plage_horaire_status)
     const [isVisible, setIsVisible] = useState(false)
     const [isVisibleModalError, setIsVisibleModalError] = useState(false)
     const [selected_plage_horaire, setSelectedPlageHoraire]=useState([])
@@ -45,7 +45,7 @@ const BookingServiceScreen = ({navigation}) => {
         refretchListPlageHoraire()
     }
 
-    console.log("infos_service", JSON.stringify(list_plage_horaire))
+    console.log("infos_service", JSON.stringify(infos_service?.prestataire))
 
     const formatPlageHoraire = () => {
         return list_plage_horaire.map((horaire) => {
@@ -189,7 +189,7 @@ const BookingServiceScreen = ({navigation}) => {
                     </View>
                     <ScrollView style={{flex: 1}}>
                         {
-                            Array.isArray(list_plage_horaire) && list_plage_horaire.length == 0 &&
+                            (Array.isArray(list_plage_horaire) && list_plage_horaire.length == 0 || list_plage_horaire?.error) &&
                             <Empty title={`Aucun plage horaire disponible`} />
                         } 
                         {
@@ -202,16 +202,21 @@ const BookingServiceScreen = ({navigation}) => {
                                     return(
                                         <TouchableOpacity 
                                             key={index} 
-                                            onPress={() => handleSelectPlageHoraire(plage_horaire.id)} 
-                                            style={[styles.plage_horaire, 
+                                            onPress={() => handleSelectPlageHoraire(plage_horaire.id)}
+                                            disabled={plage_horaire.status_horaire == "OCCUPEE"?true:false} 
+                                            style={[styles.plage_horaire,
+                                                plage_horaire.status_horaire == "OCCUPEE"?
+                                                    styles.plage_horaire_busy:
                                                 selected_plage_horaire.includes(plage_horaire.id)?
-                                                styles.plage_horaire_selected: styles.plage_horaire_busy
+                                                styles.plage_horaire_selected: styles.plage_horaire_not_busy
                                             ]}
                                         >
                                             <Text 
                                                 style={
+                                                    plage_horaire.status_horaire == "OCCUPEE"?
+                                                    styles.text_plage_horaire_busy:
                                                     selected_plage_horaire.includes(plage_horaire.id)?
-                                                    styles.text_plage_horaire_selected:styles.text_plage_horaire_busy
+                                                    styles.text_plage_horaire_selected:styles.text_plage_horaire_not_busy
                                                 }
                                             >
                                                     {plage_horaire.heure_debut.substring(0,5)} - {plage_horaire.heure_fin.substring(0,5)}

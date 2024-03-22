@@ -47,7 +47,7 @@ const DetailServiceScreen = ({navigation, route}) => {
                     </View>
                     <View style={styles.row}>
                         <Icon name={"MapPin"} color={colors.PRIMARY} size={20} />
-                        <Text style={styles.text_primary}><Text style={styles.text_price}>{infos_service.prestataire.adresse.boite_postal}</Text></Text>
+                        <Text style={styles.text_primary}><Text style={styles.text_price}>{infos_service.adresse.boite_postal}</Text></Text>
                     </View>
                 </View>
                 <View style={styles.map_wrapper}>

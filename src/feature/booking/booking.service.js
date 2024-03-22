@@ -22,11 +22,12 @@ export const get_planning = async ({queryKey}) => {
 }
 
 export const get_list_plage_horaire_status = async ({queryKey}) => {
-    const [_key, {prestataire_service_id, selected_date}] = queryKey
+    const [_key, {prestataire_id, selected_date}] = queryKey
     try{
-        const res = await http.get(`/list-plage-horaire-status/`, {params: {prestataire_service: prestataire_service_id, date: selected_date}})
+        const res = await http.get(`/list-plage-horaire-status/`, {params: {prestataire: prestataire_id, date: selected_date}})
         return res.data
     }catch(error){
+        console.log("error plage horaire", error.response.data)
         return error.response.data
     }
 }

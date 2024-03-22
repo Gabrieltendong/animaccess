@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component, useEffect, useState } from 'react';
-import { View, Text, ScrollView, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import { styles } from './styles'
 import { useMutation, useQuery } from 'react-query';
@@ -45,6 +45,8 @@ const EditServiceScreen = ({navigation, route}) => {
         dataForm.append("price", data.price)
         dataForm.append("longitude", data.longitude)
         dataForm.append("latitude", data.latitude)
+        dataForm.append("distance_zone", data.distance_zone)
+        dataForm.append("duree_service", JSON.stringify([{duree: data.duree_service}]))
         console.log("data", dataForm)
         const res = await updateService({data: dataForm, service_prestataire_id: item.id})
         if(res.service){
@@ -65,7 +67,7 @@ const EditServiceScreen = ({navigation, route}) => {
         navigation.goBack()
     }
 
-    console.log("item?.price", item)
+    // console.log("item?.price", item)
 
     useEffect(() => {
         reset({
@@ -73,12 +75,15 @@ const EditServiceScreen = ({navigation, route}) => {
             description: item?.description,
             boite_postal: item?.adresse?.boite_postal,
             longitude: item?.adresse?.longitude,
-            latitude: item?.adresse?.latitude
+            latitude: item?.adresse?.latitude,
+            distance_zone: String(item?.distance_zone),
+            duree_service: String(item?.duree_service[0].dure_service)
         })
     }, [])
   
     return (
-        <ScrollView style={styles.container} keyboardShouldPersistTaps='handled'>
+        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios'?'padding': 'height'}>
+            <ScrollView  keyboardShouldPersistTaps='handled'>
             
             <TouchableOpacity 
                 style={styles.image_wrapper}
@@ -129,6 +134,40 @@ const EditServiceScreen = ({navigation, route}) => {
             <Controller
                 control={control}
                 render={({field: {onChange, value}}) => (
+                    <Input
+                        iconName={"Locate"}
+                        placeholder="Zone d'intervention en km"
+                        onChangeText={onChange}
+                        keyboardType={'number-pad'}
+                        defaultValue={value}
+                        value={value}
+                        leftText={"Km"}
+                    />
+                )}
+                name='distance_zone'
+                rules={{required: true}}
+            />
+            {errors.distance_zone && <Text style={styles.error}>La zone d'intervention est obligatoire</Text>}
+            <Controller
+                control={control}
+                render={({field: {onChange, value}}) => (
+                    <Input
+                        iconName={"Clock3"}
+                        placeholder="Temps de prestations / heure"
+                        onChangeText={onChange}
+                        keyboardType={'number-pad'}
+                        defaultValue={value}
+                        value={value}
+                        leftText={"heure"}
+                    />
+                )}
+                name='duree_service'
+                rules={{required: true}}
+            />
+            {errors.duree_service && <Text style={styles.error}>Le temps de prestation est obligatoire</Text>}
+            <Controller
+                control={control}
+                render={({field: {onChange, value}}) => (
                     <TextInput
                         defaultValue={value}
                         placeholder='Donner une description de votre service'
@@ -154,6 +193,7 @@ const EditServiceScreen = ({navigation, route}) => {
                         keyboardType={'number-pad'}
                         // value={value}
                         defaultValue={value}
+                        leftText={"€"}
                     />
                 )}
                 name='price'
@@ -173,6 +213,7 @@ const EditServiceScreen = ({navigation, route}) => {
                 onToggle={handleCloseModal}
             />
         </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 

@@ -18,5 +18,8 @@ export const styles = StyleSheet.create({
         marginLeft: 5,
         color: colors.BLACK,
         height: 50,
+    },
+    leftText: {
+        fontFamily: fonts.POPPINS_MEDIUM
     }
 })

@@ -12,6 +12,9 @@ import Alert from '@components/Alert';
 import { LOGIN } from '@constants/routes';
 import { useRegisterPrestataire } from 'src/feature/register/useRegister';
 import { useUserStore } from 'src/store/user.store';
+import { plage_horaires } from '@utils/getPlageHoraire';
+import { create_planning } from 'src/feature/booking/booking.service';
+import { useMutation } from 'react-query';
 
 const messageSuccess = "Votre compte a bien été crée, Nous vous averons un mail de confirmation dans les 24h une fois votre inscription validé"
 
@@ -20,6 +23,7 @@ const PasswordPrestataire = ({navigation, route}) => {
 
     const { registerData, setRegisterData } = useUserStore()
     const {mutateAsync: signUpPrestataire, isLoading, error, data} = useRegisterPrestataire()
+    const {mutateAsync: createPlanning, isLoading: isLoadingCreatePlaning} = useMutation(create_planning)
     const { handleSubmit, control, watch, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState()
     const [showConfirmPassword, setShowConfirmPassword] = useState()
@@ -54,6 +58,12 @@ const PasswordPrestataire = ({navigation, route}) => {
             setMessageError(res.error)
             setIsVisibleModalError(true)
         }else{
+            const dataCreatePlaning = {
+                planning: res?.id_planing,
+                plage_horraire: plage_horaires()
+            }
+            console.log("dataCreatePlaning", dataCreatePlaning)
+            const response = await createPlanning(dataCreatePlaning)
             setIsVisibleModalSuccess(true)
         }
     }
@@ -126,7 +136,7 @@ const PasswordPrestataire = ({navigation, route}) => {
                     text='Créer mon compte' 
                     style={styles.btn} 
                     onPress={handleSubmit(handleRegister)}
-                    isLoading={isLoading}
+                    isLoading={isLoading || isLoadingCreatePlaning}
                 />
             </ScrollView>
             <Alert 

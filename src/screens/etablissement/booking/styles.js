@@ -107,17 +107,21 @@ export const styles = StyleSheet.create({
         backgroundColor: colors.PRIMARY
     },
     plage_horaire_busy: {
-        borderColor: colors.GRAY,
+        borderColor: '#ddd',
         backgroundColor: colors.WHITE
     },
     plage_horaire_not_busy: {
-
+        borderColor: colors.GRAY,
+        backgroundColor: colors.WHITE
     },
     text_plage_horaire_selected: {
         color: colors.WHITE
     },
     text_plage_horaire_busy: {
-        color: colors.GRAY,
+        color: "#ddd",
+    },
+    text_plage_horaire_not_busy: {
+        color: colors.GRAY
     },
     price_wrapper: {
         flexDirection: 'row',

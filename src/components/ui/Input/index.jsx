@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, TextInput, TouchableOpacity } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { styles } from './styles'
 import Icon from '../Icon';
 import { colors } from '@themes/index';
@@ -16,7 +16,8 @@ const Input = ({
     onChangeText,
     keyboardType,
     value,
-    defaultValue
+    defaultValue,
+    leftText
 }) => {
     return (
         <View style={styles.container}>
@@ -37,6 +38,12 @@ const Input = ({
                 <TouchableOpacity onPress={onPressLeftIcon}>
                     <Icon name={leftIcon} color={colors.PRIMARY} size={18}/>
                 </TouchableOpacity>
+            }
+            {
+                leftText && 
+                <Text style={styles.leftText}>
+                    {leftText}
+                </Text>
             }
         </View>
     );

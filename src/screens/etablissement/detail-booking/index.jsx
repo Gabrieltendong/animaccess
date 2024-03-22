@@ -132,8 +132,6 @@ const DetailBookingEtablissementScreen = ({route, navigation}) => {
                             <View style={item?.status_reservation == "PAYE_ET_TERMINE"?styles.status_pass:styles.status_to_come} />
                             <View style={[
                                     styles.text_status_wraper,
-                                    item?.status_reservation == "PAYE_ET_TERMINE" &&
-                                    styles.text_status_wraper_pending
                                 ]}
                             >
                                 <Text style={styles.text_status_bold}>Réservation Terminée</Text>

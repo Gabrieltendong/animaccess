@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { View, Text, ImageBackground, Image, StatusBar } from 'react-native';
 import { styles } from './styles'
 import Button from '@components/ui/Button';
@@ -7,6 +7,8 @@ import { SIGNUP } from '@constants/routes';
 
 // create a component
 const WelcomeScreen = ({navigation}) => {
+
+    
     return (
         <View style={styles.container}>
             <StatusBar translucent backgroundColor={'transparent'} />

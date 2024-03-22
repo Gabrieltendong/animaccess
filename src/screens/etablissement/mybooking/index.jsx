@@ -14,7 +14,7 @@ const MyBookingEtablissementScreen = () => {
     const { user } = useUserStore()
     const { setListBookingEtablissement } = useBookingStore()
     const etablissement_id = user?.account?.id
-    const {data: list_booking_etablissement } = useQuery(["List_booking_etablissament", etablissement_id], get_my_booking_etablissement)
+    const {data: list_booking_etablissement, refetch, isLoading } = useQuery(["List_booking_etablissament", etablissement_id], get_my_booking_etablissement)
 
     console.log("list_booking_etablissement", list_booking_etablissement)
 
@@ -23,6 +23,8 @@ const MyBookingEtablissementScreen = () => {
             <FlatList
                 contentContainerStyle={{paddingBottom: 80}}
                 showsVerticalScrollIndicator={false}
+                onRefresh={refetch}
+                refreshing={isLoading}
                 data={list_booking_etablissement}
                 renderItem={({item}) => <BookingItem item={item} />}
             />
