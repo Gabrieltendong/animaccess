@@ -43,9 +43,10 @@ const BookingServiceScreen = ({navigation}) => {
     const onChangeDate = (date) => {
         setSelectedDate(moment(new Date(date)).format("YYYY-MM-DD"))
         refretchListPlageHoraire()
+        setSelectedPlageHoraire([])
     }
 
-    console.log("infos_service", JSON.stringify(infos_service?.prestataire))
+    // console.log("infos_service", JSON.stringify(infos_service?.prestataire))
 
     const formatPlageHoraire = () => {
         return list_plage_horaire.map((horaire) => {
@@ -74,8 +75,6 @@ const BookingServiceScreen = ({navigation}) => {
         };
     
         let file = await RNHTMLtoPDF.convert(options)
-
-        console.log(file);
         return file.filePath
         // alert(file.filePath);
     }
@@ -92,13 +91,6 @@ const BookingServiceScreen = ({navigation}) => {
 
     const handleCreateBooking = async () => {
         const file_path = await createPDF()
-        console.log("file", file_path)
-        // const data = {
-        //     etablissement: user.account.id,
-        //     service: infos_service.id,
-        //     plage_horaire: selected_plage_horaire,
-        //     date_reservation: selected_date
-        // }
         const data = new FormData()
         data.append('etablissement', user.account.id)
         data.append('service', infos_service.id)
@@ -109,16 +101,32 @@ const BookingServiceScreen = ({navigation}) => {
             type: DocumentPicker.types.pdf,
             name: 'bon_de_commande' + moment().format("DD-MM-YYYY") + ".pdf",
         })
-        const res = await createBooking(data)
-        // console.log("data res", res)
-        if(res.id){
-            setIsVisible(true)
+        const plage_horaires = list_plage_horaire.filter((item) => selected_plage_horaire.includes(item.id))
+        console.log("plage_horaires", plage_horaires)
+        let isNotValidPlageHoraire = false
+        if(plage_horaires.length>1){
+            for(let i=0;i<plage_horaires.length; i++){
+                if(plage_horaires[i] && plage_horaires[i+1] && Math.abs(parseInt(plage_horaires[i+1].heure_fin.substring(0,2)) - parseInt(plage_horaires[i].heure_fin.substring(0,2)))>1){
+                    isNotValidPlageHoraire = true
+                }
+            }
         }
-        if(res.status == false){
+        if(isNotValidPlageHoraire){
+            setMessageError("Les plages horaires ne sont pas valide, vous devez choisir les plages horaires qui se suivent")
             setIsVisibleModalError(true)
-            // setMessageError("Cette plage horaire n'est plus disponible, Veuillez choisir une autre plage")
-            setMessageError(res.error)
+        }else{
+            const res = await createBooking(data)
+            console.log("data res", res)
+            if(res.id){
+                setIsVisible(true)
+            }
+            if(res.status == false){
+                setIsVisibleModalError(true)
+                // setMessageError("Cette plage horaire n'est plus disponible, Veuillez choisir une autre plage")
+                setMessageError(res.error)
+            }
         }
+       
     }
 
     const handleNextWeek = () => {
@@ -198,7 +206,7 @@ const BookingServiceScreen = ({navigation}) => {
                         }
                         <View style={styles.plage_horaire_wrapper}> 
                             {
-                                Array.isArray(list_plage_horaire) && list_plage_horaire.map((plage_horaire, index) => {
+                                Array.isArray(list_plage_horaire) && list_plage_horaire.sort((a, b) => parseInt(a.heure_fin.substring(0,2)) - parseInt(b.heure_fin.substring(0,2)) ).map((plage_horaire, index) => {
                                     return(
                                         <TouchableOpacity 
                                             key={index} 
