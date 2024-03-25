@@ -47,6 +47,14 @@ target 'animaccess' do
     # Pods for testing
   end
 
+  def handle_targets_config(installer)
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.4'        
+      end
+    end
+  end
+
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     react_native_post_install(
@@ -54,6 +62,12 @@ target 'animaccess' do
       config[:reactNativePath],
       :mac_catalyst_enabled => false 
     )
+    handle_targets_config(installer)
+    # We need to make one crude patch to RCT-Folly - set `__IPHONE_10_0` to our iOS target + 1
+    # ==> hack to modify the header file
+    `sed -e $'s/__IPHONE_10_0/__IPHONE_13_0/' \
+        Pods/Headers/Private/RCT-Folly/folly/portability/Time.h > temp_file \
+        && mv temp_file Pods/Headers/Private/RCT-Folly/folly/portability/Time.h`
     installer.pods_project.targets.each do |target|
       if target.name == "React-Core-RCTI18nStrings"
         target.remove_from_project
