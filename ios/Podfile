@@ -62,13 +62,16 @@ target 'animaccess' do
       config[:reactNativePath],
       :mac_catalyst_enabled => false 
     )
-    handle_targets_config(installer)
-    # We need to make one crude patch to RCT-Folly - set `__IPHONE_10_0` to our iOS target + 1
-    # ==> hack to modify the header file
-    `sed -e $'s/__IPHONE_10_0/__IPHONE_13_0/' \
-        Pods/Headers/Private/RCT-Folly/folly/portability/Time.h > temp_file \
-        && mv temp_file Pods/Headers/Private/RCT-Folly/folly/portability/Time.h`
+    __apply_Xcode_12_5_M1_post_install_workaround(installer)
     installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = "arm64"
+        current_target = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
+        minimum_target = min_ios_version_supported
+        if current_target.to_f < minimum_target.to_f
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = minimum_target
+        end
+      end
       if target.name == "React-Core-RCTI18nStrings"
         target.remove_from_project
       end
