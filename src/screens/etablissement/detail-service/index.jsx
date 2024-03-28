@@ -19,7 +19,7 @@ const DetailServiceScreen = ({navigation, route}) => {
     const { data: list_service_prestataire } = getListeServicePrestataire(infos_service?.prestataire?.id)
 
     return (
-        <Container>
+        <Container showBackButton={true}>
             <ScrollView style={styles.container} contentContainerStyle={{paddingBottom: 60}}>
                 <View style={styles.header}>
                     <View style={styles.avatar_wrapper}>

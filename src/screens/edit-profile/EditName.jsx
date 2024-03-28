@@ -55,7 +55,7 @@ const EditNameScreen = ({navigation}) => {
     }, [])
 
     return (
-        <Container title={"Modifier mon nom"}>
+        <Container showBackButton={true} title={"Modifier mon nom"}>
             <Controller
                 control={control}
                 render = {({field: {onChange, value}}) => (

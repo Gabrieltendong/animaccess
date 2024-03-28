@@ -154,7 +154,7 @@ const BookingServiceScreen = ({navigation}) => {
     }
 
     return (
-        <Container >
+        <Container showBackButton={true} >
             <ScrollView style={styles.container}> 
                 <Text style={styles.title}>Vous réservez avec...</Text>
                 <View style={styles.header}>

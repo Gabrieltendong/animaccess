@@ -53,7 +53,7 @@ const EditTypeEtablissementScreen = ({navigation}) => {
     }, [listTypeEtablissement])
 
     return (
-        <Container title={"Modifier le type de l'établissement"}>
+        <Container showBackButton={true} title={"Modifier le type de l'établissement"}>
             <View style={styles.input_select_wrapper}>
                 <SelectDropdown
                     ref={dropdownRef}

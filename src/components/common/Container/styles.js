@@ -9,6 +9,18 @@ export const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 20
     },
+    back_btn: {
+        height: 40,
+        width: 40,
+        borderRadius: 20,
+        backgroundColor: colors.WHITE,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        left: 20,
+        top: 40,
+        zIndex: 1
+    },
     logo_wrapper: {
         height: Platform.OS == 'ios'?90:70,
         alignItems: 'center',

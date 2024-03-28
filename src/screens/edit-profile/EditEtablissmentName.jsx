@@ -38,7 +38,7 @@ const EditEtablissementNameScreen = ({navigation}) => {
     }, [])
 
     return (
-        <Container title={"Modifier le nom de l'etablissement"}>
+        <Container showBackButton={true} title={"Modifier le nom de l'etablissement"}>
             <Controller
                 control={control}
                 render = {({field: {onChange, value}}) => (

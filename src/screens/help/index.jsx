@@ -34,7 +34,7 @@ const HelpScreen = ({navigation}) => {
     }
 
     return (
-        <Container style={styles.container} title={"Besoin d'assistance ?"}>
+        <Container showBackButton={true} style={styles.container} title={"Besoin d'assistance ?"}>
             <Controller
                 control={control}
                 render={({field: {onChange, value}}) => (

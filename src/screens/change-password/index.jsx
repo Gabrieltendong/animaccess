@@ -51,7 +51,7 @@ const ChangePasswordScreen = ({navigation}) => {
     }
 
     return (
-        <Container title={"Nouveau de mot de passe"}>
+        <Container showBackButton={true} title={"Nouveau de mot de passe"}>
             <Controller
                 control={control}
                 render = {({field: {onChange, value}}) => (

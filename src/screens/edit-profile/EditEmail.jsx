@@ -71,7 +71,7 @@ const EditEmailScreen = ({navigation}) => {
     }, [])
 
     return (
-        <Container title={"Modifier mon adresse email"}>
+        <Container showBackButton={true} title={"Modifier mon adresse email"}>
             <Controller
                 control={control}
                 render = {({field: {onChange, value}}) => (

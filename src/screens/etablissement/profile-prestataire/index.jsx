@@ -19,7 +19,7 @@ const ProfilePrestataireScreen = ({route}) => {
     console.log("list_service_prestataire", list_service_prestataire)
 
     return (
-        <Container>
+        <Container showBackButton={true}>
             <Text style = {styles.title_wrapper}>
                 <Text style={styles.title}>Liste des services de </Text>
                 <Text style={styles.title_bold}>{prestataire_infos?.user?.name} {prestataire_infos?.user?.lastname} </Text>

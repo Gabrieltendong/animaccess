@@ -43,7 +43,7 @@ const DetailBookingEtablissementScreen = ({route, navigation}) => {
      }
 
     return (
-        <Container >
+        <Container showBackButton={true} >
             <ScrollView style={styles.container}>
                 <Text style={styles.title}>Votre réservation</Text>
                 <View style={styles.header}>

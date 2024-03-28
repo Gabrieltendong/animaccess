@@ -1,11 +1,14 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, StatusBar } from 'react-native';
+import { View, Text, Image, ImageBackground, StatusBar, TouchableOpacity } from 'react-native';
 import { styles } from './styles'
 import { colors } from '@themes/index';
+import { ChevronLeft } from 'lucide-react-native';
+import { useNavigation } from '@react-navigation/native';
 
 // create a component
-const Container = ({children, title}) => {
+const Container = ({children, title, showBackButton}) => {
+    const navigation = useNavigation()
     return (
         <View style={styles.container}>
             <StatusBar translucent={false} backgroundColor={colors.PRIMARY} />
@@ -15,6 +18,12 @@ const Container = ({children, title}) => {
                     style={styles.logo_wrapper}
                     imageStyle={styles.image_header_border}
                 >
+                    {
+                        showBackButton && 
+                        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.back_btn}>
+                            <ChevronLeft color={colors.PRIMARY} />
+                        </TouchableOpacity>
+                    }
                     <Image 
                       source={require('@assets/images/logo/Logo-animaccess-sans-soustexte.png')}
                       style={styles.logo}

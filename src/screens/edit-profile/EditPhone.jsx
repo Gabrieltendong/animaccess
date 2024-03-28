@@ -53,7 +53,7 @@ const EditPhoneScreen = ({navigation}) => {
     }, [])
 
     return (
-        <Container title={"Modifier mon numéro de téléphone"}>
+        <Container showBackButton={true} title={"Modifier mon numéro de téléphone"}>
             <Controller
                 control={control}
                 render = {({field: {onChange, value}}) => (
