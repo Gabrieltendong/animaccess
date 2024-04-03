@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         left: 20,
-        top: 40,
+        top: Platform.OS=='ios'?40:10,
         zIndex: 1
     },
     logo_wrapper: {

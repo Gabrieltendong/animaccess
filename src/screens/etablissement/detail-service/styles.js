@@ -19,7 +19,6 @@ export const styles = StyleSheet.create({
     },
     title: {
         fontFamily: fonts.POPPINS_SEMI_BOLD,
-
     },
     subtitle: {
         fontFamily: fonts.POPPINS_MEDIUM,
@@ -43,12 +42,14 @@ export const styles = StyleSheet.create({
     },
     description: {
         textAlign: 'center',
-        marginVertical: 20
+        marginVertical: 20,
+        color: colors.BLACK
     },
     row_center: {
         flexDirection: 'row',
         justifyContent: 'center',
-        gap: 10
+        gap: 10,
+        flexWrap: 'wrap'
     },
     row: {
         flexDirection: 'row',
