@@ -19,7 +19,7 @@ const HomeScreen = () => {
     const {data: list_booking_pretataire, isLoading, refetch} = useQuery(['List_booking_prestataire', prestataire_id], get_my_booking_prestataire)
 
     return (
-        <Container title={`Bonjour ${user?.account?.user?.name} !`}>
+        <Container title={`Bonjour ${user?.account?.user?.lastname} !`}>
             <View style={[
                     styles.container,
                     Array.isArray(list_booking_pretataire) && list_booking_pretataire.length == 0 && styles.container_empty_booking
