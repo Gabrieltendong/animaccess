@@ -1,7 +1,7 @@
 //import liraries
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, ScrollView, Dimensions } from 'react-native';
-import {ExpandableCalendar, CalendarProvider, WeekCalendar} from 'react-native-calendars';
+import { ExpandableCalendar, CalendarProvider, WeekCalendar } from 'react-native-calendars';
 import DocumentPicker from 'react-native-document-picker'
 import { styles } from './styles';
 import Container from '@components/common/Container';
@@ -21,10 +21,10 @@ import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import { bonCommandHtml } from '@utils/bon-command';
 
-moment.locale('fr') 
+moment.locale('fr')
 
 // create a component
-const BookingServiceScreen = ({navigation}) => {
+const BookingServiceScreen = ({ navigation }) => {
 
     const { user } = useUserStore()
     const { infos_service } = useServiceStore()
@@ -32,13 +32,13 @@ const BookingServiceScreen = ({navigation}) => {
     const { mutateAsync: createBooking, isLoading } = useMutation(create_booking)
     const [date, setDate] = useState(moment().startOf('isoweek').format("YYYY-MM-DD"))
     const [selected_date, setSelectedDate] = useState(moment().format("YYYY-MM-DD"))
-    const {data: list_plage_horaire, refetch: refretchListPlageHoraire, isLoading: isLoadingListPlageHoraire} = useQuery(["list_plage_horaire", {prestataire_id, selected_date}], get_list_plage_horaire_status)
+    const { data: list_plage_horaire, refetch: refretchListPlageHoraire, isLoading: isLoadingListPlageHoraire } = useQuery(["list_plage_horaire", { prestataire_id, selected_date }], get_list_plage_horaire_status)
     const [isVisible, setIsVisible] = useState(false)
     const [isVisibleModalError, setIsVisibleModalError] = useState(false)
-    const [selected_plage_horaire, setSelectedPlageHoraire]=useState([])
+    const [selected_plage_horaire, setSelectedPlageHoraire] = useState([])
     const [messageError, setMessageError] = useState()
     const [days, setDays] = useState([])
-    
+
 
     const onChangeDate = (date) => {
         setSelectedDate(moment(new Date(date)).format("YYYY-MM-DD"))
@@ -50,13 +50,13 @@ const BookingServiceScreen = ({navigation}) => {
 
     const formatPlageHoraire = () => {
         return list_plage_horaire.map((horaire) => {
-            if(selected_plage_horaire.includes(horaire.id)){
-                return horaire.heure_debut.substring(0,5) + "-" + horaire.heure_fin.substring(0,5)
+            if (selected_plage_horaire.includes(horaire.id)) {
+                return horaire.heure_debut.substring(0, 5) + "-" + horaire.heure_fin.substring(0, 5)
             }
         }).join(" ")
     }
 
-    const  createPDF = async () => {
+    const createPDF = async () => {
         const data = {
             name_etablissement: user?.account?.gerant?.name,
             name_prestataire: infos_service?.prestataire?.user?.name + " " + infos_service?.prestataire?.user?.lastname,
@@ -69,25 +69,48 @@ const BookingServiceScreen = ({navigation}) => {
             price: infos_service?.price + "€ / heure"
         }
         let options = {
-          html: bonCommandHtml(data),
-          fileName: 'bon_de_commande' + moment().format("DD-MM-YYYY"),
-          directory: 'Documents',
+            html: bonCommandHtml(data),
+            fileName: 'bon_de_commande' + moment().format("DD-MM-YYYY"),
+            directory: 'Documents',
         };
-    
+
         let file = await RNHTMLtoPDF.convert(options)
         return file.filePath
         // alert(file.filePath);
     }
 
-    const handleSelectPlageHoraire = (plage_horaire_id) => {
-        let newList = [...selected_plage_horaire]
-        if(selected_plage_horaire.includes(plage_horaire_id)){
-            newList = selected_plage_horaire.filter((item) => item != plage_horaire_id)
-            setSelectedPlageHoraire(newList)
-        }else{
-            setSelectedPlageHoraire([...selected_plage_horaire, plage_horaire_id])
+    const handleSelectPlageHoraire = async (plage_horaire) => {
+        const serviceDuree = parseInt(infos_service?.duree_service[0]?.dure_service);
+        console.log("FRAISE BANANE MYRTILLE");
+        if (selected_plage_horaire.includes(plage_horaire.id)) {
+            newList = selected_plage_horaire.filter((item) => item != plage_horaire.id)
+            setSelectedPlageHoraire([])
+        } else {
+            if (serviceDuree > 1 && serviceDuree != selected_plage_horaire.length) {
+
+                const plageIndex = list_plage_horaire.findIndex(plage => plage.id === plage_horaire.id);
+                const plagesNecessaires = list_plage_horaire.slice(plageIndex, plageIndex + serviceDuree);
+                const plagesDisponibles = plagesNecessaires.every(plage => plage.status_horaire != "OCCUPEE");
+                
+                console.log(plageIndex);
+                console.log("plagesNecessaires: ");
+                console.log(plagesNecessaires);
+                console.log("plagesDisponibles: ");
+                console.log(plagesDisponibles);
+
+                if (plagesDisponibles) {
+                    const newList = [...selected_plage_horaire, ...plagesNecessaires.map(plage => plage.id)];
+                    setSelectedPlageHoraire(newList);
+                } else {
+                    setMessageError(`Ce service dure ${serviceDuree}h. \nVous devez sélectionner ${serviceDuree} plages horaires qui se suivent`);
+                    setIsVisibleModalError(true)
+                }
+            } else {
+                setMessageError(`Vous ne pouvez selectionner que ${serviceDuree} plage horaires`)
+                setIsVisibleModalError(true)
+            }
         }
-    }
+    };
 
     const handleCreateBooking = async () => {
         const file_path = await createPDF()
@@ -104,43 +127,43 @@ const BookingServiceScreen = ({navigation}) => {
         const plage_horaires = list_plage_horaire.filter((item) => selected_plage_horaire.includes(item.id))
         console.log("plage_horaires", plage_horaires)
         let isNotValidPlageHoraire = false
-        if(plage_horaires.length>1){
-            for(let i=0;i<plage_horaires.length; i++){
-                if(plage_horaires[i] && plage_horaires[i+1] && Math.abs(parseInt(plage_horaires[i+1].heure_fin.substring(0,2)) - parseInt(plage_horaires[i].heure_fin.substring(0,2)))>1){
+        if (plage_horaires.length > 1) {
+            for (let i = 0; i < plage_horaires.length; i++) {
+                if (plage_horaires[i] && plage_horaires[i + 1] && Math.abs(parseInt(plage_horaires[i + 1].heure_fin.substring(0, 2)) - parseInt(plage_horaires[i].heure_fin.substring(0, 2))) > 1) {
                     isNotValidPlageHoraire = true
                 }
             }
         }
-        if(isNotValidPlageHoraire){
+        if (isNotValidPlageHoraire) {
             setMessageError("Les plages horaires ne sont pas valide, vous devez choisir les plages horaires qui se suivent")
             setIsVisibleModalError(true)
-        }else{
+        } else {
             const res = await createBooking(data)
             console.log("data res", res)
-            if(res.id){
+            if (res.id) {
                 setIsVisible(true)
             }
-            if(res.status == false){
+            if (res.status == false) {
                 setIsVisibleModalError(true)
-                // setMessageError("Cette plage horaire n'est plus disponible, Veuillez choisir une autre plage")
-                setMessageError(res.error)
+                setMessageError("Vous avez déjà reserver une de ces plages horaires")
+                // setMessageError(res.error)
             }
         }
-       
+
     }
 
     const handleNextWeek = () => {
-        setDate(moment(new Date(date)).add(1,'w').format("YYYY-MM-DD"))
-        
+        setDate(moment(new Date(date)).add(1, 'w').format("YYYY-MM-DD"))
+
     }
 
     const handlePreviousWeek = () => {
-        setDate(moment(new Date(date)).add(-1,'w').format("YYYY-MM-DD"))
+        setDate(moment(new Date(date)).add(-1, 'w').format("YYYY-MM-DD"))
     }
 
     useEffect(() => {
         const newWeekDays = []
-        for(let i=0; i<7; i++){
+        for (let i = 0; i < 7; i++) {
             newWeekDays.push(moment(new Date(date)).add(i, 'd'))
             setDays(newWeekDays)
         }
@@ -155,12 +178,12 @@ const BookingServiceScreen = ({navigation}) => {
 
     return (
         <Container showBackButton={true} >
-            <ScrollView style={styles.container}> 
+            <ScrollView style={styles.container}>
                 <Text style={styles.title}>Vous réservez avec...</Text>
                 <View style={styles.header}>
-                    <Image 
+                    <Image
                         style={styles.avatar}
-                        source={{uri: infos_service?.image? infos_service?.image: infos_service?.service?.service?.image}} 
+                        source={{ uri: infos_service?.image ? infos_service?.image : infos_service?.service?.service?.image }}
                     />
                     <Text>
                         <Text style={styles.name_prestataire}>{infos_service?.prestataire?.user?.name}</Text>
@@ -180,13 +203,13 @@ const BookingServiceScreen = ({navigation}) => {
                     <View style={styles.day_wapper}>
                         {
                             days.map((day, index) => (
-                                <TouchableOpacity 
-                                    onPress={() => onChangeDate(day)} 
+                                <TouchableOpacity
+                                    onPress={() => onChangeDate(day)}
                                     style={[
-                                        styles.day_name_wrapper, 
+                                        styles.day_name_wrapper,
                                         moment(new Date(day)).format("YYYY-MM-DD") == moment(new Date(selected_date)).format("YYYY-MM-DD") &&
                                         styles.day_name_selected
-                                    ]} 
+                                    ]}
                                     key={index}
                                 >
                                     <Text style={styles.day_name}>{moment(new Date(day)).format("ddd")}</Text>
@@ -195,39 +218,39 @@ const BookingServiceScreen = ({navigation}) => {
                             ))
                         }
                     </View>
-                    <ScrollView style={{flex: 1}}>
+                    <ScrollView style={{ flex: 1 }}>
                         {
                             (Array.isArray(list_plage_horaire) && list_plage_horaire.length == 0 || list_plage_horaire?.error) &&
                             <Empty title={`Aucun plage horaire disponible`} />
-                        } 
+                        }
                         {
                             isLoadingListPlageHoraire &&
                             <ActivityIndicator color={colors.BLACK} size={'large'} />
                         }
-                        <View style={styles.plage_horaire_wrapper}> 
+                        <View style={styles.plage_horaire_wrapper}>
                             {
-                                Array.isArray(list_plage_horaire) && list_plage_horaire.sort((a, b) => parseInt(a.heure_fin.substring(0,2)) - parseInt(b.heure_fin.substring(0,2)) ).map((plage_horaire, index) => {
-                                    return(
-                                        <TouchableOpacity 
-                                            key={index} 
-                                            onPress={() => handleSelectPlageHoraire(plage_horaire.id)}
-                                            disabled={plage_horaire.status_horaire == "OCCUPEE"?true:false} 
+                                Array.isArray(list_plage_horaire) && list_plage_horaire.sort((a, b) => parseInt(a.heure_fin.substring(0, 2)) - parseInt(b.heure_fin.substring(0, 2))).map((plage_horaire, index) => {
+                                    return (
+                                        <TouchableOpacity
+                                            key={index}
+                                            onPress={() => handleSelectPlageHoraire(plage_horaire)}
+                                            disabled={plage_horaire.status_horaire == "OCCUPEE" ? true : false}
                                             style={[styles.plage_horaire,
-                                                plage_horaire.status_horaire == "OCCUPEE"?
-                                                    styles.plage_horaire_busy:
-                                                selected_plage_horaire.includes(plage_horaire.id)?
-                                                styles.plage_horaire_selected: styles.plage_horaire_not_busy
+                                            plage_horaire.status_horaire == "OCCUPEE" ?
+                                                styles.plage_horaire_busy :
+                                                selected_plage_horaire.includes(plage_horaire.id) ?
+                                                    styles.plage_horaire_selected : styles.plage_horaire_not_busy
                                             ]}
                                         >
-                                            <Text 
+                                            <Text
                                                 style={
-                                                    plage_horaire.status_horaire == "OCCUPEE"?
-                                                    styles.text_plage_horaire_busy:
-                                                    selected_plage_horaire.includes(plage_horaire.id)?
-                                                    styles.text_plage_horaire_selected:styles.text_plage_horaire_not_busy
+                                                    plage_horaire.status_horaire == "OCCUPEE" ?
+                                                        styles.text_plage_horaire_busy :
+                                                        selected_plage_horaire.includes(plage_horaire.id) ?
+                                                            styles.text_plage_horaire_selected : styles.text_plage_horaire_not_busy
                                                 }
                                             >
-                                                    {plage_horaire.heure_debut.substring(0,5)} - {plage_horaire.heure_fin.substring(0,5)}
+                                                {plage_horaire.heure_debut.substring(0, 5)} - {plage_horaire.heure_fin.substring(0, 5)}
                                             </Text>
                                         </TouchableOpacity>
                                     )
@@ -237,12 +260,12 @@ const BookingServiceScreen = ({navigation}) => {
                     </ScrollView>
                 </View>
                 <View style={styles.price_wrapper}>
-                    <Text style={styles.text_primary}>Vous avez choisi {selected_plage_horaire.length} planche{selected_plage_horaire.length>1?"s":""} horaire{selected_plage_horaire.length>1?"s":""}</Text>
-                    <Text style={styles.price}>{selected_plage_horaire.length*infos_service.price}€</Text>
+                    <Text style={styles.text_primary}>Vous avez choisi {selected_plage_horaire.length} planche{selected_plage_horaire.length > 1 ? "s" : ""} horaire{selected_plage_horaire.length > 1 ? "s" : ""}</Text>
+                    <Text style={styles.price}>{selected_plage_horaire.length * infos_service.price}€</Text>
                 </View>
                 {
-                    selected_plage_horaire.length>0 &&
-                    <Button 
+                    selected_plage_horaire.length > 0 &&
+                    <Button
                         text='Valider'
                         style={styles.btn}
                         onPress={handleCreateBooking}
