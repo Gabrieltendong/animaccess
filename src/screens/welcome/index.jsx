@@ -19,7 +19,7 @@ const WelcomeScreen = ({navigation}) => {
                         style={styles.logo} 
                         resizeMode='contain' 
                     />
-                    <Text style={styles.header_text}>Connectez soins et santé</Text>
+                    <Text style={styles.header_text}>Connectez {"\n"} soins et santé</Text>
                 </ImageBackground>
             </View>
             <View style={styles.content}>
