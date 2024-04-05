@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
         flex: 1
     },
     content: { 
-        minHeight: 350, 
+        minHeight: 250, 
         backgroundColor: '#fff',
         borderRadius: 20,
         paddingVertical: 30,
