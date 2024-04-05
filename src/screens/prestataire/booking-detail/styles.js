@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
         marginHorizontal: 20,
         backgroundColor: colors.WHITE,
         borderRadius: 20,
-        height: 300
+        height: 350
     },
     title: {
         fontSize: 16,
@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     btn_wrapper: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 30,
+        marginTop: 10,
         justifyContent: 'space-between'
     },
     btn: {

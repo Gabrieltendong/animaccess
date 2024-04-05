@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Platform, Linking } from 'react-native';
 import RNFetchBlob from "rn-fetch-blob";
 
 import { styles } from './styles';
@@ -97,7 +97,6 @@ const BookingPrestataireDetailScreen = ({route, navigation}) => {
         setIsVisibleModal(false)
         navigation.goBack()
     }
-
     return (
         <View style={styles.container}>
             <ImageBackground 
@@ -127,6 +126,22 @@ const BookingPrestataireDetailScreen = ({route, navigation}) => {
                     <Icon name={"Calendar"} color={colors.BLACK} size={20} />
                     <Text style={styles.text_right}>{moment(new Date(item?.date_reservation)).format("dddd DD MMMM YYYY")}</Text>
                 </View>
+                <TouchableOpacity onPress={() => {
+                    const address = item?.etablissement?.adresse?.boite_postal;
+                    if (address) {
+                        const url = Platform.select({
+                            ios: `maps://app?daddr=${address}`,
+                            android: `google.navigation:q=${address}`,
+                            default: `https://www.google.com/maps/dir/?api=1&destination=${address}`,
+                        });
+                        Linking.openURL(url);
+                    }
+                }}>
+                    <View style={styles.row}>
+                        <Icon name={"MapPin"} color={colors.BLACK} size={20} />
+                        <Text style={styles.text_right}>{item?.etablissement?.adresse?.boite_postal}</Text>
+                    </View>
+                </TouchableOpacity>
                 <View style={styles.row_hours}>
                     <Icon name={"Clock"} color={colors.BLACK} size={20} />
                     <View style={{flex: 1}}>
@@ -146,7 +161,7 @@ const BookingPrestataireDetailScreen = ({route, navigation}) => {
                     <View style={styles.btn_wrapper}>
                         <Button 
                             variant='outline' 
-                            text='Réfuser'
+                            text='Refuser'
                             style={styles.btn}
                             onPress={handleDeclineBooking}
                             isLoading={isLoadingDeclineBooking}
