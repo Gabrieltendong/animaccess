@@ -7,6 +7,7 @@ import { colors } from '@themes/index';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import { BOOKING_DETAIL } from '@constants/routes';
+import BookingStatusTag from '@components/BookingStatusTag'
 
 // create a component
 const BookingItem = ({item}) => {
@@ -15,6 +16,7 @@ const BookingItem = ({item}) => {
 
     return (
         <View style={styles.container}>
+            <BookingStatusTag status={item.status_reservation} />
             <Image source={{uri: item?.prestataire_service?.image?item?.prestataire_service?.image:item?.prestataire_service?.service?.service?.image}} style={styles.image_wrapper} />
             <View style={styles.content}>
                 <Text style={styles.title}>{item?.prestataire_service?.prestataire?.user?.name} {item?.prestataire_service?.prestataire?.user?.lastname}</Text>
