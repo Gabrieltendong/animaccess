@@ -49,6 +49,14 @@ const DetailServiceScreen = ({navigation, route}) => {
                         <Icon name={"MapPin"} color={colors.PRIMARY} size={20} />
                         <Text style={styles.text_primary}><Text style={styles.text_price}>{infos_service.adresse.boite_postal}</Text></Text>
                     </View>
+                    <View style={styles.row}>
+                        {/* <Icon name={"MapPin"} color={colors.PRIMARY} size={20} /> */}
+                        <Text style={styles.text_primary}>Zone d'intervention : <Text style={styles.text_price}>{infos_service.distance_zone} km</Text></Text>
+                    </View>
+                    <View style={styles.row}>
+                        {/* <Icon name={"MapPin"} color={colors.PRIMARY} size={20} /> */}
+                        <Text style={styles.text_primary}>Durée du service : <Text style={styles.text_price}>{infos_service.duree_service[0]?.dure_service}h</Text></Text>
+                    </View>
                 </View>
                 <View style={styles.map_wrapper}>
                     <MapView
