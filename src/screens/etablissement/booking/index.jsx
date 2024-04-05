@@ -81,7 +81,6 @@ const BookingServiceScreen = ({ navigation }) => {
 
     const handleSelectPlageHoraire = async (plage_horaire) => {
         const serviceDuree = parseInt(infos_service?.duree_service[0]?.dure_service);
-        console.log("FRAISE BANANE MYRTILLE");
         if (selected_plage_horaire.includes(plage_horaire.id)) {
             newList = selected_plage_horaire.filter((item) => item != plage_horaire.id)
             setSelectedPlageHoraire([])
@@ -92,12 +91,6 @@ const BookingServiceScreen = ({ navigation }) => {
                 const plagesNecessaires = list_plage_horaire.slice(plageIndex, plageIndex + serviceDuree);
                 const plagesDisponibles = plagesNecessaires.every(plage => plage.status_horaire != "OCCUPEE");
                 
-                console.log(plageIndex);
-                console.log("plagesNecessaires: ");
-                console.log(plagesNecessaires);
-                console.log("plagesDisponibles: ");
-                console.log(plagesDisponibles);
-
                 if (plagesDisponibles) {
                     const newList = [...selected_plage_horaire, ...plagesNecessaires.map(plage => plage.id)];
                     setSelectedPlageHoraire(newList);
