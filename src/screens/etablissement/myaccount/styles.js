@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { colors, fonts } from "@themes/index";
 
 export const styles = StyleSheet.create({
     container: {
@@ -12,5 +13,17 @@ export const styles = StyleSheet.create({
         width: '95%',
         alignSelf: 'center',
         marginTop: 1
-    }
+    },
+    mybookingsBtn:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        display:'flex',
+        backgroundColor: colors.WHITE,
+        borderRadius: 50,
+        paddingHorizontal: 20,
+        paddingVertical: 20
+    },
+    mybookingsBtnText: {
+        marginLeft: 10,
+    },
 })
