@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        marginTop: -10
+        marginTop: 20
     },
     btn_back: {
         height: 50,

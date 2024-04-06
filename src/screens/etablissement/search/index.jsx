@@ -27,39 +27,40 @@ const SearchScreen = ({navigation}) => {
     } 
   
     return (
-        <Container title={"Recherche ..."}>
-            <SearchBar value={search_term} onChangeText={setSearchTerm} onSearch={handleSearch} />
-            {
-                isLoadingSearchService &&
-                <View>
-                    <ActivityIndicator color={colors.BLACK} size={'large'} />
-                </View>
-            }
-            
-            {
-                Array.isArray(list_results_search_service?.result)?
-                <FlatList 
-                    data={list_results_search_service?.result}
-                    renderItem={CardItem}
-                    ListEmptyComponent={() => <Empty title={"Aucun service trouvé pour votre recherche"} />}
-                    numColumns={2}
-                    columnWrapperStyle={{gap: 10}}
-                    style={styles.content}
-                    contentContainerStyle={{paddingBottom: 70}}
-                />
-                :
-                <View>
-                    <Text style={styles.section_title}>Recherche par categorie</Text>
-                    <FlatList
-                        data={list_all_categorie?.results}
-                        renderItem={({item}) => <CardCategorie item={item} navigation={navigation} />}
+        <Container>
+            <View style={styles.container}>
+                <SearchBar value={search_term} onChangeText={setSearchTerm} onSearch={handleSearch} />
+                {
+                    isLoadingSearchService &&
+                    <View>
+                        <ActivityIndicator color={colors.BLACK} size={'large'} />
+                    </View>
+                }
+                
+                {
+                    Array.isArray(list_results_search_service?.result)?
+                    <FlatList 
+                        data={list_results_search_service?.result}
+                        renderItem={CardItem}
+                        ListEmptyComponent={() => <Empty title={"Aucun service trouvé pour votre recherche"} />}
                         numColumns={2}
-                        columnWrapperStyle={{gap: 20}}
+                        columnWrapperStyle={{gap: 10}}
+                        style={styles.content}
                         contentContainerStyle={{paddingBottom: 70}}
                     />
-                </View>
-            }
-            
+                    :
+                    <View>
+                        <Text style={styles.section_title}>Recherche par categorie</Text>
+                        <FlatList
+                            data={list_all_categorie?.results}
+                            renderItem={({item}) => <CardCategorie item={item} navigation={navigation} />}
+                            numColumns={2}
+                            columnWrapperStyle={{gap: 20}}
+                            contentContainerStyle={{paddingBottom: 70}}
+                        />
+                    </View>
+                }
+            </View>
         </Container>
     );
 };

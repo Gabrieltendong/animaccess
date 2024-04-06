@@ -21,7 +21,7 @@ const SearchByCategorieScreen = ({navigation, route}) => {
     const { data: list_service_by_categorie, isLoading } = useQuery(["listServiceByCategorie", categorie_id], get_list_service_by_categorie)
 
     return (
-        <Container title={"Recherche ..."}>
+        <Container>
             <View style = {styles.header}>
                 <TouchableOpacity style={styles.btn_back} onPress={() => navigation.goBack()}>
                     <Icon name={'ChevronLeft'} color={colors.WHITE} />
