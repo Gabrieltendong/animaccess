@@ -16,11 +16,11 @@ const BookingItem = ({item}) => {
 
     return (
         <View style={styles.container}>
-            <BookingStatusTag status={item.status_reservation} />
             <Image source={{uri: item?.prestataire_service?.image?item?.prestataire_service?.image:item?.prestataire_service?.service?.service?.image}} style={styles.image_wrapper} />
             <View style={styles.content}>
                 <Text style={styles.title}>{item?.prestataire_service?.prestataire?.user?.name} {item?.prestataire_service?.prestataire?.user?.lastname}</Text>
                 <Text style={styles.sub_title}>{item?.prestataire_service?.service?.service?.name}</Text>
+                <BookingStatusTag status={item.status_reservation} />
                 <View style = {styles.row}>
                     <Icon name={"Calendar"} color={colors.BLACK} size={16} />
                     <Text style={styles.text_time}>{moment(new Date(item?.date_reservation)).format("dddd DD MMMM YYYY")}</Text>

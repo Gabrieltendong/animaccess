@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
-        height: 140,
+        height: 160,
         flexDirection: 'row',
         borderRadius: 20,
         backgroundColor: colors.WHITE,
@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
         padding: 10
     },
     image_wrapper: {
-        height: 140,
+        height: 160,
         width: 80,
         borderBottomLeftRadius: 20,
         borderTopLeftRadius: 20

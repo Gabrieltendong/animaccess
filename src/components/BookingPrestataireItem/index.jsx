@@ -16,7 +16,6 @@ const BookingPrestataireItem = ({item, style}) => {
 
     return (
         <View style={[styles.container, style]}>
-            <BookingStatusTag status={item.status_reservation} />
             <Image 
                 source={{uri: 
                     item?.prestataire_service?.image?
@@ -28,6 +27,7 @@ const BookingPrestataireItem = ({item, style}) => {
             <View style={styles.content}>
                 <Text style={styles.title}>{item?.etablissement?.name}</Text>
                 <Text style={styles.sub_title}>{item?.etablissement?.gerant?.name}</Text>
+                <BookingStatusTag status={item.status_reservation} />
                 <View style = {styles.row}>
                     <Icon name={"Calendar"} color={colors.BLACK} size={16} />
                     <Text style={styles.text_time}>{moment(new Date(item?.date_reservation)).format("dddd DD MMMM YYYY")}</Text>
