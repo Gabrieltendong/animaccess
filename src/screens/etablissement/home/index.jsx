@@ -26,7 +26,7 @@ const HomeScreen = ({navigation}) => {
     }, [])
     return (
         <Container title={'Bonjour !'}>
-            <SearchBar onPressIn={() => navigation.navigate(SEARCH_STACK)} /> 
+            {/* <SearchBar onPressIn={() => navigation.navigate(SEARCH_STACK)} />  */}
             <ScrollView contentContainerStyle={{paddingBottom: 80}}>
                 <View style={styles.section_title_wrapper}>
                     <Text style={styles.section_title}>Catégories</Text>
