@@ -227,7 +227,7 @@ const MyScheduleScreen = () => {
                 <ScrollView>
                     {
                         (Array.isArray(list_planning) && list_planning.length == 0 || list_planning?.error) &&
-                        <Empty title={`Vous n'avez pas de plage horraire pour ce jour`} />
+                        <Empty title={`Vous n'avez pas de plage horaire pour ce jour`} />
                     } 
                     {
                         isLoadingListPlaning &&
