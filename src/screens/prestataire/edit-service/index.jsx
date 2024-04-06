@@ -170,7 +170,7 @@ const EditServiceScreen = ({navigation, route}) => {
                 render={({field: {onChange, value}}) => (
                     <TextInput
                         defaultValue={value}
-                        placeholder='Donner une description de votre service'
+                        placeholder='Donnez une description de votre service'
                         onChangeText={onChange}
                         numberOfLines={4}
                         multiline={true}
@@ -207,7 +207,7 @@ const EditServiceScreen = ({navigation, route}) => {
             />
             <Alert
                 type={"success"}
-                title={"Modification reussi"}
+                title={"Modification réussi"}
                 subTitle={"Votre service a bien été Modifié "}
                 isVisible={isVisibleModal}
                 onToggle={handleCloseModal}

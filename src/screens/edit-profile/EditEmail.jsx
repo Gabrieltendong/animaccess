@@ -97,7 +97,7 @@ const EditEmailScreen = ({navigation}) => {
             <Alert 
                 type={"success"}
                 isVisible={isVisible}
-                title={"Modification reussi"}
+                title={"Modification réussi"}
                 subTitle={"Votre modification a bien été en compte"}
                 onToggle={handleCloseModal}
             />

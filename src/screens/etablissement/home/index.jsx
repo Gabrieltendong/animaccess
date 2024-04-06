@@ -40,7 +40,7 @@ const HomeScreen = ({navigation}) => {
                     {
                         (list_all_categorie?.results && list_all_categorie?.results.length > 0) &&
                         <TouchableOpacity onPress={() => navigation.navigate(SEARCH_STACK)} style={styles.btn_all_categorie}>
-                            <Text style={styles.text_btn}>Afficher toutes les categories</Text>
+                            <Text style={styles.text_btn}>Afficher toutes les catégories</Text>
                         </TouchableOpacity>
                     }
                     

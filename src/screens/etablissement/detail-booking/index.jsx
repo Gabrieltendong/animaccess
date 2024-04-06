@@ -124,7 +124,7 @@ const DetailBookingEtablissementScreen = ({route, navigation}) => {
                                         styles.text_status_wraper
                                     ]}
                                 >
-                                    <Text style={styles.text_status_bold}>Réservation réfusée</Text>
+                                    <Text style={styles.text_status_bold}>Réservation refusée</Text>
                                 </View>
                             </View>
                         }

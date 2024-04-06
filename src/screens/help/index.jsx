@@ -53,7 +53,7 @@ const HelpScreen = ({navigation}) => {
                 control={control}
                 render={({field: {onChange, value}}) => (
                     <TextInput
-                        placeholder='Donner une description de votre besoin'
+                        placeholder='Donnez une description de votre besoin'
                         onChangeText={onChange}
                         numberOfLines={4}
                         multiline={true}

@@ -142,7 +142,7 @@ const PasswordPrestataire = ({navigation, route}) => {
             <Alert 
                 type={"success"}
                 isVisible={isVisibleModalSuccess}
-                title={"Inscription reussi"}
+                title={"Inscription réussi"}
                 subTitle={messageSuccess}
                 onToggle={handleCloseModalSuccess}
             />

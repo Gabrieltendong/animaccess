@@ -17,7 +17,7 @@ const Help = () => {
         >
             <Text style={styles.title}>Besoin d'aide ?</Text>
             <Text style={styles.sub_title}>Vous souhaitez être accompagné dans votre recherche ?</Text>
-            <Text style={styles.sub_title}>Vous pouvez nous contacter, un conseiller vas vous aider a faire le premier pas!</Text>
+            <Text style={styles.sub_title}>Vous pouvez nous contacter, un conseiller va vous aider à faire le premier pas !</Text>
             <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate(HELP)}>
                 <Text style={styles.text_btn}>Notre assistance</Text>
             </TouchableOpacity>

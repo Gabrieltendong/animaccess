@@ -197,7 +197,7 @@ const CreateServiceScreen = ({navigation}) => {
                 control={control}
                 render={({field: {onChange, value}}) => (
                     <TextInput
-                        placeholder='Donner une description de votre service'
+                        placeholder='Donnez une description de votre service'
                         onChangeText={onChange}
                         numberOfLines={4}
                         multiline={true}
@@ -232,7 +232,7 @@ const CreateServiceScreen = ({navigation}) => {
             />
             <Alert
                 type={"success"}
-                title={"Création service reussi"}
+                title={"Création du service réussi"}
                 subTitle={"Votre service a bien été crée les etablissements peuvent déjà faire des reservations"}
                 isVisible={isVisibleModal}
                 onToggle={handleCloseModal}

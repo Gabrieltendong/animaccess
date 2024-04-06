@@ -138,7 +138,7 @@ const BookingServiceScreen = ({ navigation }) => {
             }
             if (res.status == false) {
                 setIsVisibleModalError(true)
-                setMessageError("Vous avez déjà reserver une de ces plages horaires")
+                setMessageError("Vous avez déjà réservé une de ces plages horaires")
                 // setMessageError(res.error)
             }
         }
@@ -269,8 +269,8 @@ const BookingServiceScreen = ({ navigation }) => {
                     type={"success"}
                     isVisible={isVisible}
                     onToggle={handleCloseModal}
-                    title={"Réservation reussi"}
-                    subTitle={"Votre réservation a été effectué avec succès, Veuillez suivre le statut de votre réservation dans vos réservation"}
+                    title={"Réservation réussi"}
+                    subTitle={"Votre réservation a été effectuée avec succès. Veuillez suivre le statut de votre réservation dans vos réservations."}
                 />
                 <Alert
                     type={"danger"}

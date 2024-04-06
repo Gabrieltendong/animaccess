@@ -33,7 +33,7 @@ const SignUpScreen = ({navigation}) => {
                 <Text style={styles.text_header}>Inscription</Text>
             </ImageBackground>
             <View style={styles.content}>
-                <Text style={styles.text_select_profil}>Vous etes</Text>
+                <Text style={styles.text_select_profil}>Vous êtes</Text>
                 <View style={styles.row}>
                     <View style = {styles.type_profile_wrapper}>
                         <TouchableOpacity 

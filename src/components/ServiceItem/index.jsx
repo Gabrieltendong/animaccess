@@ -65,7 +65,7 @@ const ServiceItem = ({item}) => {
                 type={"success"}
                 isVisible={isVisible}
                 title={"Ajout au favoris"}
-                subTitle={"Se service a été ajouté a vos favoris"}
+                subTitle={"Ce service a été ajouté à vos favoris."}
                 onToggle={() => setIsVisible(false)}
             />
         </TouchableOpacity>

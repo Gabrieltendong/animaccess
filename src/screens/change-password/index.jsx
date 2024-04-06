@@ -120,7 +120,7 @@ const ChangePasswordScreen = ({navigation}) => {
             <Alert
                 type={"success"}
                 isVisible={isVisibleModalSuccess}
-                title={"Modification reussi"}
+                title={"Modification réussi"}
                 subTitle={"Votre mot de passe a bien été modifié"}
                 onToggle={handleCloseModalSuccess}
             />
