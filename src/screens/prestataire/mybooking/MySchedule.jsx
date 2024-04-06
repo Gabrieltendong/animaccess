@@ -193,7 +193,8 @@ const MyScheduleScreen = () => {
             setDays(newWeekDays)
         }
     }, [date])
-    
+    console.log(list_planning);
+
     return (
         <ScrollView style={styles.container} contentContainerStyle={{paddingBottom: 80}}> 
             <View style={styles.content_calendar}>
@@ -235,7 +236,9 @@ const MyScheduleScreen = () => {
                     }
                     <View style={styles.plage_horaire_wrapper}>
                         {
-                            Array.isArray(list_planning) && list_planning.map((plage_horaire, index) => {
+                            Array.isArray(list_planning) && list_planning
+                            .sort((a, b) => a.heure_debut.localeCompare(b.heure_debut))
+                            .map((plage_horaire, index) => {
                                 return(
                                     <View 
                                         key={index} 
