@@ -33,14 +33,12 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Animaccess a besoin d'accéder à votre camera pour que vous puissiez prendre des photos de votre CNI, nous envoyer afin de faire valider votre profile.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Nous avons besoin de votre localisation pour vous faciliter la recherche des emplacements</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Nous avons besoin de votre localisation pour vous faciliter la recherche des emplacements</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Animaccess a besoin d'accéder à votre galerie photo pour que vous puissiez nous fournir vos CNI pour valider votre profile.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-    <string>Nous avons besoin de votre localisation pour vous faciliter la recherche des emplacements</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Nous avons besoin de votre localisation pour vous faciliter la recherche des emplacements</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Bold.ttf</string>
