@@ -28,9 +28,8 @@ const CreateServiceScreen = ({navigation}) => {
     const {user} = useUserStore()
     const { getListeServicePrestataire } = useService()
     const { refetch: refreshListServicePrestataire } = getListeServicePrestataire(user?.account?.id)
-    const { list_service_prestataire } = useServiceStore()
     const [selected_categorie_id, setSelectedCategorieId] = useState()
-    const {data: listTypeService, isLoading, refetch: refreshListTypeService} = useQuery(["Service_by_categorie", selected_categorie_id], get_service)
+    const {data: listTypeService, isLoading, refetch: refreshListTypeService} = useQuery(["list_service"], get_service)
     const [error_type_service, setErrorTypeService] = useState()
     const { handleSubmit, control, setValue, formState: { errors } } = useForm();
     const [image, setImage] = useState() 
@@ -67,7 +66,7 @@ const CreateServiceScreen = ({navigation}) => {
             console.log("data", JSON.stringify(dataForm))
             const res = await createService(dataForm)
             // console.log("create service", res)
-            if(res.service){
+            if(res.id){
                 refreshListServicePrestataire()
                 setIsVisibleModal(true)
             }
@@ -88,33 +87,11 @@ const CreateServiceScreen = ({navigation}) => {
         navigation.goBack()
     }
 
-    useEffect(() => {
-        console.log("selected_categorie_id", selected_categorie_id)
-        refreshListTypeService()
-    }, [selected_categorie_id])
+  
   
     return (
         <KeyboardAvoidingView behavior={Platform.OS == 'ios'? 'padding': 'height'} style={styles.container}>
             <ScrollView  keyboardShouldPersistTaps='always' contentContainerStyle={{paddingBottom: 100}}>
-            
-            <SelectDropdown
-                buttonStyle={styles.input_select}
-                defaultButtonText={"Choisir une categorie"}
-                defaultValue={selected_categorie_id}
-                onSelect={(item) => {
-                    return {
-                        ...setSelectedCategorieId(item.id)
-                    }
-                }}
-                data={listCategorie?.results}
-                buttonTextAfterSelection={(item, index) => {
-                    console.log("object", item.name)
-                    return item.name
-                }}
-                buttonTextStyle={styles.buttonTextStyle}
-                rowTextForSelection={(item, index) => <Text>{item?.name}</Text>}
-                renderDropdownIcon={() => <Icon name={"ChevronDown"} color={colors.WHITE}/>}
-            />
             <SelectDropdown
                 buttonStyle={[styles.input_select, {marginTop: 20}]}
                 defaultButtonText={"Choisir le type de service"}
@@ -125,12 +102,12 @@ const CreateServiceScreen = ({navigation}) => {
                         ...setErrorTypeService('')
                     }
                 }}
-                data={listTypeService}
+                data={listTypeService?.results}
                 buttonTextAfterSelection={(item, index) => {
-                    return item.service.name
+                    return item.name
                 }}
                 buttonTextStyle={styles.buttonTextStyle}
-                rowTextForSelection={(item, index) => <Text>{item?.service?.name}</Text>}
+                rowTextForSelection={(item, index) => <Text>{item?.name}</Text>}
                 renderDropdownIcon={() => <Icon name={"ChevronDown"} color={colors.WHITE}/>}
             />
             {error_type_service && <Text style={styles.error}>{error_type_service}</Text>}

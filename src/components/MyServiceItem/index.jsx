@@ -9,14 +9,16 @@ import { delete_service_prestataire } from 'src/feature/service/service.service'
 import { useMutation } from 'react-query';
 import { useService } from 'src/feature/service/useService';
 import { useUserStore } from 'src/store/user.store';
+import { useServiceStore } from 'src/store/service.store';
 import { useNavigation } from '@react-navigation/native';
-import { EDIT_SERVICE } from '@constants/routes';
+import { EDIT_SERVICE, DETAIL_SERVICE } from '@constants/routes';
 
 // create a component
 const MyServiceItem = ({item}) => {
 
     const navigation = useNavigation()
     const { getListeServicePrestataire } = useService() 
+    const { setSelectedService } = useServiceStore()
     const { user } = useUserStore()
     const { refetch } = getListeServicePrestataire(user?.account?.id)
     const { mutateAsync: removeServicePrestataire, isLoading: isLoadingRemoveSevice} = useMutation(delete_service_prestataire)
@@ -24,19 +26,26 @@ const MyServiceItem = ({item}) => {
     const onDeleteService = async () => {
         const res = await removeServicePrestataire(item.id)
         refetch() 
-     }
+    }
+
+    const openDetail = () => {
+        setSelectedService(item)
+        navigation.navigate(DETAIL_SERVICE)
+    }
 
     return (
         <View style={styles.container}>
-            <ImageBackground 
-                source={{uri: item?.image? item?.image: item?.service?.service?.image}} 
-                style={styles.card_image}
-                imageStyle={styles.card_image_border}
-            >
-                {/* <TouchableOpacity style={styles.btn_favorite}>
-                    <Icon name='Heart' color={colors.WHITE} />
-                </TouchableOpacity> */}
-            </ImageBackground>
+            <TouchableOpacity onPress={openDetail}>
+                <ImageBackground 
+                    source={{uri: item?.image? item?.image: item?.service?.service?.image}} 
+                    style={styles.card_image}
+                    imageStyle={styles.card_image_border}
+                >
+                    {/* <TouchableOpacity style={styles.btn_favorite}>
+                        <Icon name='Heart' color={colors.WHITE} />
+                    </TouchableOpacity> */}
+                </ImageBackground>
+            </TouchableOpacity>
             <TouchableOpacity 
                 style={styles.btn_delete}
                 onPress={onDeleteService}

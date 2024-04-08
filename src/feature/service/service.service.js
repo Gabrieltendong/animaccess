@@ -1,10 +1,10 @@
 import { http } from "@config/httpClient"
 
 
-export const get_service = async ({queryKey}) => {
-    const [_key, categorie_id] = queryKey
+export const get_service = async () => {
+    // const [_key, categorie_id] = queryKey
     try{
-        const res = await http.get(`/list-categorie-service-by-categorie/${categorie_id}/`)
+        const res = await http.get(`/service/`)
         console.log("get liste service", res.data)
         return res.data
         
@@ -84,7 +84,7 @@ export const search_service = async ({queryKey}) => {
         const res = await http.get(`/search/?q=${query}`)
         return res.data
     }catch(error){
-        console.log('error create_service', error)
+        console.log('error search_service', error)
         return error.response.data
     }
 }

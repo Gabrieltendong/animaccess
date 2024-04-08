@@ -8,6 +8,7 @@ import Icon from '@components/ui/Icon';
 import { colors } from '@themes/index';
 import Button from '@components/ui/Button';
 import { useServiceStore } from 'src/store/service.store';
+import { useUserStore } from 'src/store/user.store';
 import { BOOKING_SERVICE, PROFIL_PRESTATAIRE } from '@constants/routes';
 import { useService } from 'src/feature/service/useService';
 
@@ -15,6 +16,7 @@ import { useService } from 'src/feature/service/useService';
 const DetailServiceScreen = ({navigation, route}) => {
 
     const { infos_service } = useServiceStore()
+    const { user } = useUserStore()
     const { getListeServicePrestataire } = useService()
     const { data: list_service_prestataire } = getListeServicePrestataire(infos_service?.prestataire?.id)
 
@@ -77,11 +79,14 @@ const DetailServiceScreen = ({navigation, route}) => {
                         />
                     </MapView>
                 </View>
-                <Button 
-                    text='Réserver' 
-                    style={styles.btn_booking}
-                    onPress={() => navigation.navigate(BOOKING_SERVICE)} 
-                />
+                {
+                    user.account.id != infos_service.prestataire.id &&
+                    <Button 
+                        text='Réserver' 
+                        style={styles.btn_booking}
+                        onPress={() => navigation.navigate(BOOKING_SERVICE)} 
+                    />
+                }
             </ScrollView>
         </Container>
     );

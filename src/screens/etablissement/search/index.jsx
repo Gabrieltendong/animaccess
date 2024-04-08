@@ -41,7 +41,7 @@ const SearchScreen = ({navigation}) => {
                     Array.isArray(list_results_search_service?.result)?
                     <FlatList 
                         data={list_results_search_service?.result}
-                        renderItem={CardItem}
+                        renderItem={({item}) => <CardItem item={item} />}
                         ListEmptyComponent={() => <Empty title={"Aucun service trouvé pour votre recherche"} />}
                         numColumns={2}
                         columnWrapperStyle={{gap: 10}}
