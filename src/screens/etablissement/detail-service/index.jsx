@@ -20,6 +20,9 @@ const DetailServiceScreen = ({navigation, route}) => {
     const { getListeServicePrestataire } = useService()
     const { data: list_service_prestataire } = getListeServicePrestataire(infos_service?.prestataire?.id)
 
+    console.log("infos_service");
+    console.log(infos_service);
+    const service_name = infos_service.service ? infos_service.service.service.name : infos_service.services.name;
     return (
         <Container showBackButton={true}>
             <ScrollView style={styles.container} contentContainerStyle={{paddingBottom: 60}}>
@@ -32,7 +35,7 @@ const DetailServiceScreen = ({navigation, route}) => {
                     </View>
                     <View style={styles.infos_service_wrapper}>
                         <Text style={styles.title}>{infos_service?.prestataire?.user?.name} {infos_service?.prestataire?.user?.lastname}</Text>
-                        <Text style={styles.subtitle}>{infos_service.service.service.name}</Text>
+                        <Text style={styles.subtitle}>{service_name}</Text>
                         <Text style={styles.small_text}>{Array.isArray(list_service_prestataire) && list_service_prestataire.length} service actif</Text>
                         <Button 
                             text='Voir le profil' 
