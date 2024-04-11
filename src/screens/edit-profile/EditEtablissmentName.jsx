@@ -38,13 +38,13 @@ const EditEtablissementNameScreen = ({navigation}) => {
     }, [])
 
     return (
-        <Container showBackButton={true} title={"Modifier le nom de l'etablissement"}>
+        <Container showBackButton={true} title={"Modifier le nom de l'établissement"}>
             <Controller
                 control={control}
                 render = {({field: {onChange, value}}) => (
                     <Input 
                         iconName={'Home'} 
-                        placeholder={"Nom de l'etablissement"}
+                        placeholder={"Nom de l'établissement"}
                         onChangeText={(value) => onChange(value)}
                         value={value}
                     />
@@ -52,7 +52,7 @@ const EditEtablissementNameScreen = ({navigation}) => {
                 name='etablissement_name'
                 rules={{ required: true }}
             />
-            {errors.etablissement_name && <Text style={styles.error}>Le nom de l'etablissement est obligatoire</Text>}
+            {errors.etablissement_name && <Text style={styles.error}>Le nom de l'établissement est obligatoire</Text>}
             <Button 
                 text='Enregistrer' 
                 style={styles.btn} 

@@ -50,7 +50,7 @@ const SearchScreen = ({navigation}) => {
                     />
                     :
                     <View>
-                        <Text style={styles.section_title}>Recherche par categorie</Text>
+                        <Text style={styles.section_title}>Recherche par catégorie</Text>
                         <FlatList
                             data={list_all_categorie?.results}
                             renderItem={({item}) => <CardCategorie item={item} navigation={navigation} />}

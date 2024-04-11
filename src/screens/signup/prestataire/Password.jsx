@@ -16,7 +16,7 @@ import { plage_horaires } from '@utils/getPlageHoraire';
 import { create_planning } from 'src/feature/booking/booking.service';
 import { useMutation } from 'react-query';
 
-const messageSuccess = "Votre compte a bien été crée, Nous vous averons un mail de confirmation dans les 24h une fois votre inscription validé"
+const messageSuccess = "Votre compte a bien été créé, Nous vous enverrons un mail de confirmation sous 24h une fois votre inscription validée"
 
 // create a component
 const PasswordPrestataire = ({navigation, route}) => {
@@ -114,7 +114,7 @@ const PasswordPrestataire = ({navigation, route}) => {
                             value={value}
                             onChangeText={onChange}
                             iconName={'LockKeyhole'} 
-                            placeholder={'Confirmer votre mot de passe'}
+                            placeholder={'Confirmez votre mot de passe'}
                             leftIcon={showConfirmPassword?"Eye":"EyeOff"}
                             secureTextEntry={!showConfirmPassword}
                             onPressLeftIcon={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -125,12 +125,12 @@ const PasswordPrestataire = ({navigation, route}) => {
                         required: true,
                         validate: (val) => {
                             if (watch('password') != val) {
-                              return "Les deux mots de passe ne sont pas identique";
+                              return "Les deux mots de passe ne sont pas identiques";
                             }
                           }
                     }}
                 />
-                {errors.confirm_password?.type == 'validate' && <Text style={styles.error}>Les deux mots de passe ne sont pas identique</Text>}
+                {errors.confirm_password?.type == 'validate' && <Text style={styles.error}>Les deux mots de passe ne sont pas identiques</Text>}
                 {errors.confirm_password?.type == 'required' && <Text style={styles.error}>Ce champ est obligatoire</Text>}
                 <Button 
                     text='Créer mon compte' 
@@ -142,7 +142,7 @@ const PasswordPrestataire = ({navigation, route}) => {
             <Alert 
                 type={"success"}
                 isVisible={isVisibleModalSuccess}
-                title={"Inscription réussi"}
+                title={"Inscription réussie"}
                 subTitle={messageSuccess}
                 onToggle={handleCloseModalSuccess}
             />

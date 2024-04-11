@@ -93,7 +93,7 @@ const ChangePasswordScreen = ({navigation}) => {
                         value={value}
                         onChangeText={onChange}
                         iconName={'LockKeyhole'} 
-                        placeholder={'Confirmer votre nouveau mot de passe'}
+                        placeholder={'Confirmez votre nouveau mot de passe'}
                         leftIcon={showConfirmPassword?"Eye":"EyeOff"}
                         secureTextEntry={!showConfirmPassword}
                         onPressLeftIcon={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -104,12 +104,12 @@ const ChangePasswordScreen = ({navigation}) => {
                     required: true,
                     validate: (val) => {
                         if (watch('password') != val) {
-                            return "Les deux mots de passe ne sont pas identique";
+                            return "Les deux mots de passe ne sont pas identiques";
                         }
                     }
                 }}
             />
-            {errors.confirm_password?.type == 'validate' && <Text style={styles.error}>Les deux mots de passe ne sont pas identique</Text>}
+            {errors.confirm_password?.type == 'validate' && <Text style={styles.error}>Les deux mots de passe ne sont pas identiques</Text>}
             {errors.confirm_password?.type == 'required' && <Text style={styles.error}>Ce champ est obligatoire</Text>}
             <Button 
                 text='Valider' 
