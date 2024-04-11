@@ -124,6 +124,13 @@ const BookingServiceScreen = ({ navigation }) => {
         const plage_horaires = list_plage_horaire.filter((item) => selected_plage_horaire.includes(item.id))
         console.log("plage_horaires", plage_horaires)
         let isNotValidPlageHoraire = false
+
+        if (moment(selected_date).isBefore(moment().format("YYYY-MM-DD"))) {
+            setMessageError("Vous ne pouvez pas effectuer de réservation pour une date passée.");
+            setIsVisibleModalError(true);
+            return; // Arrête l'exécution de la fonction ici
+        }
+
         if (plage_horaires.length > 1) {
             for (let i = 0; i < plage_horaires.length; i++) {
                 if (plage_horaires[i] && plage_horaires[i + 1] && Math.abs(parseInt(plage_horaires[i + 1].heure_fin.substring(0, 2)) - parseInt(plage_horaires[i].heure_fin.substring(0, 2))) > 1) {
