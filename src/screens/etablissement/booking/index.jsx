@@ -1,4 +1,3 @@
-//import liraries
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, ScrollView, Dimensions } from 'react-native';
 import { ExpandableCalendar, CalendarProvider, WeekCalendar } from 'react-native-calendars';
@@ -23,7 +22,6 @@ import { bonCommandHtml } from '@utils/bon-command';
 
 moment.locale('fr')
 
-// create a component
 const BookingServiceScreen = ({ navigation }) => {
 
     const { user } = useUserStore()
@@ -38,15 +36,21 @@ const BookingServiceScreen = ({ navigation }) => {
     const [selected_plage_horaire, setSelectedPlageHoraire] = useState([])
     const [messageError, setMessageError] = useState()
     const [days, setDays] = useState([])
+    const [showYear, setShowYear] = useState(false);
 
+    const handleNextYear = () => {
+        setDate(moment(date).add(1, 'year').format("YYYY-MM-DD"));
+    };
+
+    const handlePreviousYear = () => {
+        setDate(moment(date).subtract(1, 'year').format("YYYY-MM-DD"));
+    };
 
     const onChangeDate = (date) => {
         setSelectedDate(moment(new Date(date)).format("YYYY-MM-DD"))
         refretchListPlageHoraire()
         setSelectedPlageHoraire([])
     }
-
-    // console.log("infos_service", JSON.stringify(infos_service?.prestataire))
 
     const formatPlageHoraire = () => {
         return list_plage_horaire.map((horaire) => {
@@ -90,7 +94,7 @@ const BookingServiceScreen = ({ navigation }) => {
                 const plageIndex = list_plage_horaire.findIndex(plage => plage.id === plage_horaire.id);
                 const plagesNecessaires = list_plage_horaire.slice(plageIndex, plageIndex + serviceDuree);
                 const plagesDisponibles = plagesNecessaires.every(plage => plage.status_horaire != "OCCUPEE");
-                
+
                 if (plagesDisponibles) {
                     const newList = [...selected_plage_horaire, ...plagesNecessaires.map(plage => plage.id)];
                     setSelectedPlageHoraire(newList);
@@ -155,14 +159,19 @@ const BookingServiceScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
-        const newWeekDays = []
+        // Obtenir le début de la semaine selon la norme ISO (lundi)
+        const startOfWeek = moment(date).startOf('isoWeek');
+        const newWeekDays = [];
+    
         for (let i = 0; i < 7; i++) {
-            newWeekDays.push(moment(new Date(date)).add(i, 'd'))
-            setDays(newWeekDays)
+            // Ajouter chaque jour de la semaine en commençant par le lundi
+            newWeekDays.push(moment(startOfWeek).add(i, 'days'));
         }
-    }, [date])
-
-    // console.log("list_plage_horaire", list_plage_horaire)
+    
+        setDays(newWeekDays);
+    }, [date]);
+    
+    
 
     const handleCloseModal = () => {
         navigation.navigate(ETABLISSEMENT_NAVIGATOR)
@@ -184,18 +193,41 @@ const BookingServiceScreen = ({ navigation }) => {
                     </Text>
                 </View>
                 <View style={styles.content_calendar}>
-                    <View style={styles.header_week}>
-                        <TouchableOpacity style={styles.btn_row} onPress={handlePreviousWeek}>
-                            <ChevronLeft color={colors.WHITE} size={15} />
-                        </TouchableOpacity>
-                        <Text style={styles.header_month_name}>{moment(new Date(date)).format('MMMM')}</Text>
-                        <TouchableOpacity style={styles.btn_row} onPress={handleNextWeek}>
-                            <ChevronRight color={colors.WHITE} size={15} />
-                        </TouchableOpacity>
+                    <View>
+                        {showYear ? (
+                            // Affichage pour le choix de l'année
+                            <View style={styles.header_week}>
+                                <TouchableOpacity style={styles.btn_row} onPress={handlePreviousYear}>
+                                    <ChevronLeft color={colors.WHITE} size={15} />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => setShowYear(false)}>
+                                    <Text style={styles.header_month_name}>
+                                        {moment(new Date(date)).format('YYYY')}
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.btn_row} onPress={handleNextYear}>
+                                    <ChevronRight color={colors.WHITE} size={15} />
+                                </TouchableOpacity>
+                            </View>
+                        ) : (
+                            // Affichage pour le choix de la semaine
+                            <View style={styles.header_week}>
+                                <TouchableOpacity style={styles.btn_row} onPress={handlePreviousWeek}>
+                                    <ChevronLeft color={colors.WHITE} size={15} />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => setShowYear(true)}>
+                                    <Text style={styles.header_month_name}>
+                                        {moment(new Date(date)).format('MMMM YYYY')}
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.btn_row} onPress={handleNextWeek}>
+                                    <ChevronRight color={colors.WHITE} size={15} />
+                                </TouchableOpacity>
+                            </View>
+                        )}
                     </View>
                     <View style={styles.day_wapper}>
-                        {
-                            days.map((day, index) => (
+                        {days.map((day, index) => (
                                 <TouchableOpacity
                                     onPress={() => onChangeDate(day)}
                                     style={[
@@ -284,5 +316,4 @@ const BookingServiceScreen = ({ navigation }) => {
     );
 };
 
-//make this component available to the app
 export default BookingServiceScreen;
