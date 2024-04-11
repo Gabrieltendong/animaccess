@@ -67,7 +67,7 @@ const CreateServiceStep1 = ({navigation}) => {
             
             <SelectDropdown
                 buttonStyle={styles.input_select}
-                defaultButtonText={"Choisir une categorie"}
+                defaultButtonText={"Choisir une catégorie"}
                 defaultValue={seleted_categorie_id}
                 onSelect={(item) => {
                     return {

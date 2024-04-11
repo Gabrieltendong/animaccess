@@ -40,7 +40,7 @@ const SearchByCategorieScreen = ({navigation, route}) => {
             <FlatList 
                 data={list_service_by_categorie}
                 renderItem={({item}) => <CardItem item={item} />}
-                ListEmptyComponent={() => <Empty title={"Aucun service trouvé pour cette categorie"} />}
+                ListEmptyComponent={() => <Empty title={"Aucun service trouvé pour cette catégorie"} />}
                 numColumns={2}
                 columnWrapperStyle={{gap: 10}}
                 style={styles.content}

@@ -4,7 +4,7 @@ export const list_categorie = [
         image: require('@assets/images/categorie_age.png')
     },
     {
-        title: 'Pour nos anciens',
+        title: 'Pour les anciens',
         image: require('@assets/images/categorie_enfant.png')
     },
     {

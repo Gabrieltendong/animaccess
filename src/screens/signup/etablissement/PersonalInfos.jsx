@@ -24,7 +24,7 @@ const PersonalInfosEtablissement = ({navigation}) => {
         if(type_etablissement){
             navigation.navigate(PASSWORD_ETABLISSEMENT, {registerData: {...data, type_etablissement}})
         }else{
-            setErrorTypeEtablissement("Vous devez choisir le type de l'etablissement")
+            setErrorTypeEtablissement("Vous devez Choisir le type de d'établissement")
         }
     }
 
@@ -44,7 +44,7 @@ const PersonalInfosEtablissement = ({navigation}) => {
                 <View style={styles.input_select_wrapper}>
                     <SelectDropdown
                         buttonStyle={styles.input_select}
-                        defaultButtonText={"Choisir le type de l'etablissement"}
+                        defaultButtonText={"Choisir le type de d'établissement"}
                         defaultValue={type_etablissement}
                         onSelect={(item) => {
                             return {
@@ -67,7 +67,7 @@ const PersonalInfosEtablissement = ({navigation}) => {
                     render = {({field: {onChange, value}}) => (
                         <Input 
                             iconName={'Home'} 
-                            placeholder={"Nom de l'etablissement"}
+                            placeholder={"Nom de l'établissement"}
                             onChangeText={(value) => onChange(value)}
                             value={value}
                         />
@@ -75,7 +75,7 @@ const PersonalInfosEtablissement = ({navigation}) => {
                     name='etablissement_name'
                     rules={{ required: true }}
                 />
-                {errors.etablissement_name && <Text style={styles.error}>Le nom de l'etablissement est obligatoire</Text>}
+                {errors.etablissement_name && <Text style={styles.error}>Le nom de l'établissement est obligatoire</Text>}
                 <Controller
                     control={control}
                     render = {({field: {onChange, value}}) => (

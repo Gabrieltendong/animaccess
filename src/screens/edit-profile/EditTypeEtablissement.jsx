@@ -58,7 +58,7 @@ const EditTypeEtablissementScreen = ({navigation}) => {
                 <SelectDropdown
                     ref={dropdownRef}
                     buttonStyle={styles.input_select}
-                    defaultButtonText={"Choisir le type de l'etablissement"}
+                    defaultButtonText={"Choisir le type de d'établissement"}
                     defaultValue={type_etablissement}
                     onSelect={(item) => {
                         return {

@@ -1,5 +1,4 @@
-//import liraries
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, ScrollView, Dimensions } from 'react-native';
 import { ExpandableCalendar, CalendarProvider, WeekCalendar } from 'react-native-calendars';
 import DocumentPicker from 'react-native-document-picker'
@@ -23,7 +22,6 @@ import { bonCommandHtml } from '@utils/bon-command';
 
 moment.locale('fr')
 
-// create a component
 const BookingServiceScreen = ({ navigation }) => {
 
     const { user } = useUserStore()
@@ -38,15 +36,17 @@ const BookingServiceScreen = ({ navigation }) => {
     const [selected_plage_horaire, setSelectedPlageHoraire] = useState([])
     const [messageError, setMessageError] = useState()
     const [days, setDays] = useState([])
-
+    const [scrollViewWidth, setScrollViewWidth] = useState(0);
+    const months = moment.months();
+    const [selectedYear, setSelectedYear] = useState(moment().year());
+    const yearScrollViewRef = useRef(null);
+    const [years, setYears] = useState([]);
 
     const onChangeDate = (date) => {
         setSelectedDate(moment(new Date(date)).format("YYYY-MM-DD"))
         refretchListPlageHoraire()
         setSelectedPlageHoraire([])
     }
-
-    // console.log("infos_service", JSON.stringify(infos_service?.prestataire))
 
     const formatPlageHoraire = () => {
         return list_plage_horaire.map((horaire) => {
@@ -90,7 +90,7 @@ const BookingServiceScreen = ({ navigation }) => {
                 const plageIndex = list_plage_horaire.findIndex(plage => plage.id === plage_horaire.id);
                 const plagesNecessaires = list_plage_horaire.slice(plageIndex, plageIndex + serviceDuree);
                 const plagesDisponibles = plagesNecessaires.every(plage => plage.status_horaire != "OCCUPEE");
-                
+
                 if (plagesDisponibles) {
                     const newList = [...selected_plage_horaire, ...plagesNecessaires.map(plage => plage.id)];
                     setSelectedPlageHoraire(newList);
@@ -120,6 +120,13 @@ const BookingServiceScreen = ({ navigation }) => {
         const plage_horaires = list_plage_horaire.filter((item) => selected_plage_horaire.includes(item.id))
         console.log("plage_horaires", plage_horaires)
         let isNotValidPlageHoraire = false
+
+        if (moment(selected_date).isBefore(moment().format("YYYY-MM-DD"))) {
+            setMessageError("Vous ne pouvez pas effectuer de réservation pour une date passée.");
+            setIsVisibleModalError(true);
+            return; // Arrête l'exécution de la fonction ici
+        }
+
         if (plage_horaires.length > 1) {
             for (let i = 0; i < plage_horaires.length; i++) {
                 if (plage_horaires[i] && plage_horaires[i + 1] && Math.abs(parseInt(plage_horaires[i + 1].heure_fin.substring(0, 2)) - parseInt(plage_horaires[i].heure_fin.substring(0, 2))) > 1) {
@@ -145,30 +152,83 @@ const BookingServiceScreen = ({ navigation }) => {
 
     }
 
-    const handleNextWeek = () => {
-        setDate(moment(new Date(date)).add(1, 'w').format("YYYY-MM-DD"))
-
-    }
-
-    const handlePreviousWeek = () => {
-        setDate(moment(new Date(date)).add(-1, 'w').format("YYYY-MM-DD"))
-    }
-
     useEffect(() => {
-        const newWeekDays = []
-        for (let i = 0; i < 7; i++) {
-            newWeekDays.push(moment(new Date(date)).add(i, 'd'))
-            setDays(newWeekDays)
-        }
-    }, [date])
+        const startOfMonth = moment(date).startOf('month');
+        const endOfMonth = moment(date).endOf('month');
+        const dayCount = endOfMonth.diff(startOfMonth, 'days') + 1; // Inclure le dernier jour
+        const allDaysOfMonth = [];
 
-    // console.log("list_plage_horaire", list_plage_horaire)
+        for (let i = 0; i < dayCount; i++) {
+            allDaysOfMonth.push(moment(startOfMonth).add(i, 'days'));
+        }
+
+        setDays(allDaysOfMonth);
+    }, [date]);
+
 
     const handleCloseModal = () => {
         navigation.navigate(ETABLISSEMENT_NAVIGATOR)
         setIsVisible(false)
     }
 
+    const dayWidth = 40; // Incluant les marges
+    const dayMargin = 10;
+
+    const selectedIndex = days.findIndex(day =>
+        moment(day).format("YYYY-MM-DD") === moment(selected_date).format("YYYY-MM-DD")
+    );
+
+    const scrollViewRef = useRef(null);
+
+    useEffect(() => {
+        if (scrollViewRef.current && selectedIndex >= 0 && scrollViewWidth > 0) {
+            const scrollToPosition = (dayWidth + dayMargin) * selectedIndex - (scrollViewWidth / 2) + (dayWidth / 2);
+            scrollViewRef.current.scrollTo({ x: scrollToPosition, animated: true });
+        }
+    }, [selectedIndex, scrollViewWidth]);
+
+    const [selectedMonthIndex, setSelectedMonthIndex] = useState(moment().month());
+    const monthScrollViewRef = useRef(null); // Référence pour la ScrollView des mois
+    const [monthScrollViewWidth, setMonthScrollViewWidth] = useState(0);
+
+    // Changement de la date basé sur le mois sélectionné
+    useEffect(() => {
+        // Changement de la date pour aller au début du mois sélectionné dans l'année courante
+        const newDate = moment().month(selectedMonthIndex).startOf('month');
+        setDate(newDate.format("YYYY-MM-DD"));
+    }, [selectedMonthIndex]);
+
+    // Calcul et ajustement du défilement pour centrer le mois sélectionné
+    useEffect(() => {
+        if (monthScrollViewRef.current && monthScrollViewWidth > 0) {
+            const monthWidth = 80; // Largeur estimée pour chaque élément de mois
+            const monthMargin = 10; // Marge autour de chaque élément de mois
+            const scrollToPosition = (monthWidth + monthMargin) * selectedMonthIndex - (monthScrollViewWidth / 2) + (monthWidth / 2);
+            monthScrollViewRef.current.scrollTo({ x: scrollToPosition, animated: true });
+        }
+    }, [selectedMonthIndex, monthScrollViewWidth]);
+
+    useEffect(() => {
+        // Créer une liste d'années pour la sélection
+        const currentYear = moment().year();
+        const yearsArray = Array.from({ length: 20 }, (_, index) => currentYear - 10 + index);
+        setYears(yearsArray);
+    }, []);
+
+    useEffect(() => {
+        // Centrer l'année sélectionnée dans la ScrollView
+        const index = years.indexOf(selectedYear);
+        const scrollViewWidth = Dimensions.get('window').width;
+        const scrollToPosition = index * 100 - scrollViewWidth / 2 - 80; // 100 est la largeur estimée de chaque élément d'année, 50 est la moitié de cette largeur
+        yearScrollViewRef.current?.scrollTo({ x: scrollToPosition, animated: true });
+    }, [selectedYear, years]);
+
+    // Fonction pour changer la date basée sur l'année sélectionnée
+    const handleSelectYear = (year) => {
+        setSelectedYear(year);
+        const newDate = moment(date).year(year).format("YYYY-MM-DD");
+        setDate(newDate);
+    };
     return (
         <Container showBackButton={true} >
             <ScrollView style={styles.container}>
@@ -184,33 +244,75 @@ const BookingServiceScreen = ({ navigation }) => {
                     </Text>
                 </View>
                 <View style={styles.content_calendar}>
-                    <View style={styles.header_week}>
-                        <TouchableOpacity style={styles.btn_row} onPress={handlePreviousWeek}>
-                            <ChevronLeft color={colors.WHITE} size={15} />
-                        </TouchableOpacity>
-                        <Text style={styles.header_month_name}>{moment(new Date(date)).format('MMMM')}</Text>
-                        <TouchableOpacity style={styles.btn_row} onPress={handleNextWeek}>
-                            <ChevronRight color={colors.WHITE} size={15} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.day_wapper}>
-                        {
-                            days.map((day, index) => (
+                    <View style={styles.monthWrapper}>
+                        <ScrollView
+                            ref={yearScrollViewRef}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={styles.yearsContentContainer}
+                        >
+                            {years.map((year, index) => (
                                 <TouchableOpacity
+                                    key={index}
+                                    onPress={() => handleSelectYear(year)}
+                                    style={[
+                                        styles.dayNameWrapper, styles.monthNameWrapper,
+                                        year === selectedYear && styles.monthNameSelected
+                                    ]}
+                                >
+                                    <Text style={[year === selectedYear && styles.monthText]}>{year}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+                    </View>
+                    <View style={styles.monthWrapper}>
+                        <ScrollView
+                            ref={monthScrollViewRef}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                            onLayout={(event) => {
+                                setMonthScrollViewWidth(event.nativeEvent.layout.width);
+                            }}
+                        >
+                            {months.map((month, index) => (
+                                <TouchableOpacity
+                                    key={index}
+                                    onPress={() => setSelectedMonthIndex(index)}
+                                    style={[
+                                        styles.dayNameWrapper, styles.monthNameWrapper,
+                                        index === selectedMonthIndex && styles.monthNameSelected
+                                    ]}
+                                >
+                                    <Text style={[{textTransform: 'capitalize'}, index === selectedMonthIndex && styles.monthText]}>{month}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+                    </View>
+                    <View style={styles.dayWrapper}>
+                        <ScrollView
+                            ref={scrollViewRef}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={{ alignItems: 'center' }}
+                            onLayout={(event) => {
+                                const { width } = event.nativeEvent.layout;
+                                setScrollViewWidth(width);
+                            }}>
+                            {days.map((day, index) => (
+                                <TouchableOpacity
+                                    key={index}
                                     onPress={() => onChangeDate(day)}
                                     style={[
-                                        styles.day_name_wrapper,
-                                        moment(new Date(day)).format("YYYY-MM-DD") == moment(new Date(selected_date)).format("YYYY-MM-DD") &&
-                                        styles.day_name_selected
-                                    ]}
-                                    key={index}
-                                >
-                                    <Text style={styles.day_name}>{moment(new Date(day)).format("ddd")}</Text>
+                                        styles.dayNameWrapper,
+                                        moment(new Date(day)).format("YYYY-MM-DD") === moment(new Date(selected_date)).format("YYYY-MM-DD") && styles.dayNameSelected
+                                    ]}>
+                                    <Text style={styles.dayName}>{moment(new Date(day)).format("ddd")}</Text>
                                     <Text style={styles.dateStyle}>{moment(new Date(day)).format("DD")}</Text>
                                 </TouchableOpacity>
-                            ))
-                        }
+                            ))}
+                        </ScrollView>
                     </View>
+
                     <ScrollView style={{ flex: 1 }}>
                         {
                             (Array.isArray(list_plage_horaire) && list_plage_horaire.length == 0 || list_plage_horaire?.error) &&
@@ -284,5 +386,4 @@ const BookingServiceScreen = ({ navigation }) => {
     );
 };
 
-//make this component available to the app
 export default BookingServiceScreen;
