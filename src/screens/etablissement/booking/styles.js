@@ -16,18 +16,43 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20
     },
-    day_wapper: {
+    dayWrapper: {
+        marginTop:20,
         flexDirection: 'row',
         marginHorizontal: 10,
         marginBottom: 20,
         borderBottomColor: '#ccc',
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
     },
-    day_name_wrapper: {
-        flex: 1, 
+    monthWrapper: {
+        marginTop:20,
+        flexDirection: 'row',
+        // marginBottom: 20,
+    },
+    monthNameWrapper:{
+        minWidth: 80,
+        paddingHorizontal: 10,
+        paddingVertical:5,
+        backgroundColor: '#f0f0f0',
+        borderRadius: 10,
+    },
+    monthNameSelected: {
+        backgroundColor: colors.PRIMARY,
+    },
+    monthText:{
+        textTransform: 'capitalize',
+        color: 'white',
+    },
+    dayNameWrapper: {
+        minWidth: 40,
         alignItems: 'center',
-        // borderBottomColor: colors.BLACK,
-        // borderBottomWidth: 1
+        justifyContent: 'center',
+        marginHorizontal: 5,
+    },
+    dayNameSelected: {
+        borderBottomColor: colors.PRIMARY,
+        borderBottomWidth: 2,
+        backgroundColor: 'white',
     },
     btn_row: {
         height: 20,
@@ -37,28 +62,24 @@ export const styles = StyleSheet.create({
         backgroundColor: colors.PRIMARY,
         borderRadius: 15
     },
-    day_name: {
+    dayName: {
         fontSize: 12,
         color: colors.GRAY,
         fontFamily: fonts.POPPINS_REGULAR,
         textTransform: 'capitalize'
     },
-    day_name_selected: {
-        borderBottomColor: colors.PRIMARY,
-        borderBottomWidth: 1
-    },
     dateStyle: {
         fontSize: 18,
         fontFamily: fonts.POPPINS_BOLD
     },
-    header_week: {
+    headerControl: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center', // Ajuste comme nécessaire
+        marginVertical: 10, // Donne un peu d'espace entre les deux contrôles
         backgroundColor: colors.WHITE,
-        marginVertical: 20
     },
-    header_month_name: {
+    headerText: {
         fontFamily: fonts.POPPINS_BOLD,
         marginHorizontal: 20,
         textTransform: 'capitalize'
